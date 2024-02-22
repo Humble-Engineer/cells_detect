@@ -3,7 +3,7 @@ import cv2 as cv
 import numpy as np
 import time
 
-def get_HSV(address):
+def main(address):
     
     # 预设一个窗口
     cv.namedWindow("Threshold Setting")
@@ -100,7 +100,7 @@ def get_HSV(address):
             Picture_Name = Capture_Day+"_"+Capture_Time
 
             # 设置截取图片所在路径
-            Capture_Path = "./copy/"+Picture_Name+".jpg"
+            Capture_Path = "./results/"+Picture_Name+".jpg"
             
             # 保存截图
             cv.imwrite(Capture_Path, img)
@@ -110,8 +110,8 @@ def get_HSV(address):
     # 摧毁所有窗口
     cv.destroyAllWindows()
 
-adress = "./image/img.jpg"
-get_HSV(adress)
+adress = "./samples/img.jpg"
+main(adress)
 
 
 
