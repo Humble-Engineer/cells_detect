@@ -25,7 +25,7 @@ def detect(address):
         img = cv.imread(address)
 
         # 调整图像，防畸变
-        img = cv.resize(img, (0,0), fx=0.2, fy=0.2)
+        img = cv.resize(img, (0,0), fx=0.4, fy=0.4)
 
         # 将RGB模型转换为HSV模型
         hsv = cv.cvtColor(img, cv.COLOR_BGR2HSV)
@@ -62,13 +62,63 @@ def detect(address):
         mask = cv.morphologyEx(mask, cv.MORPH_CLOSE, kernel)
 
         # 获取二值化圖轮廓点集(坐标)
-        contours1, heriachy1 = cv.findContours(mask, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)  
+        contours, heriachy1 = cv.findContours(mask, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)  
+
+        # 查看轮廓个数
+        num_contours = len(contours)
+
+        # 设置要绘制的文字和字体属性
+        text = "Cells (clusters) found:" + str(num_contours)
+        font = cv.FONT_HERSHEY_SIMPLEX
+        font_scale = 0.7
+        font_thickness = 1
+        font_color = (255, 255, 255)  # 白色
+
+        # 计算文字的位置
+        text_x = int(img.shape[0]*0.1)
+        text_y = int(img.shape[0]*0.95)
+
+        # 在图像上绘制文字
+        cv.putText(img, text, (text_x, text_y), font, font_scale, font_color, font_thickness)
 
         # 在原图上绘制轮廓
-        cv.drawContours(img, contours1, -1, (0, 0, 255), 2)
+        for index in range (0,num_contours):
+
+            # 单独绘制轮廓
+            cv.drawContours(img, contours, index, (255, 0, 0), thickness=1)
+
+            # 假设 contours 是你通过 cv.findContours 得到的轮廓列表
+            # 选择要获取最小外接圆的轮廓，例如第一个轮廓
+            selected_contour = contours[index]
+
+            # 找到最小外接圆
+            center, radius = cv.minEnclosingCircle(selected_contour)
+
+            # 将浮点坐标转换为整数
+            center = tuple(map(int, center))
+            radius = int(radius)
+
+            # 在图像上绘制最小外接圆
+            # cv.circle(img, center, radius, (255, 255, 255), 2)
+
+            # 设置要绘制的文字和字体属性
+            text = str(index+1)
+            font = cv.FONT_HERSHEY_SIMPLEX
+            font_scale = 0.5
+            font_thickness = 1
+            font_color = (0, 0, 255)  # 白色
+
+
+            # 计算文字的位置
+            text_x = (center[0] - radius)
+            text_y = (center[1] - radius) 
+
+            # 在图像上绘制文字
+            cv.putText(img, text, (text_x, text_y), font, font_scale, font_color, font_thickness)
+
 
         # 显示图像
-        cv.imshow("Mask", mask)
+        # cv.imshow("Mask", mask)
         cv.imshow("Image", img)
 
         # 等待键盘指令
@@ -111,4 +161,4 @@ def detect(address):
 
 if __name__ == "__main__":
     # 尝试检测一下
-    detect("./samples/img(5).png")
+    detect("./samples/img(10).png")
