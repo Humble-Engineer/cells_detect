@@ -17,8 +17,6 @@ if __name__ == "__main__":
     # 检测输入路径的图像
     process.detect(parameter.args.path)
     
-    
-
 
 
 

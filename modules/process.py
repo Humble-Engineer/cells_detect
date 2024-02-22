@@ -5,7 +5,7 @@ import time
 def detect(address):
     
     # 预设一个窗口
-    cv.namedWindow("Threshold Setting")
+    cv.namedWindow("Threshold Setting",0)
 
     # 空函数
     def nothing(x):
@@ -107,7 +107,6 @@ def detect(address):
             font_scale = 0.5
             font_thickness = 1
             font_color = (0, 0, 255)  # 白色
-
 
             # 计算文字的位置
             text_x = (center[0] - radius)

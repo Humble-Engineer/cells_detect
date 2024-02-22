@@ -1,2 +1,4 @@
 
 *.pptx
+*.pyc
+__pycache__/
