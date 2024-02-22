@@ -3,7 +3,7 @@ import cv2 as cv
 import numpy as np
 import time
 
-def main(address):
+def detect(address):
     
     # 预设一个窗口
     cv.namedWindow("Threshold Setting")
@@ -110,8 +110,20 @@ def main(address):
     # 摧毁所有窗口
     cv.destroyAllWindows()
 
-adress = "./samples/img(1).png"
-main(adress)
+
+
+# filename.py
+import argparse
+
+# 创建ArgumentParser对象
+parser = argparse.ArgumentParser(description='荧光图像检测脚本')
+# 添加参数，并指定默认值
+parser.add_argument('--path', default='./samples/img(1).png', help='需要检测的图片路径')
+# 解析命令行参数
+args = parser.parse_args()
+
+
+detect(args.path)
 
 
 
