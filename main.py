@@ -110,7 +110,7 @@ def main(address):
     # 摧毁所有窗口
     cv.destroyAllWindows()
 
-adress = "./samples/img.jpg"
+adress = "./samples/img(1).png"
 main(adress)
 
 
