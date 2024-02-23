@@ -88,6 +88,8 @@ def draw_contours(img,contours):
         # 在图像上绘制文字
         cv.putText(img, text, (text_x, text_y), font, font_scale, font_color, font_thickness)
 
+def waitkey():
+    pass
 
 # 检测主程序
 def detect(address):
@@ -124,6 +126,7 @@ def detect(address):
         
         # 绘制找到的轮廓
         draw_contours(img,contours)
+        
         # 显示图像
         # cv.imshow("Mask", mask)
         cv.imshow("Image", img)
