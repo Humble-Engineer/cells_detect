@@ -109,18 +109,22 @@ def detect(address):
         # 将RGB模型转换为HSV模型
         hsv = cv.cvtColor(img, cv.COLOR_BGR2HSV)
         # 基于阈值生成二值图
-        Mask = cv.inRange(hsv, lowerb=lower_hsv, upperb=upper_hsv)  # hsv 掩码
-        ret, mask = cv.threshold(Mask, 40, 255, cv.THRESH_BINARY)  # 二值化处理
+        Mask = cv.inRange(hsv, lowerb=lower_hsv, upperb=upper_hsv)
+        ret, mask = cv.threshold(Mask, 40, 255, cv.THRESH_BINARY)
+
         # 图像学腐蚀(terations,程度)
-        mask = cv.erode(mask, None, iterations=2)
+        mask = cv.erode(mask, None, iterations=1)
+        
         # 图像学膨胀(terations,程度)
         mask = cv.dilate(mask, None, iterations=1)
+
         # 高斯模糊
         # mask = cv.GaussianBlur(mask, (3, 3), 0)
         # 获取图像结构化元素（形态学处理前置操作）
-        kernel = cv.getStructuringElement(cv.MORPH_RECT, (5, 5))
-        # 图像闭操作
-        mask = cv.morphologyEx(mask, cv.MORPH_CLOSE, kernel)
+        # kernel = cv.getStructuringElement(cv.MORPH_RECT, (5, 5))
+        # # 图像闭操作
+        # mask = cv.morphologyEx(mask, cv.MORPH_CLOSE, kernel)
+
         # 获取二值化圖轮廓点集(坐标)
         contours, heriachy1 = cv.findContours(mask, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
         
