@@ -43,13 +43,13 @@ def draw_contours(img,contours):
     # 设置要绘制的文字和字体属性
     text = "Cells (clusters) found:" + str(num_contours)
     font = cv.FONT_HERSHEY_SIMPLEX
-    font_scale = 0.7
+    font_scale = 0.5
     font_thickness = 1
     font_color = (255, 255, 255)  # 白色
 
     # 计算文字的位置
-    text_x = int(img.shape[0]*0.1)
-    text_y = int(img.shape[0]*0.95)
+    text_x = int(img.shape[0]*0.03)
+    text_y = int(img.shape[0]*0.97)
 
     # 在图像上绘制文字
     cv.putText(img, text, (text_x, text_y), font, font_scale, font_color, font_thickness)
@@ -99,13 +99,15 @@ def detect(address):
     
     while True:
 
+        start_time = time.time() # 记录开始时间
+
         # 更新滑块HSV设置
         lower_hsv, upper_hsv = hsv_update()
 
         # 读取图片
         img = cv.imread(address)
         # 调整图像，防畸变
-        img = cv.resize(img, (0,0), fx=1, fy=1)
+        img = cv.resize(img, (0,0), fx=0.4, fy=0.4)
         # 将RGB模型转换为HSV模型
         hsv = cv.cvtColor(img, cv.COLOR_BGR2HSV)
         # 基于阈值生成二值图
@@ -130,7 +132,27 @@ def detect(address):
         
         # 绘制找到的轮廓
         draw_contours(img,contours)
-        
+
+
+        end_time = time.time() # 记录结束时间
+        run_time = end_time - start_time # 计算运行时间（单位为秒）
+        # print("程序运行时间：", run_time)
+
+
+        # 设置要绘制的文字和字体属性
+        text = "FPS:" + str(int(1/run_time)) +" Time:" + str(int(1000*run_time)) + "ms"
+        font = cv.FONT_HERSHEY_SIMPLEX
+        font_scale = 0.5
+        font_thickness = 1
+        font_color = (255, 255, 255)  # 白色
+
+        # 计算文字的位置
+        text_x = int(img.shape[0]*0.03)
+        text_y = int(img.shape[0]*0.06)
+
+        # 在图像上绘制文字
+        cv.putText(img, text, (text_x, text_y), font, font_scale, font_color, font_thickness)
+
         # 显示图像
         # cv.imshow("Mask", mask)
         cv.imshow("Image", img)
