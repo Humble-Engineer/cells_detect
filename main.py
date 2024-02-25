@@ -12,7 +12,7 @@ if __name__ == "__main__":
         # 终端报错提示
         print(f"检测文件{parameter.args.path}不存在!")
         # 采用默认图片路径
-        parameter.args.path='./samples/img(12).png'
+        parameter.args.path='./samples/img(5).png'
 
     # 检测输入路径的图像
     process.detect(parameter.args.path)

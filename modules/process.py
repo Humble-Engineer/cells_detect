@@ -41,7 +41,7 @@ def draw_contours(img,contours):
     num_contours = len(contours)
 
     # 设置要绘制的文字和字体属性
-    text = "Cells (clusters) found:" + str(num_contours)
+    text = "Cells (Clusters) found:" + str(num_contours)
     font = cv.FONT_HERSHEY_SIMPLEX
     font_scale = 0.5
     font_thickness = 1
