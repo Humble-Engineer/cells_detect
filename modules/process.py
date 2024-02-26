@@ -58,7 +58,7 @@ def draw_contours(img,contours):
     for index in range (0,num_contours):
 
         # 单独绘制轮廓
-        cv.drawContours(img, contours, index, (255, 0, 0), thickness=1)
+        cv.drawContours(img, contours, index, (255, 0, 0), thickness=2)
 
         # 假设 contours 是你通过 cv.findContours 得到的轮廓列表
         # 选择要获取最小外接圆的轮廓，例如第一个轮廓
@@ -78,7 +78,7 @@ def draw_contours(img,contours):
         text = str(index+1)
         font = cv.FONT_HERSHEY_SIMPLEX
         font_scale = 0.5
-        font_thickness = 1
+        font_thickness = 2
         font_color = (0, 0, 255)  # 白色
 
         # 计算文字的位置
@@ -107,7 +107,7 @@ def detect(address):
         # 读取图片
         img = cv.imread(address)
         # 调整图像，防畸变
-        img = cv.resize(img, (0,0), fx=0.4, fy=0.4)
+        img = cv.resize(img, (0,0), fx=0.3, fy=0.3)
         # 将RGB模型转换为HSV模型
         hsv = cv.cvtColor(img, cv.COLOR_BGR2HSV)
         # 基于阈值生成二值图
@@ -193,4 +193,4 @@ def detect(address):
 
 if __name__ == "__main__":
     # 尝试检测一下
-    detect("./samples/origin.png")
+    detect("./samples/img(1).png")
