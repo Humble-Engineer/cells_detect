@@ -107,7 +107,7 @@ def detect(address):
         # 读取图片
         img = cv.imread(address)
         # 调整图像，防畸变
-        img = cv.resize(img, (0,0), fx=0.3, fy=0.3)
+        img = cv.resize(img, (0,0), fx=1, fy=1)
         # 将RGB模型转换为HSV模型
         hsv = cv.cvtColor(img, cv.COLOR_BGR2HSV)
         # 基于阈值生成二值图
@@ -193,4 +193,4 @@ def detect(address):
 
 if __name__ == "__main__":
     # 尝试检测一下
-    detect("./samples/img(1).png")
+    detect("./samples/origin.png")
