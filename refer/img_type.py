@@ -26,7 +26,13 @@ def check_if_image_is_rgb(image_path):
 
     return is_rgb
 
-
-image_to_check = "samples\origin.png"
-is_rgb_image = check_if_image_is_rgb(image_to_check)
-print(f"图像 '{image_to_check}' 是否为三通道：{is_rgb_image}")
+if __name__ == "__main__":
+    """
+    用于测试的示例代码。
+    """
+    # 示例图像路径
+    image_to_check = "samples\origin.png"
+    
+    print("正在检查图像是否为三通道（RGB）图像...")
+    is_rgb_image = check_if_image_is_rgb(image_to_check)
+    print(f"图像 '{image_to_check}' 是否为三通道：{is_rgb_image}")
