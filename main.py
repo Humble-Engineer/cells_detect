@@ -28,6 +28,7 @@ class MainWindow(QMainWindow):
         self.band()  # 调用band方法进行进一步的初始化或设置
 
         self.hsv_init()
+        self.hsv_update()
 
     def band(self):
         """
@@ -52,15 +53,39 @@ class MainWindow(QMainWindow):
         # 绑定傅里叶变换按钮的点击事件
         self.ui.fft_button.clicked.connect(self.fast_fft)
 
+        # 绑定默认HSV阈值按钮的点击事件
         self.ui.default_button.clicked.connect(self.hsv_init)
+        # 绑定计数按钮的点击事件
         self.ui.count_button.clicked.connect(self.count)
 
-        self.ui.H_min_Slider.sliderMoved.connect(self.hsv_update)
-        self.ui.H_max_Slider.sliderMoved.connect(self.hsv_update)
-        self.ui.S_min_Slider.sliderMoved.connect(self.hsv_update)
-        self.ui.S_max_Slider.sliderMoved.connect(self.hsv_update)
-        self.ui.V_min_Slider.sliderMoved.connect(self.hsv_update)
-        self.ui.V_max_Slider.sliderMoved.connect(self.hsv_update)
+
+        self.sliders = [self.ui.H_min_Slider, self.ui.H_max_Slider, self.ui.S_min_Slider,
+                        self.ui.S_max_Slider, self.ui.V_min_Slider, self.ui.V_max_Slider]
+        
+        for slider in self.sliders:
+            slider.sliderReleased.connect(self.hsv_update)
+            slider.sliderMoved.connect(self.hsv_update)
+            slider.valueChanged.connect(self.hsv_update)
+
+    def hsv_init(self):
+
+        self.h_min, self.h_max = 30, 75
+        self.s_min, self.s_max = 30, 255
+        self.v_min, self.v_max = 30, 255
+
+        self.ui.H_min_Slider.setValue(self.h_min)
+        self.ui.H_max_Slider.setValue(self.h_max)
+        self.ui.S_min_Slider.setValue(self.s_min)
+        self.ui.S_max_Slider.setValue(self.s_max)
+        self.ui.V_min_Slider.setValue(self.v_min)
+        self.ui.V_max_Slider.setValue(self.v_max)
+
+        self.ui.H_min_label.setText(str(self.h_min))
+        self.ui.H_max_label.setText(str(self.h_max))
+        self.ui.S_min_label.setText(str(self.s_min))
+        self.ui.S_max_label.setText(str(self.s_max))
+        self.ui.V_min_label.setText(str(self.v_min))
+        self.ui.V_max_label.setText(str(self.v_max))
 
     def hsv_update(self):
 
@@ -70,31 +95,6 @@ class MainWindow(QMainWindow):
         self.S_max = self.ui.S_max_Slider.value()
         self.V_min = self.ui.V_min_Slider.value()
         self.V_max = self.ui.V_max_Slider.value()
-
-        self.ui.H_min_label.setText(str(self.H_min))
-        self.ui.H_max_label.setText(str(self.H_max))
-        self.ui.S_min_label.setText(str(self.S_min))
-        self.ui.S_max_label.setText(str(self.S_max))
-        self.ui.V_min_label.setText(str(self.V_min))
-        self.ui.V_max_label.setText(str(self.V_max))
-        
-    def hsv_init(self):
-
-        self.H_min = 30
-        self.H_max = 100
-
-        self.S_min = 30
-        self.S_max = 255
-
-        self.V_min = 30
-        self.V_max = 255
-
-        self.ui.H_min_Slider.setValue(self.H_min)
-        self.ui.H_max_Slider.setValue(self.H_max)
-        self.ui.S_min_Slider.setValue(self.S_min)
-        self.ui.S_max_Slider.setValue(self.S_max)
-        self.ui.V_min_Slider.setValue(self.V_min)
-        self.ui.V_max_Slider.setValue(self.V_max)
 
         self.ui.H_min_label.setText(str(self.H_min))
         self.ui.H_max_label.setText(str(self.H_max))
@@ -264,104 +264,57 @@ class MainWindow(QMainWindow):
         plt.colorbar()
         plt.show()
 
+
+
+    def calculate_fps_text(self, start_time):
+            run_time = time.perf_counter() - start_time
+            fps_text = "FPS:" + str(int(1/run_time)) +" Time:" + str(int(1000*run_time)) + "ms"
+            return fps_text, run_time
+
+    def draw_text(self, img, text, position, font_scale=2, font_thickness=3, font_color=(255, 255, 255)):
+        font = cv.FONT_HERSHEY_SIMPLEX
+        text_x, text_y = position
+        cv.putText(img, text, (text_x, text_y), font, font_scale, font_color, font_thickness)
+
+    def find_and_draw_contours(self, mask, img):
+        contours, _ = cv.findContours(mask, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
+        num_contours = len(contours)
+        for index, selected_contour in enumerate(contours):
+            cv.drawContours(img, contours, index, (255, 0, 0), thickness=2)
+            center, radius = cv.minEnclosingCircle(selected_contour)
+            center = tuple(map(int, center))
+            radius = int(radius)
+            text = str(index + 1)
+            text_x = center[0] - radius
+            text_y = center[1] - radius
+            self.draw_text(img, text, (text_x, text_y), font_color=(0, 0, 255))
+
     def count(self):
+        start_time = time.perf_counter()
 
-        start_time = time.time() # 记录开始时间
+        time.sleep(0.1)
 
-        # 转换为numpy数组
         lower_hsv = np.array([self.H_min, self.S_min, self.V_min])
         upper_hsv = np.array([self.H_max, self.S_max, self.V_max])
 
-        # 读取图片
-        img = self.origin_img
-        # 调整图像，防畸变
-        img = cv.resize(img, (0,0), fx=1, fy=1)
-        # 将RGB模型转换为HSV模型
-        hsv = cv.cvtColor(img, cv.COLOR_BGR2HSV)
-        # 基于阈值生成二值图
-        Mask = cv.inRange(hsv, lowerb=lower_hsv, upperb=upper_hsv)
-        ret, mask = cv.threshold(Mask, 40, 255, cv.THRESH_BINARY)
+        try:
+            # Resize image for processing
+            img = cv.resize(self.origin_img, (0,0), fx=1, fy=1)
+            hsv = cv.cvtColor(img, cv.COLOR_BGR2HSV)
+            mask = cv.inRange(hsv, lowerb=lower_hsv, upperb=upper_hsv)
+            mask = cv.erode(mask, None, iterations=1)
+            mask = cv.dilate(mask, None, iterations=1)
 
-        # 图像学腐蚀(terations,程度)
-        mask = cv.erode(mask, None, iterations=1)
-        
-        # 图像学膨胀(terations,程度)
-        mask = cv.dilate(mask, None, iterations=1)
+            self.find_and_draw_contours(mask, img)
 
-        # 获取二值化圖轮廓点集(坐标)
-        contours, heriachy1 = cv.findContours(mask, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
-        
-        # 绘制找到的轮廓
-        # 查看轮廓个数
-        num_contours = len(contours)
+            fps_text, _ = self.calculate_fps_text(start_time)
+            self.draw_text(img, fps_text, (int(img.shape[0]*0.03), int(img.shape[0]*0.06)))
 
-        # 设置要绘制的文字和字体属性
-        text = "Cells (Clusters) found:" + str(num_contours)
-        font = cv.FONT_HERSHEY_SIMPLEX
-        font_scale = 2
-        font_thickness = 3
-        font_color = (255, 255, 255)  # 白色
+            self.result_img = img
+            self.display_image(img)
+        except Exception as e:
+            print(f"An error occurred during image processing: {e}")
 
-        # 计算文字的位置
-        text_x = int(img.shape[0]*0.03)
-        text_y = int(img.shape[0]*0.97)
-
-        # 在图像上绘制文字
-        cv.putText(img, text, (text_x, text_y), font, font_scale, font_color, font_thickness)
-
-        # 在原图上绘制轮廓
-        for index in range (0,num_contours):
-
-            # 单独绘制轮廓
-            cv.drawContours(img, contours, index, (255, 0, 0), thickness=2)
-
-            # 假设 contours 是你通过 cv.findContours 得到的轮廓列表
-            # 选择要获取最小外接圆的轮廓，例如第一个轮廓
-            selected_contour = contours[index]
-
-            # 找到最小外接圆
-            center, radius = cv.minEnclosingCircle(selected_contour)
-
-            # 将浮点坐标转换为整数
-            center = tuple(map(int, center))
-            radius = int(radius)
-
-            # 在图像上绘制最小外接圆
-            # cv.circle(img, center, radius, (255, 255, 255), 2)
-
-            # 设置要绘制的文字和字体属性
-            text = str(index+1)
-            font = cv.FONT_HERSHEY_SIMPLEX
-            font_scale = 2
-            font_thickness = 3
-            font_color = (0, 0, 255)  # 白色
-
-            # 计算文字的位置
-            text_x = (center[0] - radius)
-            text_y = (center[1] - radius) 
-
-            # 在图像上绘制文字
-            cv.putText(img, text, (text_x, text_y), font, font_scale, font_color, font_thickness)
-
-        end_time = time.time() # 记录结束时间
-        run_time = end_time - start_time # 计算运行时间（单位为秒）
-
-        # 设置要绘制的文字和字体属性
-        text = "FPS:" + str(int(1/run_time)) +" Time:" + str(int(1000*run_time)) + "ms"
-        font = cv.FONT_HERSHEY_SIMPLEX
-        font_scale = 2
-        font_thickness = 3
-        font_color = (255, 255, 255)  # 白色
-
-        # 计算文字的位置
-        text_x = int(img.shape[0]*0.03)
-        text_y = int(img.shape[0]*0.06)
-
-        # 在图像上绘制文字
-        cv.putText(img, text, (text_x, text_y), font, font_scale, font_color, font_thickness)
-        self.result_img = img
-
-        self.display_image(img)
     
 if __name__ == "__main__":
     # 创建 QApplication 实例
