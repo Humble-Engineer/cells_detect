@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 
 from PySide6.QtWidgets import QApplication, QMainWindow, QFileDialog
 from PySide6.QtGui import QPixmap, QImage
+from PySide6.QtCore import Qt
 
 # 编译UI文件：PySide6-uic MainWindow.ui -o MainWindow_ui.py
 from MainWindow_ui import Ui_MainWindow
@@ -69,7 +70,7 @@ class MainWindow(QMainWindow):
 
     def hsv_init(self):
 
-        self.h_min, self.h_max = 30, 75
+        self.h_min, self.h_max = 20, 60
         self.s_min, self.s_max = 30, 255
         self.v_min, self.v_max = 30, 255
 
@@ -175,11 +176,18 @@ class MainWindow(QMainWindow):
             label_width = self.ui.result_img.width()
             label_height = self.ui.result_img.height()
 
-            # 将 QPixmap 缩放到 QLabel 大小，保持原图长宽比
-            scaled_pixmap = original_pixmap.scaled(label_width, label_height)
+            # 缩放 QPixmap 只按高度缩放
+            scaled_pixmap = original_pixmap.scaledToHeight(label_height)
+            
+            # 设置 QLabel 的对齐方式为居中
+            self.ui.result_img.setAlignment(Qt.AlignCenter)
 
-            # 将缩放后的 QPixmap 设置为 QLabel 的内容
+            # 设置 QPixmap 到 QLabel 中
             self.ui.result_img.setPixmap(scaled_pixmap)
+
+            # 设置 QLabel 的背景颜色为黑色
+            self.ui.result_img.setStyleSheet("background-color: black;")
+
         else:
             # 如果图像加载失败，打印错误信息
             print("Failed to display image!")
@@ -264,30 +272,43 @@ class MainWindow(QMainWindow):
         plt.colorbar()
         plt.show()
 
-
-
     def calculate_fps_text(self, start_time):
             run_time = time.perf_counter() - start_time
-            fps_text = "FPS:" + str(int(1/run_time)) +" Time:" + str(int(1000*run_time)) + "ms"
+            fps_text = f"FPS:{int(1/run_time)} Time:{int(1000*run_time)}ms"
             return fps_text, run_time
 
-    def draw_text(self, img, text, position, font_scale=2, font_thickness=3, font_color=(255, 255, 255)):
+    def draw_text(self, img, text, position, font_scale=None, font_thickness=None, font_color=(255, 255, 255)):
+        if font_scale is None:
+            font_scale = img.shape[0] / 1000  # Adjust based on the height of the image
+        if font_thickness is None:
+            font_thickness = max(1, int(3*font_scale))  # Ensure at least a thickness of 1
         font = cv.FONT_HERSHEY_SIMPLEX
         text_x, text_y = position
         cv.putText(img, text, (text_x, text_y), font, font_scale, font_color, font_thickness)
+
+    def draw_cells_found_text(self, img, num_contours):
+        text = f"Cells have been found: {num_contours}"
+        # Calculate the position for the left bottom corner
+        text_x = int(img.shape[1] * 0.03)  # 3% from the left side
+        text_y = int(img.shape[0] * 0.97)  # 3% from the bottom
+        self.draw_text(img, text, (text_x, text_y))
 
     def find_and_draw_contours(self, mask, img):
         contours, _ = cv.findContours(mask, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
         num_contours = len(contours)
         for index, selected_contour in enumerate(contours):
-            cv.drawContours(img, contours, index, (255, 0, 0), thickness=2)
+            cv.drawContours(img, contours, index, (255, 0, 0), thickness=max(1, int(img.shape[0] / 300)))  # Adjust thickness based on image height
             center, radius = cv.minEnclosingCircle(selected_contour)
             center = tuple(map(int, center))
             radius = int(radius)
             text = str(index + 1)
             text_x = center[0] - radius
             text_y = center[1] - radius
+            # Adjust text position and size based on the image dimensions
             self.draw_text(img, text, (text_x, text_y), font_color=(0, 0, 255))
+
+        # Draw the number of cells found text
+        self.draw_cells_found_text(img, num_contours)
 
     def count(self):
         start_time = time.perf_counter()
@@ -302,18 +323,20 @@ class MainWindow(QMainWindow):
             img = cv.resize(self.origin_img, (0,0), fx=1, fy=1)
             hsv = cv.cvtColor(img, cv.COLOR_BGR2HSV)
             mask = cv.inRange(hsv, lowerb=lower_hsv, upperb=upper_hsv)
-            mask = cv.erode(mask, None, iterations=1)
-            mask = cv.dilate(mask, None, iterations=1)
+            mask = cv.erode(mask, None, iterations=5)
+            mask = cv.dilate(mask, None, iterations=5)
 
             self.find_and_draw_contours(mask, img)
 
             fps_text, _ = self.calculate_fps_text(start_time)
-            self.draw_text(img, fps_text, (int(img.shape[0]*0.03), int(img.shape[0]*0.06)))
+            # Adjust FPS text position and size based on the image dimensions
+            self.draw_text(img, fps_text, (int(img.shape[1]*0.03), int(img.shape[0]*0.06)))
 
             self.result_img = img
             self.display_image(img)
         except Exception as e:
             print(f"An error occurred during image processing: {e}")
+
 
     
 if __name__ == "__main__":
