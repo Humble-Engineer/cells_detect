@@ -2,3 +2,7 @@
 *.pptx
 *.pyc
 __pycache__/*.pyc
+
+build/
+dist/
+*.spec
