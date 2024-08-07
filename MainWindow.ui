@@ -19,7 +19,7 @@
   <property name="minimumSize">
    <size>
     <width>1200</width>
-    <height>600</height>
+    <height>650</height>
    </size>
   </property>
   <property name="maximumSize">
@@ -666,7 +666,7 @@
          </font>
         </property>
         <property name="text">
-         <string>采集图像</string>
+         <string>采集图像（待开发）</string>
         </property>
        </widget>
       </item>

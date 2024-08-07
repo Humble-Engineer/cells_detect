@@ -1,3 +1,11 @@
+'''
+打包发布命令：
+pyinstaller -F main.py
+-w (–windowed / –noconsole): 对于 GUI 应用程序，隐藏控制台窗口。
+--icon=FILE.ico: 指定可执行文件的图标。
+
+'''
+
 import sys
 from pathlib import Path
 
@@ -10,7 +18,6 @@ from PySide6.QtWidgets import QApplication, QMainWindow, QFileDialog
 from PySide6.QtGui import QPixmap, QImage
 from PySide6.QtCore import Qt
 
-# 编译UI文件：PySide6-uic MainWindow.ui -o MainWindow_ui.py
 from MainWindow_ui import Ui_MainWindow
 
 class MainWindow(QMainWindow):
