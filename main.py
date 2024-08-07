@@ -26,12 +26,12 @@ class MainWindow(QMainWindow):
         self.ui = Ui_MainWindow()  # 实例化UI类
         self.ui.setupUi(self)  # 使用UI类的实例设置主窗口的界面
 
-        self.band()  # 调用band方法进行进一步的初始化或设置
+        self.slot_bind()  # 调用band方法进行进一步的初始化或设置
 
         self.hsv_init()
         self.hsv_update()
 
-    def band(self):
+    def slot_bind(self):
         """
         绑定按钮或菜单项的点击事件到相应的函数。
         """
@@ -60,20 +60,22 @@ class MainWindow(QMainWindow):
         self.ui.count_button.clicked.connect(self.count)
 
 
-        self.sliders = [self.ui.H_min_Slider, self.ui.H_max_Slider, self.ui.S_min_Slider,
+        self.hsv_sliders = [self.ui.H_min_Slider, self.ui.H_max_Slider, self.ui.S_min_Slider,
                         self.ui.S_max_Slider, self.ui.V_min_Slider, self.ui.V_max_Slider]
         
-        for slider in self.sliders:
+        for slider in self.hsv_sliders:
             slider.sliderReleased.connect(self.hsv_update)
             slider.sliderMoved.connect(self.hsv_update)
             slider.valueChanged.connect(self.hsv_update)
 
     def hsv_init(self):
 
+        # 设置默认的HSV阈值属性
         self.h_min, self.h_max = 20, 60
         self.s_min, self.s_max = 30, 255
         self.v_min, self.v_max = 30, 255
 
+        # 同步HSV阈值滑块
         self.ui.H_min_Slider.setValue(self.h_min)
         self.ui.H_max_Slider.setValue(self.h_max)
         self.ui.S_min_Slider.setValue(self.s_min)
@@ -81,6 +83,7 @@ class MainWindow(QMainWindow):
         self.ui.V_min_Slider.setValue(self.v_min)
         self.ui.V_max_Slider.setValue(self.v_max)
 
+        # 同步HSV阈值标签
         self.ui.H_min_label.setText(str(self.h_min))
         self.ui.H_max_label.setText(str(self.h_max))
         self.ui.S_min_label.setText(str(self.s_min))
@@ -90,6 +93,7 @@ class MainWindow(QMainWindow):
 
     def hsv_update(self):
 
+        # 获取滑块的值
         self.H_min = self.ui.H_min_Slider.value()
         self.H_max = self.ui.H_max_Slider.value()
         self.S_min = self.ui.S_min_Slider.value()
@@ -97,6 +101,7 @@ class MainWindow(QMainWindow):
         self.V_min = self.ui.V_min_Slider.value()
         self.V_max = self.ui.V_max_Slider.value()
 
+        # 同步HSV阈值标签
         self.ui.H_min_label.setText(str(self.H_min))
         self.ui.H_max_label.setText(str(self.H_max))
         self.ui.S_min_label.setText(str(self.S_min))
@@ -321,10 +326,15 @@ class MainWindow(QMainWindow):
         try:
             # Resize image for processing
             img = cv.resize(self.origin_img, (0,0), fx=1, fy=1)
+            img = cv.GaussianBlur(img, (3, 3), 0)  # 高斯模糊
             hsv = cv.cvtColor(img, cv.COLOR_BGR2HSV)
             mask = cv.inRange(hsv, lowerb=lower_hsv, upperb=upper_hsv)
-            mask = cv.erode(mask, None, iterations=5)
-            mask = cv.dilate(mask, None, iterations=5)
+           
+            kernel = cv.getStructuringElement(cv.MORPH_ELLIPSE, (5, 5)) #使用结构元素
+            mask = cv.morphologyEx(mask, cv.MORPH_OPEN, kernel)
+
+            mask = cv.erode(mask, kernel, iterations=5) #腐蚀
+            mask = cv.dilate(mask, kernel, iterations=5) #膨胀
 
             self.find_and_draw_contours(mask, img)
 
