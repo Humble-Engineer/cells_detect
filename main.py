@@ -25,12 +25,11 @@ class MainWindow(QMainWindow):
 
         self.ui = Ui_MainWindow()  # 实例化UI类
         self.ui.setupUi(self)  # 使用UI类的实例设置主窗口的界面
-
+        
         self.slot_bind()  # 调用band方法进行进一步的初始化或设置
-
-        self.hsv_init()
-        self.hsv_update()
-
+        
+        self.argu_init()
+        
     def slot_bind(self):
         """
         绑定按钮或菜单项的点击事件到相应的函数。
@@ -54,46 +53,45 @@ class MainWindow(QMainWindow):
         # 绑定傅里叶变换按钮的点击事件
         self.ui.fft_button.clicked.connect(self.fast_fft)
 
-        # 绑定默认HSV阈值按钮的点击事件
-        self.ui.default_button.clicked.connect(self.hsv_init)
+        # 绑定默认参数按钮的点击事件
+        self.ui.default_button.clicked.connect(self.argu_init)
         # 绑定计数按钮的点击事件
         self.ui.count_button.clicked.connect(self.count)
 
 
-        self.hsv_sliders = [self.ui.H_min_Slider, self.ui.H_max_Slider, self.ui.S_min_Slider,
-                        self.ui.S_max_Slider, self.ui.V_min_Slider, self.ui.V_max_Slider]
+        self.sliders = [self.ui.H_min_Slider, self.ui.H_max_Slider, self.ui.S_min_Slider,
+                        self.ui.S_max_Slider, self.ui.V_min_Slider, self.ui.V_max_Slider,
+
+                        self.ui.Gauss_Slider, self.ui.Struct_Slider, 
+                        self.ui.Erode_Slider, self.ui.Dilate_Slider]
         
-        for slider in self.hsv_sliders:
-            slider.sliderReleased.connect(self.hsv_update)
-            slider.sliderMoved.connect(self.hsv_update)
-            slider.valueChanged.connect(self.hsv_update)
+        for slider in self.sliders:
+            slider.sliderReleased.connect(self.argu_update)
+            slider.sliderMoved.connect(self.argu_update)
+            slider.valueChanged.connect(self.argu_update)
 
-    def hsv_init(self):
 
-        # 设置默认的HSV阈值属性
-        self.h_min, self.h_max = 20, 60
-        self.s_min, self.s_max = 30, 255
-        self.v_min, self.v_max = 30, 255
 
-        # 同步HSV阈值滑块
-        self.ui.H_min_Slider.setValue(self.h_min)
-        self.ui.H_max_Slider.setValue(self.h_max)
-        self.ui.S_min_Slider.setValue(self.s_min)
-        self.ui.S_max_Slider.setValue(self.s_max)
-        self.ui.V_min_Slider.setValue(self.v_min)
-        self.ui.V_max_Slider.setValue(self.v_max)
+    def argu_init(self):
 
-        # 同步HSV阈值标签
-        self.ui.H_min_label.setText(str(self.h_min))
-        self.ui.H_max_label.setText(str(self.h_max))
-        self.ui.S_min_label.setText(str(self.s_min))
-        self.ui.S_max_label.setText(str(self.s_max))
-        self.ui.V_min_label.setText(str(self.v_min))
-        self.ui.V_max_label.setText(str(self.v_max))
+        self.ui.H_min_Slider.setValue(20)
+        self.ui.H_max_Slider.setValue(60)
+        self.ui.S_min_Slider.setValue(30)
+        self.ui.S_max_Slider.setValue(255)
+        self.ui.V_min_Slider.setValue(30)
+        self.ui.V_max_Slider.setValue(255)
 
-    def hsv_update(self):
+        self.ui.Gauss_Slider.setValue(1)
+        self.ui.Struct_Slider.setValue(2)
+        self.ui.Erode_Slider.setValue(1)
+        self.ui.Dilate_Slider.setValue(1)
 
-        # 获取滑块的值
+        self.argu_update()
+
+        print("检测参数已经重置...")
+
+    def argu_update(self):
+
         self.H_min = self.ui.H_min_Slider.value()
         self.H_max = self.ui.H_max_Slider.value()
         self.S_min = self.ui.S_min_Slider.value()
@@ -101,13 +99,22 @@ class MainWindow(QMainWindow):
         self.V_min = self.ui.V_min_Slider.value()
         self.V_max = self.ui.V_max_Slider.value()
 
-        # 同步HSV阈值标签
         self.ui.H_min_label.setText(str(self.H_min))
         self.ui.H_max_label.setText(str(self.H_max))
         self.ui.S_min_label.setText(str(self.S_min))
         self.ui.S_max_label.setText(str(self.S_max))
         self.ui.V_min_label.setText(str(self.V_min))
         self.ui.V_max_label.setText(str(self.V_max))
+
+        self.gauss_shape = 2*self.ui.Gauss_Slider.value()+1
+        self.struct_shape = 2*self.ui.Struct_Slider.value()+1
+        self.erode_times = 2*self.ui.Erode_Slider.value()+1
+        self.dilate_times = 2*self.ui.Dilate_Slider.value()+1
+
+        self.ui.Gauss_label.setText(str(self.gauss_shape))
+        self.ui.Struct_label.setText(str(self.struct_shape))
+        self.ui.Erode_label.setText(str(self.erode_times))
+        self.ui.Dilate_label.setText(str(self.dilate_times))
 
     def load_image(self):
         """
@@ -326,15 +333,16 @@ class MainWindow(QMainWindow):
         try:
             # Resize image for processing
             img = cv.resize(self.origin_img, (0,0), fx=1, fy=1)
-            img = cv.GaussianBlur(img, (3, 3), 0)  # 高斯模糊
+            # 高斯模糊(卷积核越大,可去除更多噪声,但会损失更多细节)
+            img = cv.GaussianBlur(img, (self.gauss_shape, self.gauss_shape), 0)
             hsv = cv.cvtColor(img, cv.COLOR_BGR2HSV)
             mask = cv.inRange(hsv, lowerb=lower_hsv, upperb=upper_hsv)
-           
-            kernel = cv.getStructuringElement(cv.MORPH_ELLIPSE, (5, 5)) #使用结构元素
-            mask = cv.morphologyEx(mask, cv.MORPH_OPEN, kernel)
 
-            mask = cv.erode(mask, kernel, iterations=5) #腐蚀
-            mask = cv.dilate(mask, kernel, iterations=5) #膨胀
+            # 使用结构元素(卷积核大小作用类似)
+            kernel = cv.getStructuringElement(cv.MORPH_ELLIPSE, (self.struct_shape,self.struct_shape))
+            # 形态学操作(可选迭代次数)
+            mask = cv.erode(mask, kernel, iterations=self.erode_times) #腐蚀
+            mask = cv.dilate(mask, kernel, iterations=self.dilate_times) #膨胀
 
             self.find_and_draw_contours(mask, img)
 
@@ -344,11 +352,17 @@ class MainWindow(QMainWindow):
 
             self.result_img = img
             self.display_image(img)
+
+            # 打印使用的参数
+            print(f" H_min={self.H_min}, S_min={self.S_min}, V_min={self.V_min}, "
+                f"H_max={self.H_max}, S_max={self.S_max}, V_max={self.V_max}, "
+                f"gauss_shape={self.gauss_shape}, struct_shape={self.struct_shape}, "
+                f"erode_times={self.erode_times}, dilate_times={self.dilate_times}")
+
         except Exception as e:
             print(f"An error occurred during image processing: {e}")
 
 
-    
 if __name__ == "__main__":
     # 创建 QApplication 实例
     app = QApplication(sys.argv)
