@@ -82,7 +82,7 @@ class MainWindow(QMainWindow):
     def argu_init(self):
 
         self.ui.H_min_Slider.setValue(20)
-        self.ui.H_max_Slider.setValue(60)
+        self.ui.H_max_Slider.setValue(80)
         self.ui.S_min_Slider.setValue(30)
         self.ui.S_max_Slider.setValue(255)
         self.ui.V_min_Slider.setValue(30)
@@ -157,13 +157,15 @@ class MainWindow(QMainWindow):
             return
 
         # 弹出保存文件对话框，让用户选择保存位置和文件名
-        save_dialog = QFileDialog(self, "保存图像")
-        save_dialog.setDefaultSuffix("png")  # 默认文件扩展名
-        save_dialog.setNameFilter("PNG Files (*.png)")
-        if save_dialog.exec() != QFileDialog.Accepted:
-            return
+        save_path, _ = QFileDialog.getSaveFileName(
+            self,
+            "保存图像",
+            "result.png",
+            "PNG Files (*.png)"
+        )
 
-        save_path = save_dialog.selectedFiles()[0]
+        if not save_path:
+            return
 
         # 将QPixmap保存为图像文件
         if not current_pixmap.save(save_path, "PNG"):
@@ -332,7 +334,7 @@ class MainWindow(QMainWindow):
     def count(self):
         start_time = time.perf_counter()
 
-        time.sleep(0.1)
+        # time.sleep(0.1)
 
         lower_hsv = np.array([self.H_min, self.S_min, self.V_min])
         upper_hsv = np.array([self.H_max, self.S_max, self.V_max])

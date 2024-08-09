@@ -111,7 +111,7 @@
         <item>
          <widget class="QLabel" name="label_4">
           <property name="text">
-           <string>H min</string>
+           <string>色相下限：   </string>
           </property>
          </widget>
         </item>
@@ -157,7 +157,7 @@
         <item>
          <widget class="QLabel" name="label_5">
           <property name="text">
-           <string>H max</string>
+           <string>色相上限：   </string>
           </property>
          </widget>
         </item>
@@ -203,7 +203,7 @@
         <item>
          <widget class="QLabel" name="label_6">
           <property name="text">
-           <string>S min</string>
+           <string>饱和度上限：</string>
           </property>
          </widget>
         </item>
@@ -249,7 +249,7 @@
         <item>
          <widget class="QLabel" name="label_7">
           <property name="text">
-           <string>S max</string>
+           <string>饱和度下限：</string>
           </property>
          </widget>
         </item>
@@ -295,7 +295,7 @@
         <item>
          <widget class="QLabel" name="label_8">
           <property name="text">
-           <string>V min</string>
+           <string>明度上限：   </string>
           </property>
          </widget>
         </item>
@@ -341,7 +341,7 @@
         <item>
          <widget class="QLabel" name="label_9">
           <property name="text">
-           <string>V max</string>
+           <string>明度下限：   </string>
           </property>
          </widget>
         </item>
@@ -426,7 +426,7 @@
         <item>
          <widget class="QLabel" name="label_11">
           <property name="text">
-           <string>Gauss_core</string>
+           <string>高斯核尺寸：</string>
           </property>
          </widget>
         </item>
@@ -478,7 +478,7 @@
         <item>
          <widget class="QLabel" name="label_12">
           <property name="text">
-           <string>Struct_core</string>
+           <string>结构核尺寸：</string>
           </property>
          </widget>
         </item>
@@ -524,7 +524,7 @@
         <item>
          <widget class="QLabel" name="label_13">
           <property name="text">
-           <string>Erode_time</string>
+           <string>腐蚀程度：   </string>
           </property>
          </widget>
         </item>
@@ -537,7 +537,7 @@
            </sizepolicy>
           </property>
           <property name="maximum">
-           <number>4</number>
+           <number>7</number>
           </property>
           <property name="singleStep">
            <number>1</number>
@@ -573,7 +573,7 @@
         <item>
          <widget class="QLabel" name="label_14">
           <property name="text">
-           <string>Dilate_time</string>
+           <string>膨胀程度：   </string>
           </property>
          </widget>
         </item>
