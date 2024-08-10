@@ -491,7 +491,7 @@ class Ui_MainWindow(object):
     # setupUi
 
     def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"Cell Count", None))
+        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"Cell Counter v2.0", None))
         self.result_img.setText("")
         self.label_3.setText(QCoreApplication.translate("MainWindow", u"\u4e8c\u503c\u5316\u53c2\u6570", None))
         self.label_4.setText(QCoreApplication.translate("MainWindow", u"\u8272\u76f8\u4e0b\u9650\uff1a   ", None))

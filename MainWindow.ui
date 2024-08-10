@@ -34,7 +34,7 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>Cell Count</string>
+   <string>Cell Counter v2.0</string>
   </property>
   <property name="layoutDirection">
    <enum>Qt::LayoutDirection::LeftToRight</enum>

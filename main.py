@@ -90,8 +90,13 @@ class MainWindow(QMainWindow):
 
         self.ui.Gauss_Slider.setValue(1)
         self.ui.Struct_Slider.setValue(2)
-        self.ui.Erode_Slider.setValue(1)
+        self.ui.Erode_Slider.setValue(2)
         self.ui.Dilate_Slider.setValue(1)
+
+        self.low_percentage = 0.1
+        self.growth_factor = 1.8
+        self.border_distance = 10
+
 
         self.argu_update()
 
@@ -163,10 +168,8 @@ class MainWindow(QMainWindow):
             "result.png",
             "PNG Files (*.png)"
         )
-
         if not save_path:
             return
-
         # 将QPixmap保存为图像文件
         if not current_pixmap.save(save_path, "PNG"):
             print(f"Failed to save image to {save_path}")
@@ -189,26 +192,19 @@ class MainWindow(QMainWindow):
 
             # 创建 QImage 并使用图像数据初始化
             qimg = QImage(img_rgb.data, img_rgb.shape[1], img_rgb.shape[0], QImage.Format_RGB888)
-
             # 从 QImage 创建原始 QPixmap
             original_pixmap = QPixmap.fromImage(qimg)
-
             # 获取 QLabel 的尺寸
             label_width = self.ui.result_img.width()
             label_height = self.ui.result_img.height()
-
             # 缩放 QPixmap 只按高度缩放
             scaled_pixmap = original_pixmap.scaledToHeight(label_height)
-            
             # 设置 QLabel 的对齐方式为居中
             self.ui.result_img.setAlignment(Qt.AlignCenter)
-
             # 设置 QPixmap 到 QLabel 中
             self.ui.result_img.setPixmap(scaled_pixmap)
-
             # 设置 QLabel 的背景颜色为黑色
             self.ui.result_img.setStyleSheet("background-color: black;")
-
         else:
             # 如果图像加载失败，打印错误信息
             print("Failed to display image!")
@@ -294,93 +290,126 @@ class MainWindow(QMainWindow):
         plt.show()
 
     def calculate_fps_text(self, start_time):
+            """
+            计算FPS并返回FPS文本和运行时间
+            """
+            # 计算运行时间
             run_time = time.perf_counter() - start_time
             fps_text = f"FPS:{int(1/run_time)} Time:{int(1000*run_time)}ms"
             return fps_text, run_time
 
     def draw_text(self, img, text, position, font_scale=None, font_thickness=None, font_color=(255, 255, 255)):
+        """
+        在图像上绘制文字。
+        
+        :param img: 图像
+        :param text: 要绘制的文字
+        :param position: 文字的位置 (x, y)
+        :param font_scale: 字体大小
+        :param font_thickness: 字体厚度
+        :param font_color: 字体颜色 (B, G, R)
+        """
         if font_scale is None:
-            font_scale = img.shape[0] / 1000  # Adjust based on the height of the image
+            font_scale = img.shape[0] / 1000  # 根据图像的高度调整字体大小
         if font_thickness is None:
-            font_thickness = max(1, int(3*font_scale))  # Ensure at least a thickness of 1
+            font_thickness = max(1, int(3*font_scale))  # 确保至少有1的厚度
         font = cv.FONT_HERSHEY_SIMPLEX
         text_x, text_y = position
         cv.putText(img, text, (text_x, text_y), font, font_scale, font_color, font_thickness)
 
     def draw_cells_found_text(self, img, total_cells):
+        """
+        在图像底部左角绘制找到的细胞总数。
+        
+        :param img: 图像
+        :param total_cells: 找到的细胞总数
+        """
         text = f"Total cells found: {total_cells}"
-        # Calculate the position for the left bottom corner
-        text_x = int(img.shape[1] * 0.03)  # 3% from the left side
-        text_y = int(img.shape[0] * 0.97)  # 3% from the bottom
+        # 计算左下角的位置
+        text_x = int(img.shape[1] * 0.03)  # 距离左边3%
+        text_y = int(img.shape[0] * 0.97)  # 距离底边3%
         self.draw_text(img, text, (text_x, text_y))
 
-
     def find_and_draw_contours(self, mask, img):
+        """
+        查找轮廓并在图像上绘制。
+        
+        :param mask: 二值掩膜图像
+        :param img: 原始图像
+        """
         contours, _ = cv.findContours(mask, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
         num_contours = len(contours)
         
-        # Calculate the area of each contour
+        # 计算每个轮廓的面积
         areas = [cv.contourArea(contour) for contour in contours]
         
-        # Filter contours that are close to the image boundaries
+        # 过滤靠近图像边界的轮廓
         filtered_contours, filtered_areas = self.filter_border_contours(contours, areas, img)
         
-        # Sort the filtered areas
+        # 排序过滤后的面积
         sorted_areas = sorted(filtered_areas)
         
-        # Find the threshold for the smallest 10% of areas
-        threshold_index = int(len(sorted_areas) * 0.1)
+        # 找到最小10%面积的阈值索引
+        threshold_index = int(len(sorted_areas) * self.low_percentage)
 
-        # If there are too few contours, set the smallest contour as the reference
+        # 如果轮廓太少，设置最小轮廓作为参考
         if threshold_index == 0:
             threshold_index = 1
             
-        print(f"threshold_index: {threshold_index}")
+        print(f"阈值索引: {threshold_index}")
         
-        # Take the smallest 10% of areas
+        # 取最小10%的面积
         smallest_10_percent_areas = sorted_areas[:threshold_index]
         
-        # Calculate the median area of the smallest 10%
-        # Check if the list is empty to avoid index out of range
+        # 计算最小10%面积的中位数
+        # 检查列表是否为空以避免越界
         if smallest_10_percent_areas:
             median_smallest_10_percent_area = smallest_10_percent_areas[len(smallest_10_percent_areas) // 2]
         else:
             median_smallest_10_percent_area = 0
         
-        # Estimate the number of cells for each contour
+        # 估计每个轮廓代表的细胞数量
         estimated_cell_counts = []
         for area in filtered_areas:
             cell_count = 1
-            while area > median_smallest_10_percent_area * (1.8 * cell_count):
+            while area > median_smallest_10_percent_area * (self.growth_factor * cell_count):
                 cell_count += 1
             estimated_cell_counts.append(cell_count)
         
         total_cells = sum(estimated_cell_counts)
         
         for index, (selected_contour, cell_count) in enumerate(zip(filtered_contours, estimated_cell_counts)):
-            cv.drawContours(img, filtered_contours, index, (255, 0, 0), thickness=max(1, int(img.shape[0] / 300)))  # Adjust thickness based on image height
+            cv.drawContours(img, filtered_contours, index, (255, 0, 0), thickness=max(1, int(img.shape[0] / 300)))  # 根据图像高度调整轮廓线粗细
             center, radius = cv.minEnclosingCircle(selected_contour)
             center = tuple(map(int, center))
             radius = int(radius)
             text = f"{cell_count}"
             text_x = center[0] - radius
             text_y = center[1] - radius
-            # Adjust text position and size based on the image dimensions
+            # 根据图像尺寸调整文字位置和大小
             self.draw_text(img, text, (text_x, text_y), font_color=(0, 0, 255))
 
-        # Draw the number of cells found text
+        # 绘制找到的细胞总数
         self.draw_cells_found_text(img, total_cells)
         
-        # Print or use the median area as needed
-        print(f"Median area of the smallest 10% of contours: {median_smallest_10_percent_area:.2f} pixels")
+        # 输出或使用最小10%轮廓面积的中位数
+        print(f"最小10%轮廓面积的中位数: {median_smallest_10_percent_area:.2f} 像素")
 
     def filter_border_contours(self, contours, areas, img):
+        """
+        过滤靠近图像边界的轮廓。
+        
+        :param contours: 轮廓列表
+        :param areas: 轮廓对应的面积列表
+        :param img: 原始图像
+        :return: 过滤后的轮廓和面积列表
+        """
         filtered_contours = []
         filtered_areas = []
         for contour, area in zip(contours, areas):
-            # Check if the contour is close to the borders
+            # 检查轮廓是否靠近边界
             x, y, w, h = cv.boundingRect(contour)
-            if not (x < 10 or y < 10 or x + w > img.shape[1] - 10 or y + h > img.shape[0] - 10):
+            if not (x < self.border_distance or y < self.border_distance or x + w > img.shape[1] - self.border_distance or y + h > img.shape[0] - self.border_distance):
                 filtered_contours.append(contour)
                 filtered_areas.append(area)
         return filtered_contours, filtered_areas
