@@ -315,8 +315,25 @@ class MainWindow(QMainWindow):
         self.draw_text(img, text, (text_x, text_y))
 
     def find_and_draw_contours(self, mask, img):
+
         contours, _ = cv.findContours(mask, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
         num_contours = len(contours)
+        
+        # Calculate the area of each contour
+        areas = [cv.contourArea(contour) for contour in contours]
+        
+        # Sort the areas
+        sorted_areas = sorted(areas)
+        
+        # Find the threshold for the smallest 10% of areas
+        threshold_index = int(len(sorted_areas) * 0.1)
+        
+        # Take the smallest 10% of areas
+        smallest_10_percent_areas = sorted_areas[:threshold_index]
+        
+        # Calculate the average area of the smallest 10%
+        avg_smallest_10_percent_area = sum(smallest_10_percent_areas) / len(smallest_10_percent_areas) if smallest_10_percent_areas else 0
+        
         for index, selected_contour in enumerate(contours):
             cv.drawContours(img, contours, index, (255, 0, 0), thickness=max(1, int(img.shape[0] / 300)))  # Adjust thickness based on image height
             center, radius = cv.minEnclosingCircle(selected_contour)
@@ -330,6 +347,10 @@ class MainWindow(QMainWindow):
 
         # Draw the number of cells found text
         self.draw_cells_found_text(img, num_contours)
+
+        # Print or use the average area as needed
+        print(f"Average area of the smallest 10% of contours: {avg_smallest_10_percent_area:.2f} pixels")
+
 
     def count(self):
         start_time = time.perf_counter()
