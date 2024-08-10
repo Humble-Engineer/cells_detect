@@ -65,7 +65,6 @@ class MainWindow(QMainWindow):
         # 绑定计数按钮的点击事件
         self.ui.count_button.clicked.connect(self.count)
 
-
         self.sliders = [self.ui.H_min_Slider, self.ui.H_max_Slider, self.ui.S_min_Slider,
                         self.ui.S_max_Slider, self.ui.V_min_Slider, self.ui.V_max_Slider,
 
@@ -76,8 +75,6 @@ class MainWindow(QMainWindow):
             slider.sliderReleased.connect(self.argu_update)
             slider.sliderMoved.connect(self.argu_update)
             slider.valueChanged.connect(self.argu_update)
-
-
 
     def argu_init(self):
 
@@ -97,10 +94,8 @@ class MainWindow(QMainWindow):
         self.growth_factor = 1.8
         self.border_distance = 10
 
-
         self.argu_update()
-
-        print("检测参数已经重置...")
+        # print("检测参数已经重置...")
 
     def argu_update(self):
 
@@ -355,9 +350,7 @@ class MainWindow(QMainWindow):
         # 如果轮廓太少，设置最小轮廓作为参考
         if threshold_index == 0:
             threshold_index = 1
-            
-        print(f"阈值索引: {threshold_index}")
-        
+
         # 取最小10%的面积
         smallest_10_percent_areas = sorted_areas[:threshold_index]
         
@@ -393,7 +386,7 @@ class MainWindow(QMainWindow):
         self.draw_cells_found_text(img, total_cells)
         
         # 输出或使用最小10%轮廓面积的中位数
-        print(f"最小10%轮廓面积的中位数: {median_smallest_10_percent_area:.2f} 像素")
+        # print(f"最小10%轮廓面积的中位数: {median_smallest_10_percent_area:.2f} 像素")
 
     def filter_border_contours(self, contours, areas, img):
         """
@@ -446,10 +439,9 @@ class MainWindow(QMainWindow):
             self.display_image(img)
 
             # 打印使用的参数
-            print(f" H_min={self.H_min}, S_min={self.S_min}, V_min={self.V_min}, "
-                f"H_max={self.H_max}, S_max={self.S_max}, V_max={self.V_max}, "
-                f"gauss_shape={self.gauss_shape}, struct_shape={self.struct_shape}, "
-                f"erode_times={self.erode_times}, dilate_times={self.dilate_times}")
+            print(f"H:({self.H_min},{self.H_max}),S:({self.S_min},{self.S_max}),V:({self.V_min},{self.V_max})\n"
+                  f"gauss_shape={self.gauss_shape}, struct_shape={self.struct_shape},\n"
+                  f"erode_times={self.erode_times}, dilate_times={self.dilate_times}")
 
         except Exception as e:
             print(f"An error occurred during image processing: {e}")
