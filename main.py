@@ -307,50 +307,83 @@ class MainWindow(QMainWindow):
         text_x, text_y = position
         cv.putText(img, text, (text_x, text_y), font, font_scale, font_color, font_thickness)
 
-    def draw_cells_found_text(self, img, num_contours):
-        text = f"Cells have been found: {num_contours}"
+    def draw_cells_found_text(self, img, total_cells):
+        text = f"Total cells found: {total_cells}"
         # Calculate the position for the left bottom corner
         text_x = int(img.shape[1] * 0.03)  # 3% from the left side
         text_y = int(img.shape[0] * 0.97)  # 3% from the bottom
         self.draw_text(img, text, (text_x, text_y))
 
-    def find_and_draw_contours(self, mask, img):
 
+    def find_and_draw_contours(self, mask, img):
         contours, _ = cv.findContours(mask, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
         num_contours = len(contours)
         
         # Calculate the area of each contour
         areas = [cv.contourArea(contour) for contour in contours]
         
-        # Sort the areas
-        sorted_areas = sorted(areas)
+        # Filter contours that are close to the image boundaries
+        filtered_contours, filtered_areas = self.filter_border_contours(contours, areas, img)
+        
+        # Sort the filtered areas
+        sorted_areas = sorted(filtered_areas)
         
         # Find the threshold for the smallest 10% of areas
         threshold_index = int(len(sorted_areas) * 0.1)
+
+        # If there are too few contours, set the smallest contour as the reference
+        if threshold_index == 0:
+            threshold_index = 1
+            
+        print(f"threshold_index: {threshold_index}")
         
         # Take the smallest 10% of areas
         smallest_10_percent_areas = sorted_areas[:threshold_index]
         
-        # Calculate the average area of the smallest 10%
-        avg_smallest_10_percent_area = sum(smallest_10_percent_areas) / len(smallest_10_percent_areas) if smallest_10_percent_areas else 0
+        # Calculate the median area of the smallest 10%
+        # Check if the list is empty to avoid index out of range
+        if smallest_10_percent_areas:
+            median_smallest_10_percent_area = smallest_10_percent_areas[len(smallest_10_percent_areas) // 2]
+        else:
+            median_smallest_10_percent_area = 0
         
-        for index, selected_contour in enumerate(contours):
-            cv.drawContours(img, contours, index, (255, 0, 0), thickness=max(1, int(img.shape[0] / 300)))  # Adjust thickness based on image height
+        # Estimate the number of cells for each contour
+        estimated_cell_counts = []
+        for area in filtered_areas:
+            cell_count = 1
+            while area > median_smallest_10_percent_area * (1.8 * cell_count):
+                cell_count += 1
+            estimated_cell_counts.append(cell_count)
+        
+        total_cells = sum(estimated_cell_counts)
+        
+        for index, (selected_contour, cell_count) in enumerate(zip(filtered_contours, estimated_cell_counts)):
+            cv.drawContours(img, filtered_contours, index, (255, 0, 0), thickness=max(1, int(img.shape[0] / 300)))  # Adjust thickness based on image height
             center, radius = cv.minEnclosingCircle(selected_contour)
             center = tuple(map(int, center))
             radius = int(radius)
-            text = str(index + 1)
+            text = f"{cell_count}"
             text_x = center[0] - radius
             text_y = center[1] - radius
             # Adjust text position and size based on the image dimensions
             self.draw_text(img, text, (text_x, text_y), font_color=(0, 0, 255))
 
         # Draw the number of cells found text
-        self.draw_cells_found_text(img, num_contours)
+        self.draw_cells_found_text(img, total_cells)
+        
+        # Print or use the median area as needed
+        print(f"Median area of the smallest 10% of contours: {median_smallest_10_percent_area:.2f} pixels")
 
-        # Print or use the average area as needed
-        print(f"Average area of the smallest 10% of contours: {avg_smallest_10_percent_area:.2f} pixels")
-
+    def filter_border_contours(self, contours, areas, img):
+        filtered_contours = []
+        filtered_areas = []
+        for contour, area in zip(contours, areas):
+            # Check if the contour is close to the borders
+            x, y, w, h = cv.boundingRect(contour)
+            if not (x < 10 or y < 10 or x + w > img.shape[1] - 10 or y + h > img.shape[0] - 10):
+                filtered_contours.append(contour)
+                filtered_areas.append(area)
+        return filtered_contours, filtered_areas
 
     def count(self):
         start_time = time.perf_counter()
