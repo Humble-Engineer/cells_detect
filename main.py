@@ -1,11 +1,10 @@
 '''
 打包发布命令：
-pyinstaller -F main.py
+pyinstaller -F -w --icon=cell.ico main.py
 -w (–windowed / –noconsole): 对于 GUI 应用程序，隐藏控制台窗口。
 --icon=FILE.ico: 指定可执行文件的图标。
 
 '''
-
 import sys
 from pathlib import Path
 
@@ -15,7 +14,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 from PySide6.QtWidgets import QApplication, QMainWindow, QFileDialog
-from PySide6.QtGui import QPixmap, QImage
+from PySide6.QtGui import QPixmap, QImage, QIcon
 from PySide6.QtCore import Qt
 
 from MainWindow_ui import Ui_MainWindow
@@ -450,6 +449,7 @@ class MainWindow(QMainWindow):
 if __name__ == "__main__":
     # 创建 QApplication 实例
     app = QApplication(sys.argv)
+    app.setWindowIcon(QIcon('cell.ico'))
 
     # 创建主窗口并显示
     main_window = MainWindow()
