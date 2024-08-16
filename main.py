@@ -19,6 +19,8 @@ from PySide6.QtCore import Qt
 
 from MainWindow_ui import Ui_MainWindow
 
+import threading
+
 class MainWindow(QMainWindow):
     """
     主窗口类，用于显示图像。
@@ -33,7 +35,6 @@ class MainWindow(QMainWindow):
         self.ui.setupUi(self)  # 使用UI类的实例设置主窗口的界面
         
         self.slot_bind()  # 调用band方法进行进一步的初始化或设置
-        
         self.argu_init()
         
     def slot_bind(self):
@@ -47,22 +48,16 @@ class MainWindow(QMainWindow):
         # self.ui.___SPIN_BOX___.valueChanged.connect(___FUNCTION___)
         # 自定义信号.属性名.connect(___FUNCTION___)
 
-        # 绑定加载图像按钮的点击事件
         self.ui.load_button.clicked.connect(self.load_image)
-        # 绑定保存图像按钮的点击事件
         self.ui.save_button.clicked.connect(self.save_image)
-        # 绑定重置图像按钮的点击事件
         self.ui.reset_button.clicked.connect(self.reset_image)
 
-        # 绑定图像直方图按钮的点击事件
         self.ui.draw_button.clicked.connect(self.darw_hist)
-        # 绑定傅里叶变换按钮的点击事件
         self.ui.fft_button.clicked.connect(self.fast_fft)
 
-        # 绑定默认参数按钮的点击事件
         self.ui.default_button.clicked.connect(self.argu_init)
-        # 绑定计数按钮的点击事件
         self.ui.count_button.clicked.connect(self.count)
+        self.ui.capture_button.clicked.connect(self.toggle_thread)
 
         self.sliders = [self.ui.H_min_Slider, self.ui.H_max_Slider, self.ui.S_min_Slider,
                         self.ui.S_max_Slider, self.ui.V_min_Slider, self.ui.V_max_Slider,
@@ -77,19 +72,22 @@ class MainWindow(QMainWindow):
 
     def argu_init(self):
 
+        self.thread_running = False  # 控制线程是否运行的标志
+        self.worker_thread = None  # 存储线程实例
+
         self.ui.H_min_Slider.setValue(20)
-        self.ui.H_max_Slider.setValue(80)
+        self.ui.H_max_Slider.setValue(100)
         self.ui.S_min_Slider.setValue(30)
         self.ui.S_max_Slider.setValue(255)
         self.ui.V_min_Slider.setValue(30)
         self.ui.V_max_Slider.setValue(255)
 
-        self.ui.Gauss_Slider.setValue(1)
-        self.ui.Struct_Slider.setValue(2)
-        self.ui.Erode_Slider.setValue(2)
-        self.ui.Dilate_Slider.setValue(1)
+        self.ui.Gauss_Slider.setValue(0)
+        self.ui.Struct_Slider.setValue(1)
+        self.ui.Erode_Slider.setValue(0)
+        self.ui.Dilate_Slider.setValue(0)
 
-        self.low_percentage = 0.1
+        self.low_percentage = 0.2
         self.growth_factor = 1.8
         self.border_distance = 10
 
@@ -121,6 +119,29 @@ class MainWindow(QMainWindow):
         self.ui.Struct_label.setText(str(self.struct_shape))
         self.ui.Erode_label.setText(str(self.erode_times))
         self.ui.Dilate_label.setText(str(self.dilate_times))
+
+    def toggle_thread(self):
+        if not self.thread_running:
+            self.start_thread()
+        else:
+            self.stop_thread()
+
+    def start_thread(self):
+        self.thread_running = True
+        self.worker_thread = threading.Thread(target=self.thread_worker, daemon=True)
+        self.worker_thread.start()
+
+    def stop_thread(self):
+        self.thread_running = False
+        if self.worker_thread is not None:
+            self.worker_thread.join()
+        self.worker_thread = None
+
+    def thread_worker(self):
+        print('\n Thread Working', end='', flush=True)
+        while self.thread_running:
+            print('.', end='', flush=True)
+            time.sleep(1)
 
     def load_image(self):
         """
@@ -375,11 +396,12 @@ class MainWindow(QMainWindow):
             center, radius = cv.minEnclosingCircle(selected_contour)
             center = tuple(map(int, center))
             radius = int(radius)
-            text = f"{cell_count}"
-            text_x = center[0] - radius
-            text_y = center[1] - radius
-            # 根据图像尺寸调整文字位置和大小
-            self.draw_text(img, text, (text_x, text_y), font_color=(0, 0, 255))
+            if cell_count > 1:
+                text = f"{cell_count}"
+                text_x = center[0] - radius
+                text_y = center[1] - radius
+                # 根据图像尺寸调整文字位置和大小
+                self.draw_text(img, text, (text_x, text_y), font_color=(0, 0, 255))
 
         # 绘制找到的细胞总数
         self.draw_cells_found_text(img, total_cells)
