@@ -520,7 +520,7 @@ class Ui_MainWindow(object):
         self.Dilate_label.setText(QCoreApplication.translate("MainWindow", u"0", None))
         self.load_button.setText(QCoreApplication.translate("MainWindow", u"\u52a0\u8f7d\u56fe\u50cf", None))
         self.capture_button.setText(QCoreApplication.translate("MainWindow", u"\u91c7\u96c6\u56fe\u50cf\uff08\u5f85\u5f00\u53d1\uff09", None))
-        self.reset_button.setText(QCoreApplication.translate("MainWindow", u"\u6062\u590d\u539f\u56fe", None))
+        self.reset_button.setText(QCoreApplication.translate("MainWindow", u"\u5b9e\u65f6\u91c7\u96c6", None))
         self.save_button.setText(QCoreApplication.translate("MainWindow", u"\u4fdd\u5b58\u56fe\u50cf", None))
         self.draw_button.setText(QCoreApplication.translate("MainWindow", u"\u7070\u5ea6\u76f4\u65b9\u56fe", None))
         self.fft_button.setText(QCoreApplication.translate("MainWindow", u"\u5085\u91cc\u53f6\u9891\u8c31", None))

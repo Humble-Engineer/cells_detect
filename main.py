@@ -36,6 +36,9 @@ class MainWindow(QMainWindow):
         
         self.slot_bind()  # 调用band方法进行进一步的初始化或设置
         self.argu_init()
+
+        # while True:
+        #     self.count()
         
     def slot_bind(self):
         """
@@ -77,15 +80,15 @@ class MainWindow(QMainWindow):
 
         self.ui.H_min_Slider.setValue(20)
         self.ui.H_max_Slider.setValue(100)
-        self.ui.S_min_Slider.setValue(30)
+        self.ui.S_min_Slider.setValue(70)
         self.ui.S_max_Slider.setValue(255)
-        self.ui.V_min_Slider.setValue(30)
+        self.ui.V_min_Slider.setValue(70)
         self.ui.V_max_Slider.setValue(255)
 
-        self.ui.Gauss_Slider.setValue(0)
+        self.ui.Gauss_Slider.setValue(1)
         self.ui.Struct_Slider.setValue(1)
         self.ui.Erode_Slider.setValue(0)
-        self.ui.Dilate_Slider.setValue(0)
+        self.ui.Dilate_Slider.setValue(1)
 
         self.low_percentage = 0.2
         self.growth_factor = 1.8
@@ -138,10 +141,30 @@ class MainWindow(QMainWindow):
         self.worker_thread = None
 
     def thread_worker(self):
-        print('\n Thread Working', end='', flush=True)
+
+        # 首先尝试使用内置摄像头
+        cap = cv.VideoCapture(0)
+
+        # 检查内置摄像头是否成功打开
+        if not cap.isOpened():
+            print("尝试使用内置摄像头失败，正在尝试使用外接摄像头...")
+            # 如果内置摄像头失败，则尝试外接摄像头
+            cap = cv.VideoCapture(1)
+            if not cap.isOpened():
+                print("Error: 无法打开任何摄像头")
+                return
+        else :
+            print("成功打开内置摄像头...")
+        
         while self.thread_running:
-            print('.', end='', flush=True)
-            time.sleep(1)
+
+            ret, self.origin_img = cap.read()
+            if not ret:
+                print("无法获取帧，请检查摄像头是否正常工作。")
+                break
+            else:
+                self.count()
+                pass
 
     def load_image(self):
         """
@@ -431,7 +454,7 @@ class MainWindow(QMainWindow):
     def count(self):
         start_time = time.perf_counter()
 
-        # time.sleep(0.1)
+        time.sleep(0.2)
 
         lower_hsv = np.array([self.H_min, self.S_min, self.V_min])
         upper_hsv = np.array([self.H_max, self.S_max, self.V_max])
@@ -460,9 +483,9 @@ class MainWindow(QMainWindow):
             self.display_image(img)
 
             # 打印使用的参数
-            print(f"H:({self.H_min},{self.H_max}),S:({self.S_min},{self.S_max}),V:({self.V_min},{self.V_max})\n"
-                  f"gauss_shape={self.gauss_shape}, struct_shape={self.struct_shape},\n"
-                  f"erode_times={self.erode_times}, dilate_times={self.dilate_times}")
+            # print(f"H:({self.H_min},{self.H_max}),S:({self.S_min},{self.S_max}),V:({self.V_min},{self.V_max})\n"
+            #       f"gauss_shape={self.gauss_shape}, struct_shape={self.struct_shape},\n"
+            #       f"erode_times={self.erode_times}, dilate_times={self.dilate_times}")
 
         except Exception as e:
             print(f"An error occurred during image processing: {e}")
