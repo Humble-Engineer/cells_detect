@@ -37,8 +37,7 @@ class MainWindow(QMainWindow):
         self.slot_bind()  # 调用band方法进行进一步的初始化或设置
         self.argu_init()
 
-        # while True:
-        #     self.count()
+        self.camera_init() # 摄像头初始化
         
     def slot_bind(self):
         """
@@ -74,9 +73,6 @@ class MainWindow(QMainWindow):
             slider.valueChanged.connect(self.argu_update)
 
     def argu_init(self):
-
-        self.thread_running = False  # 控制线程是否运行的标志
-        self.worker_thread = None  # 存储线程实例
 
         self.ui.H_min_Slider.setValue(20)
         self.ui.H_max_Slider.setValue(100)
@@ -123,6 +119,25 @@ class MainWindow(QMainWindow):
         self.ui.Erode_label.setText(str(self.erode_times))
         self.ui.Dilate_label.setText(str(self.dilate_times))
 
+    def camera_init(self):
+
+        self.thread_running = False  # 控制线程是否运行的标志
+        self.worker_thread = None  # 存储线程实例
+
+        # 首先尝试使用内置摄像头
+        self.cap = cv.VideoCapture(0)
+
+        # 检查内置摄像头是否成功打开
+        if not self.cap.isOpened():
+            print("尝试使用内置摄像头失败，正在尝试使用外接摄像头...")
+            # 如果内置摄像头失败，则尝试外接摄像头
+            self.cap = cv.VideoCapture(1)
+            if not self.cap.isOpened():
+                print("Error: 无法打开任何摄像头")
+                return
+        else :
+            print("成功读取内置摄像头...")
+
     def toggle_thread(self):
         if not self.thread_running:
             self.start_thread()
@@ -131,34 +146,22 @@ class MainWindow(QMainWindow):
 
     def start_thread(self):
         self.thread_running = True
+        self.ui.capture_button.setText("停止捕获")
         self.worker_thread = threading.Thread(target=self.thread_worker, daemon=True)
         self.worker_thread.start()
 
     def stop_thread(self):
         self.thread_running = False
+        self.ui.capture_button.setText("相机捕获")
         if self.worker_thread is not None:
             self.worker_thread.join()
         self.worker_thread = None
 
     def thread_worker(self):
 
-        # 首先尝试使用内置摄像头
-        cap = cv.VideoCapture(0)
-
-        # 检查内置摄像头是否成功打开
-        if not cap.isOpened():
-            print("尝试使用内置摄像头失败，正在尝试使用外接摄像头...")
-            # 如果内置摄像头失败，则尝试外接摄像头
-            cap = cv.VideoCapture(1)
-            if not cap.isOpened():
-                print("Error: 无法打开任何摄像头")
-                return
-        else :
-            print("成功打开内置摄像头...")
-        
         while self.thread_running:
 
-            ret, self.origin_img = cap.read()
+            ret, self.origin_img = self.cap.read()
             if not ret:
                 print("无法获取帧，请检查摄像头是否正常工作。")
                 break
@@ -170,6 +173,8 @@ class MainWindow(QMainWindow):
         """
         加载并显示原始图像。
         """
+        self.stop_thread() # 先关闭实时捕获功能防止图像被覆盖
+
         # 弹出文件对话框，让用户选择图像
         initial_dir = "samples"  # 可以指定初始目录
         file_filter = "Image files (*.png *.jpg *.jpeg *.bmp)"  # 指定支持的文件类型
@@ -242,7 +247,7 @@ class MainWindow(QMainWindow):
             # 设置 QPixmap 到 QLabel 中
             self.ui.result_img.setPixmap(scaled_pixmap)
             # 设置 QLabel 的背景颜色为黑色
-            self.ui.result_img.setStyleSheet("background-color: black;")
+            # self.ui.result_img.setStyleSheet("background-color: black;")
         else:
             # 如果图像加载失败，打印错误信息
             print("Failed to display image!")
@@ -251,6 +256,8 @@ class MainWindow(QMainWindow):
         """
         绘制图像直方图
         """
+        self.stop_thread() # 先关闭实时捕获功能防止图像被覆盖
+
         self.reset_image()
         # 获取图像数据
         img = self.origin_img
@@ -284,6 +291,8 @@ class MainWindow(QMainWindow):
             image (numpy.ndarray): 输入图像，应为二维灰度图像或三维彩色图像（BGR顺序）
             crop_size (tuple, optional): 裁剪区域的大小，格式为 (height, width)，默认为 None（不裁剪）
         """
+        self.stop_thread() # 先关闭实时捕获功能防止图像被覆盖
+
         self.reset_image()
         self.result_img = cv.cvtColor(self.result_img, cv.COLOR_BGR2GRAY)
 
@@ -454,7 +463,7 @@ class MainWindow(QMainWindow):
     def count(self):
         start_time = time.perf_counter()
 
-        time.sleep(0.2)
+        time.sleep(0.02)
 
         lower_hsv = np.array([self.H_min, self.S_min, self.V_min])
         upper_hsv = np.array([self.H_max, self.S_max, self.V_max])

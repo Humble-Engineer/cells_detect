@@ -34,7 +34,7 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>Cell Counter v2.0</string>
+   <string>Cell Counter v3.0</string>
   </property>
   <property name="layoutDirection">
    <enum>Qt::LayoutDirection::LeftToRight</enum>
@@ -678,7 +678,7 @@
          </font>
         </property>
         <property name="text">
-         <string>相机采集</string>
+         <string>相机捕获</string>
         </property>
        </widget>
       </item>

@@ -494,7 +494,7 @@ class Ui_MainWindow(object):
     # setupUi
 
     def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"Cell Counter v2.0", None))
+        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"Cell Counter v3.0", None))
         self.result_img.setText("")
         self.label_3.setText(QCoreApplication.translate("MainWindow", u"\u4e8c\u503c\u5316\u53c2\u6570", None))
         self.label_4.setText(QCoreApplication.translate("MainWindow", u"\u8272\u76f8\u4e0b\u9650\uff1a   ", None))
@@ -519,7 +519,7 @@ class Ui_MainWindow(object):
         self.label_14.setText(QCoreApplication.translate("MainWindow", u"\u81a8\u80c0\u7a0b\u5ea6\uff1a   ", None))
         self.Dilate_label.setText(QCoreApplication.translate("MainWindow", u"0", None))
         self.load_button.setText(QCoreApplication.translate("MainWindow", u"\u52a0\u8f7d\u56fe\u50cf", None))
-        self.capture_button.setText(QCoreApplication.translate("MainWindow", u"\u76f8\u673a\u91c7\u96c6", None))
+        self.capture_button.setText(QCoreApplication.translate("MainWindow", u"\u76f8\u673a\u6355\u83b7", None))
         self.reset_button.setText(QCoreApplication.translate("MainWindow", u"\u6062\u590d\u539f\u56fe", None))
         self.save_button.setText(QCoreApplication.translate("MainWindow", u"\u4fdd\u5b58\u56fe\u50cf", None))
         self.draw_button.setText(QCoreApplication.translate("MainWindow", u"\u7070\u5ea6\u76f4\u65b9\u56fe", None))
