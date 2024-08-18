@@ -678,7 +678,7 @@
          </font>
         </property>
         <property name="text">
-         <string>采集图像（待开发）</string>
+         <string>相机采集</string>
         </property>
        </widget>
       </item>
@@ -699,7 +699,7 @@
          </font>
         </property>
         <property name="text">
-         <string>实时采集</string>
+         <string>恢复原图</string>
         </property>
        </widget>
       </item>
