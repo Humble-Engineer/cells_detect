@@ -41,6 +41,8 @@ class Basic:
         """
         保存当前处理完成后的图像。
         """
+        self.main_window.camera.stop_thread() # 先关闭实时捕获功能防止图像被覆盖
+
         # 获取当前处理完成的图像
         img = self.main_window.result_img
 
@@ -76,6 +78,8 @@ class Basic:
         """
         重置图像，恢复到原始状态。
         """
+        self.main_window.camera.stop_thread() # 先关闭实时捕获功能防止图像被覆盖
+
         self.main_window.result_img = self.main_window.origin_img
         self.display_image(self.main_window.result_img)
 

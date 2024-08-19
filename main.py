@@ -37,11 +37,11 @@ class MainWindow(QMainWindow):
         self.statistics = Statistics(self)
         self.algorithm = Algorithm(self)
 
-        screen = cv2.imread('libs/logo.png')
-        self.basic.display_image(screen)
-        
         self.slot_bind()  # 调用band方法进行进一步的初始化或设置
         self.argu_init()
+
+        screen = cv2.imread('libs/logo.png')
+        self.basic.display_image(screen)
 
     def slot_bind(self):
         """
