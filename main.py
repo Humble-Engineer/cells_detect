@@ -377,51 +377,63 @@ class MainWindow(QMainWindow):
         text_y = int(img.shape[0] * 0.97)  # 距离底边3%
         self.draw_text(img, text, (text_x, text_y))
 
-    def find_and_draw_contours(self, mask, img):
+    def find_and_draw_contours(self, mask, img, filter_cells=False):
         """
         查找轮廓并在图像上绘制。
         
         :param mask: 二值掩膜图像
         :param img: 原始图像
+        :param filter_cells: 是否启用过滤边缘细胞和估计细胞团数量
         """
         contours, _ = cv.findContours(mask, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
         num_contours = len(contours)
         
         # 计算每个轮廓的面积
         areas = [cv.contourArea(contour) for contour in contours]
-        
-        # 过滤靠近图像边界的轮廓
-        filtered_contours, filtered_areas = self.filter_border_contours(contours, areas, img)
+
+        if filter_cells:
+            # 过滤靠近图像边界的轮廓
+            filtered_contours, filtered_areas = self.filter_border_contours(contours, areas, img)
+        else:
+            # 如果不启用过滤，则直接使用原始轮廓和面积
+            filtered_contours = contours
+            filtered_areas = areas
         
         # 排序过滤后的面积
         sorted_areas = sorted(filtered_areas)
         
-        # 找到最小10%面积的阈值索引
-        threshold_index = int(len(sorted_areas) * self.low_percentage)
+        if filter_cells:
+            # 找到最小10%面积的阈值索引
+            threshold_index = int(len(sorted_areas) * self.low_percentage)
 
-        # 如果轮廓太少，设置最小轮廓作为参考
-        if threshold_index == 0:
-            threshold_index = 1
+            # 如果轮廓太少，设置最小轮廓作为参考
+            if threshold_index == 0:
+                threshold_index = 1
 
-        # 取最小10%的面积
-        smallest_10_percent_areas = sorted_areas[:threshold_index]
+            # 取最小10%的面积
+            smallest_10_percent_areas = sorted_areas[:threshold_index]
         
-        # 计算最小10%面积的中位数
-        # 检查列表是否为空以避免越界
-        if smallest_10_percent_areas:
-            median_smallest_10_percent_area = smallest_10_percent_areas[len(smallest_10_percent_areas) // 2]
+            # 计算最小10%面积的中位数
+            # 检查列表是否为空以避免越界
+            if smallest_10_percent_areas:
+                median_smallest_10_percent_area = smallest_10_percent_areas[len(smallest_10_percent_areas) // 2]
+            else:
+                median_smallest_10_percent_area = 0
+        
+        if filter_cells:
+            # 估计每个轮廓代表的细胞数量
+            estimated_cell_counts = []
+            for area in filtered_areas:
+                cell_count = 1
+                while area > median_smallest_10_percent_area * (self.growth_factor * cell_count):
+                    cell_count += 1
+                estimated_cell_counts.append(cell_count)
+            
+            total_cells = sum(estimated_cell_counts)
         else:
-            median_smallest_10_percent_area = 0
-        
-        # 估计每个轮廓代表的细胞数量
-        estimated_cell_counts = []
-        for area in filtered_areas:
-            cell_count = 1
-            while area > median_smallest_10_percent_area * (self.growth_factor * cell_count):
-                cell_count += 1
-            estimated_cell_counts.append(cell_count)
-        
-        total_cells = sum(estimated_cell_counts)
+            # 如果不启用估计，则所有轮廓默认为单个细胞
+            estimated_cell_counts = [1] * len(filtered_contours)
+            total_cells = len(filtered_contours)
         
         for index, (selected_contour, cell_count) in enumerate(zip(filtered_contours, estimated_cell_counts)):
             cv.drawContours(img, filtered_contours, index, (255, 0, 0), thickness=max(1, int(img.shape[0] / 300)))  # 根据图像高度调整轮廓线粗细
@@ -482,10 +494,10 @@ class MainWindow(QMainWindow):
             mask = cv.erode(mask, kernel, iterations=self.erode_times) #腐蚀
             mask = cv.dilate(mask, kernel, iterations=self.dilate_times) #膨胀
 
-            self.find_and_draw_contours(mask, img)
+            self.find_and_draw_contours(mask, img, filter_cells=False)
 
             fps_text, _ = self.calculate_fps_text(start_time)
-            # Adjust FPS text position and size based on the image dimensions
+
             self.draw_text(img, fps_text, (int(img.shape[1]*0.03), int(img.shape[0]*0.06)))
 
             self.result_img = img
