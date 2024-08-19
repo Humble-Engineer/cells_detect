@@ -49,8 +49,8 @@ class Ui_MainWindow(object):
         sizePolicy1.setVerticalStretch(0)
         sizePolicy1.setHeightForWidth(self.result_img.sizePolicy().hasHeightForWidth())
         self.result_img.setSizePolicy(sizePolicy1)
-        self.result_img.setMinimumSize(QSize(889, 500))
-        self.result_img.setMaximumSize(QSize(889, 500))
+        self.result_img.setMinimumSize(QSize(890, 500))
+        self.result_img.setMaximumSize(QSize(890, 500))
         self.result_img.setFrameShape(QFrame.Shape.Panel)
 
         self.gridLayout.addWidget(self.result_img, 0, 0, 2, 1)

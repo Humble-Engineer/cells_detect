@@ -1,11 +1,12 @@
 '''
 打包发布命令：
-pyinstaller -F -w --icon=cell.ico main.py
+pyinstaller -F -w --icon=./libs/cell.ico main.py
 -w (–windowed / –noconsole): 对于 GUI 应用程序，隐藏控制台窗口。
 --icon=FILE.ico: 指定可执行文件的图标。
 
 '''
 import sys
+import cv2
 
 from PySide6.QtWidgets import QApplication, QMainWindow
 from PySide6.QtGui import QIcon
@@ -35,6 +36,9 @@ class MainWindow(QMainWindow):
 
         self.statistics = Statistics(self)
         self.algorithm = Algorithm(self)
+
+        screen = cv2.imread('libs/logo.png')
+        self.basic.display_image(screen)
         
         self.slot_bind()  # 调用band方法进行进一步的初始化或设置
         self.argu_init()
@@ -123,7 +127,7 @@ class MainWindow(QMainWindow):
 if __name__ == "__main__":
     # 创建 QApplication 实例
     app = QApplication(sys.argv)
-    app.setWindowIcon(QIcon('cell.ico'))
+    app.setWindowIcon(QIcon('libs/cell.ico'))
 
     # 创建主窗口并显示
     main_window = MainWindow()
