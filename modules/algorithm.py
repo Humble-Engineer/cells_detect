@@ -64,13 +64,14 @@ class Algorithm:
         # 计算每个轮廓的面积
         areas = [cv.contourArea(contour) for contour in contours]
 
-        if filter_cells:
-            # 过滤靠近图像边界的轮廓
-            filtered_contours, filtered_areas = self.filter_border_contours(contours, areas, img)
-        else:
-            # 如果不启用过滤，则直接使用原始轮廓和面积
-            filtered_contours = contours
-            filtered_areas = areas
+        # if filter_cells:
+        #     # 过滤靠近图像边界的轮廓
+        #     filtered_contours, filtered_areas = self.filter_border_contours(contours, areas, img)
+        
+        # else:
+        # 如果不启用过滤，则直接使用原始轮廓和面积
+        filtered_contours = contours
+        filtered_areas = areas
         
         # 排序过滤后的面积
         sorted_areas = sorted(filtered_areas)
