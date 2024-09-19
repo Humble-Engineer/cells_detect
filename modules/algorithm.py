@@ -47,8 +47,18 @@ class Algorithm:
         text = f"Total cells found: {total_cells}"
         # 计算左下角的位置
         text_x = int(img.shape[1] * 0.03)  # 距离左边3%
-        text_y = int(img.shape[0] * 0.97)  # 距离底边3%
+        text_y = int(img.shape[0] * 0.90)  # 距离底边3%
         self.draw_text(img, text, (text_x, text_y))
+        
+        # 计算细胞浓度
+        cell_concent = round(total_cells / 6, 2)
+        
+        text = f"Concentration: {cell_concent} w/ml"
+        text_x = int(img.shape[1] * 0.03)  # 距离左边3%
+        text_y = int(img.shape[0] * 0.95)  # 距离底边3%
+        self.draw_text(img, text, (text_x, text_y))
+
+        
 
     def find_and_draw_contours(self, mask, img, filter_cells=True):
         """
