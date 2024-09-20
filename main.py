@@ -10,7 +10,6 @@ import cv2
 
 from PySide6.QtWidgets import QApplication, QMainWindow
 from PySide6.QtGui import QIcon
-from PySide6.QtCore import QTimer
 
 from MainWindow_ui import Ui_MainWindow
 
@@ -79,8 +78,8 @@ class MainWindow(QMainWindow):
 
     def argu_init(self):
 
-        self.ui.H_min_Slider.setValue(20)
-        self.ui.H_max_Slider.setValue(100)
+        self.ui.H_min_Slider.setValue(30)
+        self.ui.H_max_Slider.setValue(90)
         self.ui.S_min_Slider.setValue(70)
         self.ui.S_max_Slider.setValue(255)
         self.ui.V_min_Slider.setValue(70)
