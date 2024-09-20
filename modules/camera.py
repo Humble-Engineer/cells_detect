@@ -17,12 +17,13 @@ class Camera:
 
         # 检查内置摄像头是否成功打开
         if not self.cap.isOpened():
-            print("尝试使用内置摄像头失败，正在尝试使用外接摄像头...")
             # 如果内置摄像头失败，则尝试外接摄像头
             self.cap = cv.VideoCapture(1)
             if not self.cap.isOpened():
-                print("Error: 无法打开任何摄像头")
+                print("未检测到任何摄像头!")
                 return
+            else:   
+                print("成功读取外接摄像头...")
         else :
             print("成功读取内置摄像头...")
 

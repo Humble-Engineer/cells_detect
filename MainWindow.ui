@@ -69,8 +69,8 @@
       </property>
       <property name="maximumSize">
        <size>
-        <width>890</width>
-        <height>500</height>
+        <width>16777215</width>
+        <height>16777215</height>
        </size>
       </property>
       <property name="frameShape">
@@ -83,6 +83,12 @@
     </item>
     <item row="0" column="1">
      <layout class="QVBoxLayout" name="verticalLayout">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <property name="sizeConstraint">
+       <enum>QLayout::SizeConstraint::SetFixedSize</enum>
+      </property>
       <item>
        <widget class="QLabel" name="label_3">
         <property name="sizePolicy">
@@ -99,8 +105,8 @@
         </property>
         <property name="maximumSize">
          <size>
-          <width>16777215</width>
-          <height>16777215</height>
+          <width>285</width>
+          <height>25</height>
          </size>
         </property>
         <property name="font">
@@ -122,6 +128,12 @@
        <layout class="QHBoxLayout" name="horizontalLayout">
         <item>
          <widget class="QLabel" name="label_4">
+          <property name="maximumSize">
+           <size>
+            <width>78</width>
+            <height>35</height>
+           </size>
+          </property>
           <property name="text">
            <string>色相下限：   </string>
           </property>
@@ -134,6 +146,12 @@
             <horstretch>0</horstretch>
             <verstretch>30</verstretch>
            </sizepolicy>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>185</width>
+            <height>9999999</height>
+           </size>
           </property>
           <property name="maximum">
            <number>255</number>
@@ -154,6 +172,12 @@
             <verstretch>30</verstretch>
            </sizepolicy>
           </property>
+          <property name="maximumSize">
+           <size>
+            <width>24</width>
+            <height>35</height>
+           </size>
+          </property>
           <property name="midLineWidth">
            <number>4</number>
           </property>
@@ -168,6 +192,12 @@
        <layout class="QHBoxLayout" name="horizontalLayout_2">
         <item>
          <widget class="QLabel" name="label_5">
+          <property name="maximumSize">
+           <size>
+            <width>78</width>
+            <height>35</height>
+           </size>
+          </property>
           <property name="text">
            <string>色相上限：   </string>
           </property>
@@ -180,6 +210,12 @@
             <horstretch>0</horstretch>
             <verstretch>30</verstretch>
            </sizepolicy>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>185</width>
+            <height>9999999</height>
+           </size>
           </property>
           <property name="maximum">
            <number>255</number>
@@ -200,6 +236,12 @@
             <verstretch>30</verstretch>
            </sizepolicy>
           </property>
+          <property name="maximumSize">
+           <size>
+            <width>24</width>
+            <height>35</height>
+           </size>
+          </property>
           <property name="midLineWidth">
            <number>4</number>
           </property>
@@ -214,6 +256,12 @@
        <layout class="QHBoxLayout" name="horizontalLayout_3">
         <item>
          <widget class="QLabel" name="label_6">
+          <property name="maximumSize">
+           <size>
+            <width>78</width>
+            <height>35</height>
+           </size>
+          </property>
           <property name="text">
            <string>饱和度上限：</string>
           </property>
@@ -226,6 +274,12 @@
             <horstretch>0</horstretch>
             <verstretch>30</verstretch>
            </sizepolicy>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>185</width>
+            <height>9999999</height>
+           </size>
           </property>
           <property name="maximum">
            <number>255</number>
@@ -246,6 +300,12 @@
             <verstretch>30</verstretch>
            </sizepolicy>
           </property>
+          <property name="maximumSize">
+           <size>
+            <width>24</width>
+            <height>35</height>
+           </size>
+          </property>
           <property name="midLineWidth">
            <number>4</number>
           </property>
@@ -260,6 +320,12 @@
        <layout class="QHBoxLayout" name="horizontalLayout_4">
         <item>
          <widget class="QLabel" name="label_7">
+          <property name="maximumSize">
+           <size>
+            <width>78</width>
+            <height>35</height>
+           </size>
+          </property>
           <property name="text">
            <string>饱和度下限：</string>
           </property>
@@ -272,6 +338,12 @@
             <horstretch>0</horstretch>
             <verstretch>30</verstretch>
            </sizepolicy>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>185</width>
+            <height>9999999</height>
+           </size>
           </property>
           <property name="maximum">
            <number>255</number>
@@ -292,6 +364,12 @@
             <verstretch>30</verstretch>
            </sizepolicy>
           </property>
+          <property name="maximumSize">
+           <size>
+            <width>24</width>
+            <height>35</height>
+           </size>
+          </property>
           <property name="midLineWidth">
            <number>4</number>
           </property>
@@ -306,6 +384,12 @@
        <layout class="QHBoxLayout" name="horizontalLayout_5">
         <item>
          <widget class="QLabel" name="label_8">
+          <property name="maximumSize">
+           <size>
+            <width>78</width>
+            <height>35</height>
+           </size>
+          </property>
           <property name="text">
            <string>明度上限：   </string>
           </property>
@@ -318,6 +402,12 @@
             <horstretch>0</horstretch>
             <verstretch>30</verstretch>
            </sizepolicy>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>185</width>
+            <height>9999999</height>
+           </size>
           </property>
           <property name="maximum">
            <number>255</number>
@@ -338,6 +428,12 @@
             <verstretch>30</verstretch>
            </sizepolicy>
           </property>
+          <property name="maximumSize">
+           <size>
+            <width>24</width>
+            <height>35</height>
+           </size>
+          </property>
           <property name="midLineWidth">
            <number>4</number>
           </property>
@@ -352,6 +448,12 @@
        <layout class="QHBoxLayout" name="horizontalLayout_6">
         <item>
          <widget class="QLabel" name="label_9">
+          <property name="maximumSize">
+           <size>
+            <width>78</width>
+            <height>35</height>
+           </size>
+          </property>
           <property name="text">
            <string>明度下限：   </string>
           </property>
@@ -364,6 +466,12 @@
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>185</width>
+            <height>9999999</height>
+           </size>
           </property>
           <property name="maximum">
            <number>255</number>
@@ -384,6 +492,12 @@
             <verstretch>30</verstretch>
            </sizepolicy>
           </property>
+          <property name="maximumSize">
+           <size>
+            <width>24</width>
+            <height>35</height>
+           </size>
+          </property>
           <property name="midLineWidth">
            <number>4</number>
           </property>
@@ -398,6 +512,12 @@
     </item>
     <item row="1" column="1">
      <layout class="QVBoxLayout" name="verticalLayout_2">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <property name="sizeConstraint">
+       <enum>QLayout::SizeConstraint::SetFixedSize</enum>
+      </property>
       <item>
        <widget class="QLabel" name="label_10">
         <property name="sizePolicy">
@@ -414,8 +534,8 @@
         </property>
         <property name="maximumSize">
          <size>
-          <width>16777215</width>
-          <height>16777215</height>
+          <width>285</width>
+          <height>25</height>
          </size>
         </property>
         <property name="font">
@@ -437,6 +557,12 @@
        <layout class="QHBoxLayout" name="horizontalLayout_9">
         <item>
          <widget class="QLabel" name="label_11">
+          <property name="maximumSize">
+           <size>
+            <width>78</width>
+            <height>53</height>
+           </size>
+          </property>
           <property name="text">
            <string>高斯核尺寸：</string>
           </property>
@@ -449,6 +575,12 @@
             <horstretch>0</horstretch>
             <verstretch>30</verstretch>
            </sizepolicy>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>185</width>
+            <height>9999999</height>
+           </size>
           </property>
           <property name="minimum">
            <number>0</number>
@@ -475,6 +607,12 @@
             <verstretch>30</verstretch>
            </sizepolicy>
           </property>
+          <property name="maximumSize">
+           <size>
+            <width>24</width>
+            <height>53</height>
+           </size>
+          </property>
           <property name="midLineWidth">
            <number>4</number>
           </property>
@@ -489,6 +627,12 @@
        <layout class="QHBoxLayout" name="horizontalLayout_10">
         <item>
          <widget class="QLabel" name="label_12">
+          <property name="maximumSize">
+           <size>
+            <width>78</width>
+            <height>52</height>
+           </size>
+          </property>
           <property name="text">
            <string>结构核尺寸：</string>
           </property>
@@ -501,6 +645,12 @@
             <horstretch>0</horstretch>
             <verstretch>30</verstretch>
            </sizepolicy>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>185</width>
+            <height>9999999</height>
+           </size>
           </property>
           <property name="maximum">
            <number>4</number>
@@ -521,6 +671,12 @@
             <verstretch>30</verstretch>
            </sizepolicy>
           </property>
+          <property name="maximumSize">
+           <size>
+            <width>24</width>
+            <height>53</height>
+           </size>
+          </property>
           <property name="midLineWidth">
            <number>4</number>
           </property>
@@ -535,6 +691,12 @@
        <layout class="QHBoxLayout" name="horizontalLayout_11">
         <item>
          <widget class="QLabel" name="label_13">
+          <property name="maximumSize">
+           <size>
+            <width>77</width>
+            <height>53</height>
+           </size>
+          </property>
           <property name="text">
            <string>腐蚀程度：   </string>
           </property>
@@ -547,6 +709,12 @@
             <horstretch>0</horstretch>
             <verstretch>30</verstretch>
            </sizepolicy>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>185</width>
+            <height>9999999</height>
+           </size>
           </property>
           <property name="maximum">
            <number>7</number>
@@ -570,6 +738,12 @@
             <verstretch>30</verstretch>
            </sizepolicy>
           </property>
+          <property name="maximumSize">
+           <size>
+            <width>24</width>
+            <height>53</height>
+           </size>
+          </property>
           <property name="midLineWidth">
            <number>4</number>
           </property>
@@ -584,6 +758,12 @@
        <layout class="QHBoxLayout" name="horizontalLayout_12">
         <item>
          <widget class="QLabel" name="label_14">
+          <property name="maximumSize">
+           <size>
+            <width>77</width>
+            <height>53</height>
+           </size>
+          </property>
           <property name="text">
            <string>膨胀程度：   </string>
           </property>
@@ -596,6 +776,12 @@
             <horstretch>0</horstretch>
             <verstretch>30</verstretch>
            </sizepolicy>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>185</width>
+            <height>9999999</height>
+           </size>
           </property>
           <property name="maximum">
            <number>4</number>
@@ -616,6 +802,12 @@
             <verstretch>30</verstretch>
            </sizepolicy>
           </property>
+          <property name="maximumSize">
+           <size>
+            <width>24</width>
+            <height>53</height>
+           </size>
+          </property>
           <property name="midLineWidth">
            <number>4</number>
           </property>
@@ -633,6 +825,12 @@
     </item>
     <item row="2" column="0">
      <layout class="QHBoxLayout" name="horizontalLayout_7">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <property name="sizeConstraint">
+       <enum>QLayout::SizeConstraint::SetDefaultConstraint</enum>
+      </property>
       <item>
        <widget class="QPushButton" name="load_button">
         <property name="enabled">
@@ -643,6 +841,18 @@
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>148</width>
+          <height>124</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>9999999</width>
+          <height>124</height>
+         </size>
         </property>
         <property name="font">
          <font>
@@ -668,6 +878,18 @@
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
+        <property name="minimumSize">
+         <size>
+          <width>148</width>
+          <height>124</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>9999999</width>
+          <height>124</height>
+         </size>
+        </property>
         <property name="font">
          <font>
           <pointsize>8</pointsize>
@@ -690,6 +912,18 @@
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
+        <property name="minimumSize">
+         <size>
+          <width>148</width>
+          <height>124</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>9999999</width>
+          <height>124</height>
+         </size>
+        </property>
         <property name="font">
          <font>
           <pointsize>8</pointsize>
@@ -710,6 +944,18 @@
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>148</width>
+          <height>124</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>9999999</width>
+          <height>124</height>
+         </size>
         </property>
         <property name="font">
          <font>
@@ -732,6 +978,18 @@
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
+        <property name="minimumSize">
+         <size>
+          <width>148</width>
+          <height>124</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>9999999</width>
+          <height>124</height>
+         </size>
+        </property>
         <property name="font">
          <font>
           <pointsize>8</pointsize>
@@ -751,6 +1009,18 @@
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
+        <property name="minimumSize">
+         <size>
+          <width>148</width>
+          <height>124</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>9999999</width>
+          <height>124</height>
+         </size>
+        </property>
         <property name="font">
          <font>
           <pointsize>8</pointsize>
@@ -766,6 +1036,9 @@
     </item>
     <item row="2" column="1">
      <layout class="QHBoxLayout" name="horizontalLayout_8">
+      <property name="sizeConstraint">
+       <enum>QLayout::SizeConstraint::SetDefaultConstraint</enum>
+      </property>
       <item>
        <widget class="QPushButton" name="default_button">
         <property name="sizePolicy">
@@ -773,6 +1046,18 @@
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>139</width>
+          <height>124</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>139</width>
+          <height>124</height>
+         </size>
         </property>
         <property name="font">
          <font>
@@ -794,6 +1079,18 @@
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>139</width>
+          <height>124</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>139</width>
+          <height>124</height>
+         </size>
         </property>
         <property name="font">
          <font>

@@ -10,6 +10,7 @@ import cv2
 
 from PySide6.QtWidgets import QApplication, QMainWindow
 from PySide6.QtGui import QIcon
+from PySide6.QtCore import QTimer
 
 from MainWindow_ui import Ui_MainWindow
 
@@ -91,7 +92,7 @@ class MainWindow(QMainWindow):
         self.ui.Dilate_Slider.setValue(1)
 
         self.low_percentage = 0.2
-        self.growth_factor = 1.8
+        self.growth_factor = 2.0
         self.border_distance = 10
 
         self.argu_update()
