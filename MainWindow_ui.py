@@ -23,14 +23,14 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(1200, 650)
+        MainWindow.resize(1200, 800)
         sizePolicy = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(MainWindow.sizePolicy().hasHeightForWidth())
         MainWindow.setSizePolicy(sizePolicy)
-        MainWindow.setMinimumSize(QSize(1200, 650))
-        MainWindow.setMaximumSize(QSize(16777215, 16777215))
+        MainWindow.setMinimumSize(QSize(1200, 800))
+        MainWindow.setMaximumSize(QSize(1200, 800))
         font = QFont()
         font.setPointSize(10)
         MainWindow.setFont(font)
@@ -42,30 +42,17 @@ class Ui_MainWindow(object):
         self.centralwidget.setObjectName(u"centralwidget")
         self.gridLayout = QGridLayout(self.centralwidget)
         self.gridLayout.setObjectName(u"gridLayout")
-        self.result_img = QLabel(self.centralwidget)
-        self.result_img.setObjectName(u"result_img")
-        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
-        sizePolicy1.setHorizontalStretch(0)
-        sizePolicy1.setVerticalStretch(0)
-        sizePolicy1.setHeightForWidth(self.result_img.sizePolicy().hasHeightForWidth())
-        self.result_img.setSizePolicy(sizePolicy1)
-        self.result_img.setMinimumSize(QSize(890, 500))
-        self.result_img.setMaximumSize(QSize(16777215, 16777215))
-        self.result_img.setFrameShape(QFrame.Shape.Panel)
-
-        self.gridLayout.addWidget(self.result_img, 0, 0, 2, 1)
-
-        self.verticalLayout = QVBoxLayout()
-        self.verticalLayout.setSpacing(0)
-        self.verticalLayout.setObjectName(u"verticalLayout")
-        self.verticalLayout.setSizeConstraint(QLayout.SizeConstraint.SetFixedSize)
+        self.mask_layout = QVBoxLayout()
+        self.mask_layout.setSpacing(0)
+        self.mask_layout.setObjectName(u"mask_layout")
+        self.mask_layout.setSizeConstraint(QLayout.SizeConstraint.SetFixedSize)
         self.label_3 = QLabel(self.centralwidget)
         self.label_3.setObjectName(u"label_3")
-        sizePolicy2 = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
-        sizePolicy2.setHorizontalStretch(0)
-        sizePolicy2.setVerticalStretch(0)
-        sizePolicy2.setHeightForWidth(self.label_3.sizePolicy().hasHeightForWidth())
-        self.label_3.setSizePolicy(sizePolicy2)
+        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+        sizePolicy1.setHorizontalStretch(0)
+        sizePolicy1.setVerticalStretch(0)
+        sizePolicy1.setHeightForWidth(self.label_3.sizePolicy().hasHeightForWidth())
+        self.label_3.setSizePolicy(sizePolicy1)
         self.label_3.setMinimumSize(QSize(0, 0))
         self.label_3.setMaximumSize(QSize(285, 25))
         font1 = QFont()
@@ -75,7 +62,7 @@ class Ui_MainWindow(object):
         self.label_3.setFont(font1)
         self.label_3.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
-        self.verticalLayout.addWidget(self.label_3)
+        self.mask_layout.addWidget(self.label_3)
 
         self.horizontalLayout = QHBoxLayout()
         self.horizontalLayout.setObjectName(u"horizontalLayout")
@@ -87,11 +74,11 @@ class Ui_MainWindow(object):
 
         self.H_min_Slider = QSlider(self.centralwidget)
         self.H_min_Slider.setObjectName(u"H_min_Slider")
-        sizePolicy3 = QSizePolicy(QSizePolicy.Policy.MinimumExpanding, QSizePolicy.Policy.MinimumExpanding)
-        sizePolicy3.setHorizontalStretch(0)
-        sizePolicy3.setVerticalStretch(30)
-        sizePolicy3.setHeightForWidth(self.H_min_Slider.sizePolicy().hasHeightForWidth())
-        self.H_min_Slider.setSizePolicy(sizePolicy3)
+        sizePolicy2 = QSizePolicy(QSizePolicy.Policy.MinimumExpanding, QSizePolicy.Policy.MinimumExpanding)
+        sizePolicy2.setHorizontalStretch(0)
+        sizePolicy2.setVerticalStretch(30)
+        sizePolicy2.setHeightForWidth(self.H_min_Slider.sizePolicy().hasHeightForWidth())
+        self.H_min_Slider.setSizePolicy(sizePolicy2)
         self.H_min_Slider.setMaximumSize(QSize(185, 9999999))
         self.H_min_Slider.setMaximum(255)
         self.H_min_Slider.setValue(0)
@@ -101,18 +88,18 @@ class Ui_MainWindow(object):
 
         self.H_min_label = QLabel(self.centralwidget)
         self.H_min_label.setObjectName(u"H_min_label")
-        sizePolicy4 = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
-        sizePolicy4.setHorizontalStretch(0)
-        sizePolicy4.setVerticalStretch(30)
-        sizePolicy4.setHeightForWidth(self.H_min_label.sizePolicy().hasHeightForWidth())
-        self.H_min_label.setSizePolicy(sizePolicy4)
+        sizePolicy3 = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
+        sizePolicy3.setHorizontalStretch(0)
+        sizePolicy3.setVerticalStretch(30)
+        sizePolicy3.setHeightForWidth(self.H_min_label.sizePolicy().hasHeightForWidth())
+        self.H_min_label.setSizePolicy(sizePolicy3)
         self.H_min_label.setMaximumSize(QSize(24, 35))
         self.H_min_label.setMidLineWidth(4)
 
         self.horizontalLayout.addWidget(self.H_min_label)
 
 
-        self.verticalLayout.addLayout(self.horizontalLayout)
+        self.mask_layout.addLayout(self.horizontalLayout)
 
         self.horizontalLayout_2 = QHBoxLayout()
         self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
@@ -124,8 +111,8 @@ class Ui_MainWindow(object):
 
         self.H_max_Slider = QSlider(self.centralwidget)
         self.H_max_Slider.setObjectName(u"H_max_Slider")
-        sizePolicy3.setHeightForWidth(self.H_max_Slider.sizePolicy().hasHeightForWidth())
-        self.H_max_Slider.setSizePolicy(sizePolicy3)
+        sizePolicy2.setHeightForWidth(self.H_max_Slider.sizePolicy().hasHeightForWidth())
+        self.H_max_Slider.setSizePolicy(sizePolicy2)
         self.H_max_Slider.setMaximumSize(QSize(185, 9999999))
         self.H_max_Slider.setMaximum(255)
         self.H_max_Slider.setValue(0)
@@ -135,15 +122,15 @@ class Ui_MainWindow(object):
 
         self.H_max_label = QLabel(self.centralwidget)
         self.H_max_label.setObjectName(u"H_max_label")
-        sizePolicy4.setHeightForWidth(self.H_max_label.sizePolicy().hasHeightForWidth())
-        self.H_max_label.setSizePolicy(sizePolicy4)
+        sizePolicy3.setHeightForWidth(self.H_max_label.sizePolicy().hasHeightForWidth())
+        self.H_max_label.setSizePolicy(sizePolicy3)
         self.H_max_label.setMaximumSize(QSize(24, 35))
         self.H_max_label.setMidLineWidth(4)
 
         self.horizontalLayout_2.addWidget(self.H_max_label)
 
 
-        self.verticalLayout.addLayout(self.horizontalLayout_2)
+        self.mask_layout.addLayout(self.horizontalLayout_2)
 
         self.horizontalLayout_3 = QHBoxLayout()
         self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
@@ -155,8 +142,8 @@ class Ui_MainWindow(object):
 
         self.S_min_Slider = QSlider(self.centralwidget)
         self.S_min_Slider.setObjectName(u"S_min_Slider")
-        sizePolicy3.setHeightForWidth(self.S_min_Slider.sizePolicy().hasHeightForWidth())
-        self.S_min_Slider.setSizePolicy(sizePolicy3)
+        sizePolicy2.setHeightForWidth(self.S_min_Slider.sizePolicy().hasHeightForWidth())
+        self.S_min_Slider.setSizePolicy(sizePolicy2)
         self.S_min_Slider.setMaximumSize(QSize(185, 9999999))
         self.S_min_Slider.setMaximum(255)
         self.S_min_Slider.setValue(0)
@@ -166,15 +153,15 @@ class Ui_MainWindow(object):
 
         self.S_min_label = QLabel(self.centralwidget)
         self.S_min_label.setObjectName(u"S_min_label")
-        sizePolicy4.setHeightForWidth(self.S_min_label.sizePolicy().hasHeightForWidth())
-        self.S_min_label.setSizePolicy(sizePolicy4)
+        sizePolicy3.setHeightForWidth(self.S_min_label.sizePolicy().hasHeightForWidth())
+        self.S_min_label.setSizePolicy(sizePolicy3)
         self.S_min_label.setMaximumSize(QSize(24, 35))
         self.S_min_label.setMidLineWidth(4)
 
         self.horizontalLayout_3.addWidget(self.S_min_label)
 
 
-        self.verticalLayout.addLayout(self.horizontalLayout_3)
+        self.mask_layout.addLayout(self.horizontalLayout_3)
 
         self.horizontalLayout_4 = QHBoxLayout()
         self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
@@ -186,8 +173,8 @@ class Ui_MainWindow(object):
 
         self.S_max_Slider = QSlider(self.centralwidget)
         self.S_max_Slider.setObjectName(u"S_max_Slider")
-        sizePolicy3.setHeightForWidth(self.S_max_Slider.sizePolicy().hasHeightForWidth())
-        self.S_max_Slider.setSizePolicy(sizePolicy3)
+        sizePolicy2.setHeightForWidth(self.S_max_Slider.sizePolicy().hasHeightForWidth())
+        self.S_max_Slider.setSizePolicy(sizePolicy2)
         self.S_max_Slider.setMaximumSize(QSize(185, 9999999))
         self.S_max_Slider.setMaximum(255)
         self.S_max_Slider.setValue(0)
@@ -197,15 +184,15 @@ class Ui_MainWindow(object):
 
         self.S_max_label = QLabel(self.centralwidget)
         self.S_max_label.setObjectName(u"S_max_label")
-        sizePolicy4.setHeightForWidth(self.S_max_label.sizePolicy().hasHeightForWidth())
-        self.S_max_label.setSizePolicy(sizePolicy4)
+        sizePolicy3.setHeightForWidth(self.S_max_label.sizePolicy().hasHeightForWidth())
+        self.S_max_label.setSizePolicy(sizePolicy3)
         self.S_max_label.setMaximumSize(QSize(24, 35))
         self.S_max_label.setMidLineWidth(4)
 
         self.horizontalLayout_4.addWidget(self.S_max_label)
 
 
-        self.verticalLayout.addLayout(self.horizontalLayout_4)
+        self.mask_layout.addLayout(self.horizontalLayout_4)
 
         self.horizontalLayout_5 = QHBoxLayout()
         self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
@@ -217,8 +204,8 @@ class Ui_MainWindow(object):
 
         self.V_min_Slider = QSlider(self.centralwidget)
         self.V_min_Slider.setObjectName(u"V_min_Slider")
-        sizePolicy3.setHeightForWidth(self.V_min_Slider.sizePolicy().hasHeightForWidth())
-        self.V_min_Slider.setSizePolicy(sizePolicy3)
+        sizePolicy2.setHeightForWidth(self.V_min_Slider.sizePolicy().hasHeightForWidth())
+        self.V_min_Slider.setSizePolicy(sizePolicy2)
         self.V_min_Slider.setMaximumSize(QSize(185, 9999999))
         self.V_min_Slider.setMaximum(255)
         self.V_min_Slider.setValue(0)
@@ -228,15 +215,15 @@ class Ui_MainWindow(object):
 
         self.V_min_label = QLabel(self.centralwidget)
         self.V_min_label.setObjectName(u"V_min_label")
-        sizePolicy4.setHeightForWidth(self.V_min_label.sizePolicy().hasHeightForWidth())
-        self.V_min_label.setSizePolicy(sizePolicy4)
+        sizePolicy3.setHeightForWidth(self.V_min_label.sizePolicy().hasHeightForWidth())
+        self.V_min_label.setSizePolicy(sizePolicy3)
         self.V_min_label.setMaximumSize(QSize(24, 35))
         self.V_min_label.setMidLineWidth(4)
 
         self.horizontalLayout_5.addWidget(self.V_min_label)
 
 
-        self.verticalLayout.addLayout(self.horizontalLayout_5)
+        self.mask_layout.addLayout(self.horizontalLayout_5)
 
         self.horizontalLayout_6 = QHBoxLayout()
         self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
@@ -248,11 +235,11 @@ class Ui_MainWindow(object):
 
         self.V_max_Slider = QSlider(self.centralwidget)
         self.V_max_Slider.setObjectName(u"V_max_Slider")
-        sizePolicy5 = QSizePolicy(QSizePolicy.Policy.MinimumExpanding, QSizePolicy.Policy.MinimumExpanding)
-        sizePolicy5.setHorizontalStretch(0)
-        sizePolicy5.setVerticalStretch(0)
-        sizePolicy5.setHeightForWidth(self.V_max_Slider.sizePolicy().hasHeightForWidth())
-        self.V_max_Slider.setSizePolicy(sizePolicy5)
+        sizePolicy4 = QSizePolicy(QSizePolicy.Policy.MinimumExpanding, QSizePolicy.Policy.MinimumExpanding)
+        sizePolicy4.setHorizontalStretch(0)
+        sizePolicy4.setVerticalStretch(0)
+        sizePolicy4.setHeightForWidth(self.V_max_Slider.sizePolicy().hasHeightForWidth())
+        self.V_max_Slider.setSizePolicy(sizePolicy4)
         self.V_max_Slider.setMaximumSize(QSize(185, 9999999))
         self.V_max_Slider.setMaximum(255)
         self.V_max_Slider.setValue(0)
@@ -262,33 +249,33 @@ class Ui_MainWindow(object):
 
         self.V_max_label = QLabel(self.centralwidget)
         self.V_max_label.setObjectName(u"V_max_label")
-        sizePolicy4.setHeightForWidth(self.V_max_label.sizePolicy().hasHeightForWidth())
-        self.V_max_label.setSizePolicy(sizePolicy4)
+        sizePolicy3.setHeightForWidth(self.V_max_label.sizePolicy().hasHeightForWidth())
+        self.V_max_label.setSizePolicy(sizePolicy3)
         self.V_max_label.setMaximumSize(QSize(24, 35))
         self.V_max_label.setMidLineWidth(4)
 
         self.horizontalLayout_6.addWidget(self.V_max_label)
 
 
-        self.verticalLayout.addLayout(self.horizontalLayout_6)
+        self.mask_layout.addLayout(self.horizontalLayout_6)
 
 
-        self.gridLayout.addLayout(self.verticalLayout, 0, 1, 1, 1)
+        self.gridLayout.addLayout(self.mask_layout, 1, 2, 1, 1)
 
-        self.verticalLayout_2 = QVBoxLayout()
-        self.verticalLayout_2.setSpacing(0)
-        self.verticalLayout_2.setObjectName(u"verticalLayout_2")
-        self.verticalLayout_2.setSizeConstraint(QLayout.SizeConstraint.SetFixedSize)
+        self.blur_layout = QVBoxLayout()
+        self.blur_layout.setSpacing(0)
+        self.blur_layout.setObjectName(u"blur_layout")
+        self.blur_layout.setSizeConstraint(QLayout.SizeConstraint.SetFixedSize)
         self.label_10 = QLabel(self.centralwidget)
         self.label_10.setObjectName(u"label_10")
-        sizePolicy2.setHeightForWidth(self.label_10.sizePolicy().hasHeightForWidth())
-        self.label_10.setSizePolicy(sizePolicy2)
+        sizePolicy1.setHeightForWidth(self.label_10.sizePolicy().hasHeightForWidth())
+        self.label_10.setSizePolicy(sizePolicy1)
         self.label_10.setMinimumSize(QSize(0, 0))
         self.label_10.setMaximumSize(QSize(285, 25))
         self.label_10.setFont(font1)
         self.label_10.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
-        self.verticalLayout_2.addWidget(self.label_10)
+        self.blur_layout.addWidget(self.label_10)
 
         self.horizontalLayout_9 = QHBoxLayout()
         self.horizontalLayout_9.setObjectName(u"horizontalLayout_9")
@@ -300,8 +287,8 @@ class Ui_MainWindow(object):
 
         self.Gauss_Slider = QSlider(self.centralwidget)
         self.Gauss_Slider.setObjectName(u"Gauss_Slider")
-        sizePolicy3.setHeightForWidth(self.Gauss_Slider.sizePolicy().hasHeightForWidth())
-        self.Gauss_Slider.setSizePolicy(sizePolicy3)
+        sizePolicy2.setHeightForWidth(self.Gauss_Slider.sizePolicy().hasHeightForWidth())
+        self.Gauss_Slider.setSizePolicy(sizePolicy2)
         self.Gauss_Slider.setMaximumSize(QSize(185, 9999999))
         self.Gauss_Slider.setMinimum(0)
         self.Gauss_Slider.setMaximum(4)
@@ -313,15 +300,15 @@ class Ui_MainWindow(object):
 
         self.Gauss_label = QLabel(self.centralwidget)
         self.Gauss_label.setObjectName(u"Gauss_label")
-        sizePolicy4.setHeightForWidth(self.Gauss_label.sizePolicy().hasHeightForWidth())
-        self.Gauss_label.setSizePolicy(sizePolicy4)
+        sizePolicy3.setHeightForWidth(self.Gauss_label.sizePolicy().hasHeightForWidth())
+        self.Gauss_label.setSizePolicy(sizePolicy3)
         self.Gauss_label.setMaximumSize(QSize(24, 53))
         self.Gauss_label.setMidLineWidth(4)
 
         self.horizontalLayout_9.addWidget(self.Gauss_label)
 
 
-        self.verticalLayout_2.addLayout(self.horizontalLayout_9)
+        self.blur_layout.addLayout(self.horizontalLayout_9)
 
         self.horizontalLayout_10 = QHBoxLayout()
         self.horizontalLayout_10.setObjectName(u"horizontalLayout_10")
@@ -333,8 +320,8 @@ class Ui_MainWindow(object):
 
         self.Struct_Slider = QSlider(self.centralwidget)
         self.Struct_Slider.setObjectName(u"Struct_Slider")
-        sizePolicy3.setHeightForWidth(self.Struct_Slider.sizePolicy().hasHeightForWidth())
-        self.Struct_Slider.setSizePolicy(sizePolicy3)
+        sizePolicy2.setHeightForWidth(self.Struct_Slider.sizePolicy().hasHeightForWidth())
+        self.Struct_Slider.setSizePolicy(sizePolicy2)
         self.Struct_Slider.setMaximumSize(QSize(185, 9999999))
         self.Struct_Slider.setMaximum(4)
         self.Struct_Slider.setPageStep(1)
@@ -344,15 +331,15 @@ class Ui_MainWindow(object):
 
         self.Struct_label = QLabel(self.centralwidget)
         self.Struct_label.setObjectName(u"Struct_label")
-        sizePolicy4.setHeightForWidth(self.Struct_label.sizePolicy().hasHeightForWidth())
-        self.Struct_label.setSizePolicy(sizePolicy4)
+        sizePolicy3.setHeightForWidth(self.Struct_label.sizePolicy().hasHeightForWidth())
+        self.Struct_label.setSizePolicy(sizePolicy3)
         self.Struct_label.setMaximumSize(QSize(24, 53))
         self.Struct_label.setMidLineWidth(4)
 
         self.horizontalLayout_10.addWidget(self.Struct_label)
 
 
-        self.verticalLayout_2.addLayout(self.horizontalLayout_10)
+        self.blur_layout.addLayout(self.horizontalLayout_10)
 
         self.horizontalLayout_11 = QHBoxLayout()
         self.horizontalLayout_11.setObjectName(u"horizontalLayout_11")
@@ -364,8 +351,8 @@ class Ui_MainWindow(object):
 
         self.Erode_Slider = QSlider(self.centralwidget)
         self.Erode_Slider.setObjectName(u"Erode_Slider")
-        sizePolicy3.setHeightForWidth(self.Erode_Slider.sizePolicy().hasHeightForWidth())
-        self.Erode_Slider.setSizePolicy(sizePolicy3)
+        sizePolicy2.setHeightForWidth(self.Erode_Slider.sizePolicy().hasHeightForWidth())
+        self.Erode_Slider.setSizePolicy(sizePolicy2)
         self.Erode_Slider.setMaximumSize(QSize(185, 9999999))
         self.Erode_Slider.setMaximum(7)
         self.Erode_Slider.setSingleStep(1)
@@ -376,15 +363,15 @@ class Ui_MainWindow(object):
 
         self.Erode_label = QLabel(self.centralwidget)
         self.Erode_label.setObjectName(u"Erode_label")
-        sizePolicy4.setHeightForWidth(self.Erode_label.sizePolicy().hasHeightForWidth())
-        self.Erode_label.setSizePolicy(sizePolicy4)
+        sizePolicy3.setHeightForWidth(self.Erode_label.sizePolicy().hasHeightForWidth())
+        self.Erode_label.setSizePolicy(sizePolicy3)
         self.Erode_label.setMaximumSize(QSize(24, 53))
         self.Erode_label.setMidLineWidth(4)
 
         self.horizontalLayout_11.addWidget(self.Erode_label)
 
 
-        self.verticalLayout_2.addLayout(self.horizontalLayout_11)
+        self.blur_layout.addLayout(self.horizontalLayout_11)
 
         self.horizontalLayout_12 = QHBoxLayout()
         self.horizontalLayout_12.setObjectName(u"horizontalLayout_12")
@@ -396,8 +383,8 @@ class Ui_MainWindow(object):
 
         self.Dilate_Slider = QSlider(self.centralwidget)
         self.Dilate_Slider.setObjectName(u"Dilate_Slider")
-        sizePolicy3.setHeightForWidth(self.Dilate_Slider.sizePolicy().hasHeightForWidth())
-        self.Dilate_Slider.setSizePolicy(sizePolicy3)
+        sizePolicy2.setHeightForWidth(self.Dilate_Slider.sizePolicy().hasHeightForWidth())
+        self.Dilate_Slider.setSizePolicy(sizePolicy2)
         self.Dilate_Slider.setMaximumSize(QSize(185, 9999999))
         self.Dilate_Slider.setMaximum(4)
         self.Dilate_Slider.setPageStep(1)
@@ -407,137 +394,156 @@ class Ui_MainWindow(object):
 
         self.Dilate_label = QLabel(self.centralwidget)
         self.Dilate_label.setObjectName(u"Dilate_label")
-        sizePolicy4.setHeightForWidth(self.Dilate_label.sizePolicy().hasHeightForWidth())
-        self.Dilate_label.setSizePolicy(sizePolicy4)
+        sizePolicy3.setHeightForWidth(self.Dilate_label.sizePolicy().hasHeightForWidth())
+        self.Dilate_label.setSizePolicy(sizePolicy3)
         self.Dilate_label.setMaximumSize(QSize(24, 53))
         self.Dilate_label.setMidLineWidth(4)
 
         self.horizontalLayout_12.addWidget(self.Dilate_label)
 
 
-        self.verticalLayout_2.addLayout(self.horizontalLayout_12)
+        self.blur_layout.addLayout(self.horizontalLayout_12)
 
         self.horizontalLayout_13 = QHBoxLayout()
         self.horizontalLayout_13.setObjectName(u"horizontalLayout_13")
 
-        self.verticalLayout_2.addLayout(self.horizontalLayout_13)
+        self.blur_layout.addLayout(self.horizontalLayout_13)
 
 
-        self.gridLayout.addLayout(self.verticalLayout_2, 1, 1, 1, 1)
+        self.gridLayout.addLayout(self.blur_layout, 2, 2, 1, 1)
 
-        self.horizontalLayout_7 = QHBoxLayout()
-        self.horizontalLayout_7.setSpacing(0)
-        self.horizontalLayout_7.setObjectName(u"horizontalLayout_7")
-        self.horizontalLayout_7.setSizeConstraint(QLayout.SizeConstraint.SetDefaultConstraint)
-        self.load_button = QPushButton(self.centralwidget)
-        self.load_button.setObjectName(u"load_button")
-        self.load_button.setEnabled(True)
-        sizePolicy5.setHeightForWidth(self.load_button.sizePolicy().hasHeightForWidth())
-        self.load_button.setSizePolicy(sizePolicy5)
-        self.load_button.setMinimumSize(QSize(148, 124))
-        self.load_button.setMaximumSize(QSize(9999999, 124))
+        self.count_layout = QHBoxLayout()
+        self.count_layout.setObjectName(u"count_layout")
+        self.count_layout.setSizeConstraint(QLayout.SizeConstraint.SetDefaultConstraint)
+        self.default_button = QPushButton(self.centralwidget)
+        self.default_button.setObjectName(u"default_button")
+        sizePolicy4.setHeightForWidth(self.default_button.sizePolicy().hasHeightForWidth())
+        self.default_button.setSizePolicy(sizePolicy4)
+        self.default_button.setMinimumSize(QSize(0, 0))
+        self.default_button.setMaximumSize(QSize(16777215, 16777215))
         font2 = QFont()
-        font2.setPointSize(8)
+        font2.setPointSize(12)
         font2.setBold(True)
         font2.setItalic(False)
         font2.setUnderline(False)
-        self.load_button.setFont(font2)
+        self.default_button.setFont(font2)
 
-        self.horizontalLayout_7.addWidget(self.load_button)
+        self.count_layout.addWidget(self.default_button)
+
+        self.count_button = QPushButton(self.centralwidget)
+        self.count_button.setObjectName(u"count_button")
+        sizePolicy4.setHeightForWidth(self.count_button.sizePolicy().hasHeightForWidth())
+        self.count_button.setSizePolicy(sizePolicy4)
+        self.count_button.setMinimumSize(QSize(0, 0))
+        self.count_button.setMaximumSize(QSize(16777215, 16777215))
+        self.count_button.setFont(font2)
+
+        self.count_layout.addWidget(self.count_button)
+
+
+        self.gridLayout.addLayout(self.count_layout, 4, 2, 1, 1)
+
+        self.gridLayout_2 = QGridLayout()
+        self.gridLayout_2.setObjectName(u"gridLayout_2")
+        self.gridLayout_2.setSizeConstraint(QLayout.SizeConstraint.SetDefaultConstraint)
+        self.draw_button = QPushButton(self.centralwidget)
+        self.draw_button.setObjectName(u"draw_button")
+        sizePolicy4.setHeightForWidth(self.draw_button.sizePolicy().hasHeightForWidth())
+        self.draw_button.setSizePolicy(sizePolicy4)
+        self.draw_button.setMinimumSize(QSize(90, 50))
+        self.draw_button.setMaximumSize(QSize(9999999, 16777215))
+        font3 = QFont()
+        font3.setPointSize(8)
+        font3.setBold(True)
+        self.draw_button.setFont(font3)
+
+        self.gridLayout_2.addWidget(self.draw_button, 3, 7, 1, 1)
+
+        self.fft_button = QPushButton(self.centralwidget)
+        self.fft_button.setObjectName(u"fft_button")
+        sizePolicy4.setHeightForWidth(self.fft_button.sizePolicy().hasHeightForWidth())
+        self.fft_button.setSizePolicy(sizePolicy4)
+        self.fft_button.setMinimumSize(QSize(90, 50))
+        self.fft_button.setMaximumSize(QSize(9999999, 16777215))
+        self.fft_button.setFont(font3)
+
+        self.gridLayout_2.addWidget(self.fft_button, 1, 7, 1, 1)
+
+        self.load_button = QPushButton(self.centralwidget)
+        self.load_button.setObjectName(u"load_button")
+        self.load_button.setEnabled(True)
+        sizePolicy4.setHeightForWidth(self.load_button.sizePolicy().hasHeightForWidth())
+        self.load_button.setSizePolicy(sizePolicy4)
+        self.load_button.setMinimumSize(QSize(90, 50))
+        self.load_button.setMaximumSize(QSize(9999999, 16777215))
+        font4 = QFont()
+        font4.setPointSize(8)
+        font4.setBold(True)
+        font4.setItalic(False)
+        font4.setUnderline(False)
+        self.load_button.setFont(font4)
+
+        self.gridLayout_2.addWidget(self.load_button, 1, 3, 1, 1)
+
+        self.save_button = QPushButton(self.centralwidget)
+        self.save_button.setObjectName(u"save_button")
+        sizePolicy4.setHeightForWidth(self.save_button.sizePolicy().hasHeightForWidth())
+        self.save_button.setSizePolicy(sizePolicy4)
+        self.save_button.setMinimumSize(QSize(90, 50))
+        self.save_button.setMaximumSize(QSize(9999999, 16777215))
+        self.save_button.setFont(font4)
+
+        self.gridLayout_2.addWidget(self.save_button, 3, 5, 1, 1)
+
+        self.reset_button = QPushButton(self.centralwidget)
+        self.reset_button.setObjectName(u"reset_button")
+        sizePolicy4.setHeightForWidth(self.reset_button.sizePolicy().hasHeightForWidth())
+        self.reset_button.setSizePolicy(sizePolicy4)
+        self.reset_button.setMinimumSize(QSize(90, 50))
+        self.reset_button.setMaximumSize(QSize(9999999, 16777215))
+        self.reset_button.setFont(font4)
+
+        self.gridLayout_2.addWidget(self.reset_button, 1, 5, 1, 1)
 
         self.capture_button = QPushButton(self.centralwidget)
         self.capture_button.setObjectName(u"capture_button")
         self.capture_button.setEnabled(True)
-        sizePolicy5.setHeightForWidth(self.capture_button.sizePolicy().hasHeightForWidth())
-        self.capture_button.setSizePolicy(sizePolicy5)
-        self.capture_button.setMinimumSize(QSize(148, 124))
-        self.capture_button.setMaximumSize(QSize(9999999, 124))
-        font3 = QFont()
-        font3.setPointSize(8)
-        font3.setBold(True)
-        font3.setItalic(False)
-        font3.setUnderline(False)
-        font3.setKerning(True)
-        self.capture_button.setFont(font3)
-
-        self.horizontalLayout_7.addWidget(self.capture_button)
-
-        self.reset_button = QPushButton(self.centralwidget)
-        self.reset_button.setObjectName(u"reset_button")
-        sizePolicy5.setHeightForWidth(self.reset_button.sizePolicy().hasHeightForWidth())
-        self.reset_button.setSizePolicy(sizePolicy5)
-        self.reset_button.setMinimumSize(QSize(148, 124))
-        self.reset_button.setMaximumSize(QSize(9999999, 124))
-        self.reset_button.setFont(font2)
-
-        self.horizontalLayout_7.addWidget(self.reset_button)
-
-        self.save_button = QPushButton(self.centralwidget)
-        self.save_button.setObjectName(u"save_button")
-        sizePolicy5.setHeightForWidth(self.save_button.sizePolicy().hasHeightForWidth())
-        self.save_button.setSizePolicy(sizePolicy5)
-        self.save_button.setMinimumSize(QSize(148, 124))
-        self.save_button.setMaximumSize(QSize(9999999, 124))
-        self.save_button.setFont(font2)
-
-        self.horizontalLayout_7.addWidget(self.save_button)
-
-        self.draw_button = QPushButton(self.centralwidget)
-        self.draw_button.setObjectName(u"draw_button")
-        sizePolicy5.setHeightForWidth(self.draw_button.sizePolicy().hasHeightForWidth())
-        self.draw_button.setSizePolicy(sizePolicy5)
-        self.draw_button.setMinimumSize(QSize(148, 124))
-        self.draw_button.setMaximumSize(QSize(9999999, 124))
-        font4 = QFont()
-        font4.setPointSize(8)
-        font4.setBold(True)
-        self.draw_button.setFont(font4)
-
-        self.horizontalLayout_7.addWidget(self.draw_button)
-
-        self.fft_button = QPushButton(self.centralwidget)
-        self.fft_button.setObjectName(u"fft_button")
-        sizePolicy5.setHeightForWidth(self.fft_button.sizePolicy().hasHeightForWidth())
-        self.fft_button.setSizePolicy(sizePolicy5)
-        self.fft_button.setMinimumSize(QSize(148, 124))
-        self.fft_button.setMaximumSize(QSize(9999999, 124))
-        self.fft_button.setFont(font4)
-
-        self.horizontalLayout_7.addWidget(self.fft_button)
-
-
-        self.gridLayout.addLayout(self.horizontalLayout_7, 2, 0, 1, 1)
-
-        self.horizontalLayout_8 = QHBoxLayout()
-        self.horizontalLayout_8.setObjectName(u"horizontalLayout_8")
-        self.horizontalLayout_8.setSizeConstraint(QLayout.SizeConstraint.SetDefaultConstraint)
-        self.default_button = QPushButton(self.centralwidget)
-        self.default_button.setObjectName(u"default_button")
-        sizePolicy5.setHeightForWidth(self.default_button.sizePolicy().hasHeightForWidth())
-        self.default_button.setSizePolicy(sizePolicy5)
-        self.default_button.setMinimumSize(QSize(139, 124))
-        self.default_button.setMaximumSize(QSize(139, 124))
+        sizePolicy4.setHeightForWidth(self.capture_button.sizePolicy().hasHeightForWidth())
+        self.capture_button.setSizePolicy(sizePolicy4)
+        self.capture_button.setMinimumSize(QSize(90, 50))
+        self.capture_button.setMaximumSize(QSize(9999999, 16777215))
         font5 = QFont()
-        font5.setPointSize(12)
+        font5.setPointSize(8)
         font5.setBold(True)
         font5.setItalic(False)
         font5.setUnderline(False)
-        self.default_button.setFont(font5)
+        font5.setKerning(True)
+        self.capture_button.setFont(font5)
 
-        self.horizontalLayout_8.addWidget(self.default_button)
-
-        self.count_button = QPushButton(self.centralwidget)
-        self.count_button.setObjectName(u"count_button")
-        sizePolicy5.setHeightForWidth(self.count_button.sizePolicy().hasHeightForWidth())
-        self.count_button.setSizePolicy(sizePolicy5)
-        self.count_button.setMinimumSize(QSize(139, 124))
-        self.count_button.setMaximumSize(QSize(139, 124))
-        self.count_button.setFont(font5)
-
-        self.horizontalLayout_8.addWidget(self.count_button)
+        self.gridLayout_2.addWidget(self.capture_button, 3, 3, 1, 1)
 
 
-        self.gridLayout.addLayout(self.horizontalLayout_8, 2, 1, 1, 1)
+        self.gridLayout.addLayout(self.gridLayout_2, 3, 2, 1, 1)
+
+        self.result_img = QLabel(self.centralwidget)
+        self.result_img.setObjectName(u"result_img")
+        sizePolicy5 = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
+        sizePolicy5.setHorizontalStretch(0)
+        sizePolicy5.setVerticalStretch(0)
+        sizePolicy5.setHeightForWidth(self.result_img.sizePolicy().hasHeightForWidth())
+        self.result_img.setSizePolicy(sizePolicy5)
+        self.result_img.setMinimumSize(QSize(890, 500))
+        self.result_img.setMaximumSize(QSize(16777215, 16777215))
+        self.result_img.setFrameShape(QFrame.Shape.Panel)
+
+        self.gridLayout.addWidget(self.result_img, 0, 0, 3, 1)
+
+        self.MatLayout = QVBoxLayout()
+        self.MatLayout.setObjectName(u"MatLayout")
+        self.MatLayout.setSizeConstraint(QLayout.SizeConstraint.SetFixedSize)
+        self.MatLayout.setContentsMargins(-1, 0, 0, 0)
+
+        self.gridLayout.addLayout(self.MatLayout, 3, 0, 2, 1)
 
         MainWindow.setCentralWidget(self.centralwidget)
 
@@ -548,7 +554,6 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"Cell Counter v3.0", None))
-        self.result_img.setText("")
         self.label_3.setText(QCoreApplication.translate("MainWindow", u"\u4e8c\u503c\u5316\u53c2\u6570", None))
         self.label_4.setText(QCoreApplication.translate("MainWindow", u"\u8272\u76f8\u4e0b\u9650\uff1a   ", None))
         self.H_min_label.setText(QCoreApplication.translate("MainWindow", u"0", None))
@@ -571,13 +576,14 @@ class Ui_MainWindow(object):
         self.Erode_label.setText(QCoreApplication.translate("MainWindow", u"0", None))
         self.label_14.setText(QCoreApplication.translate("MainWindow", u"\u81a8\u80c0\u7a0b\u5ea6\uff1a   ", None))
         self.Dilate_label.setText(QCoreApplication.translate("MainWindow", u"0", None))
-        self.load_button.setText(QCoreApplication.translate("MainWindow", u"\u52a0\u8f7d\u56fe\u50cf", None))
-        self.capture_button.setText(QCoreApplication.translate("MainWindow", u"\u76f8\u673a\u6355\u83b7", None))
-        self.reset_button.setText(QCoreApplication.translate("MainWindow", u"\u6062\u590d\u539f\u56fe", None))
-        self.save_button.setText(QCoreApplication.translate("MainWindow", u"\u4fdd\u5b58\u56fe\u50cf", None))
-        self.draw_button.setText(QCoreApplication.translate("MainWindow", u"\u7070\u5ea6\u76f4\u65b9\u56fe", None))
-        self.fft_button.setText(QCoreApplication.translate("MainWindow", u"\u5085\u91cc\u53f6\u9891\u8c31", None))
         self.default_button.setText(QCoreApplication.translate("MainWindow", u"\u9ed8\u8ba4\u53c2\u6570", None))
         self.count_button.setText(QCoreApplication.translate("MainWindow", u"\u5f00\u59cb\u8ba1\u6570", None))
+        self.draw_button.setText(QCoreApplication.translate("MainWindow", u"\u7070\u5ea6\u76f4\u65b9\u56fe", None))
+        self.fft_button.setText(QCoreApplication.translate("MainWindow", u"\u5085\u91cc\u53f6\u9891\u8c31", None))
+        self.load_button.setText(QCoreApplication.translate("MainWindow", u"\u52a0\u8f7d\u56fe\u50cf", None))
+        self.save_button.setText(QCoreApplication.translate("MainWindow", u"\u4fdd\u5b58\u56fe\u50cf", None))
+        self.reset_button.setText(QCoreApplication.translate("MainWindow", u"\u6062\u590d\u539f\u56fe", None))
+        self.capture_button.setText(QCoreApplication.translate("MainWindow", u"\u76f8\u673a\u6355\u83b7", None))
+        self.result_img.setText("")
     # retranslateUi
 
