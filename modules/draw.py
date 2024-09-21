@@ -4,6 +4,8 @@ from matplotlib.figure import Figure
 import numpy as np
 import matplotlib.animation as animation
 
+import time
+
 class MplCanvas(FigureCanvas):
     def __init__(self, main_window):
         """
@@ -55,7 +57,10 @@ class MplCanvas(FigureCanvas):
             cache_frame_data=False
         )
 
-    
+        # 添加一些数据点
+        for i in range(10):
+            self.add_data(np.random.randint(0, 501))
+
     def init_plot(self):
         """
         初始化绘图函数，设置初始状态。
@@ -67,16 +72,6 @@ class MplCanvas(FigureCanvas):
         """
         更新绘图函数，每秒更新一次。
         """
-        # 生成新的数据点
-        if self.main_window.x_data:  # 如果 self.x_data 不为空
-            x_new = self.main_window.x_data[-1] + 1  # 取最后一个元素加 1
-        else:
-            x_new = 0  # 如果 self.x_data 为空，初始化为 0
-        y_new = np.random.randint(0, 501)
-
-        # 更新数据列表
-        self.main_window.x_data.append(x_new)
-        self.main_window.y_data.append(y_new)
 
         if len(self.main_window.x_data) > 20:
             self.main_window.x_data.pop(0)
@@ -93,3 +88,17 @@ class MplCanvas(FigureCanvas):
 
         return self.line,
 
+    def add_data(self,y):
+        """
+        添加数据到绘图。
+        """
+        # 生成新的数据点
+        if self.main_window.x_data:  # 如果 self.x_data 不为空
+            x_new = self.main_window.x_data[-1] + 1  # 取最后一个元素加 1
+        else:
+            x_new = 0  # 如果 self.x_data 为空，初始化为 0
+        y_new = y
+
+        # 更新数据列表
+        self.main_window.x_data.append(x_new)
+        self.main_window.y_data.append(y_new)

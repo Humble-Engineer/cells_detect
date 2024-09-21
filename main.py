@@ -20,6 +20,21 @@ from modules.algorithm import Algorithm
 from modules.draw import MplCanvas
 
 
+# import numpy as np
+# from PySide6.QtCore import QTimer, Signal, QObject, QThread
+# # 工作线程类，用于生成数据
+# class Worker(QObject):
+#     data_signal = Signal(int)  # 定义一个信号，传递整型数据
+
+#     def run(self):
+#         while True:
+#             new_y = np.random.randint(0, 501)
+#             self.data_signal.emit(new_y)  # 发送新数据
+#             # 模拟数据生成间隔
+#             QThread.msleep(100)
+            
+
+
 class MainWindow(QMainWindow):
     """
     主窗口类，用于显示图像。
