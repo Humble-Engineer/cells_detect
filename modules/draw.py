@@ -57,9 +57,9 @@ class MplCanvas(FigureCanvas):
             cache_frame_data=False
         )
 
-        # 添加一些数据点
-        for i in range(10):
-            self.add_data(np.random.randint(0, 501))
+        # # 添加一些数据点
+        # for i in range(10):
+        #     self.add_data(np.random.randint(0, 501))
 
     def init_plot(self):
         """
@@ -74,14 +74,12 @@ class MplCanvas(FigureCanvas):
         """
 
         if len(self.main_window.x_data) > 20:
+            
             self.main_window.x_data.pop(0)
             self.main_window.y_data.pop(0)
 
             self.main_window.mat.axes.set_xlim(self.main_window.x_data[0], self.main_window.x_data[-1] + 1)  # 设置x轴范围
             self.main_window.mat.axes.set_xticks(list(range(self.main_window.x_data[0], self.main_window.x_data[-1] + 2)))  # 设置x轴刻度
-            self.main_window.mat.figure.canvas.draw()  # 强制更新图形
-            
-        # print(self.x_data, self.y_data)
 
         # 更新图形
         self.line.set_data(self.main_window.x_data, self.main_window.y_data)

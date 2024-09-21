@@ -136,7 +136,9 @@ class Algorithm:
         
         # 输出或使用最小10%轮廓面积的中位数
         # print(f"最小10%轮廓面积的中位数: {median_smallest_10_percent_area:.2f} 像素")
-
+        
+        return total_cells
+    
     def filter_border_contours(self, contours, areas, img):
         """
         过滤靠近图像边界的轮廓。
@@ -178,7 +180,7 @@ class Algorithm:
             mask = cv.erode(mask, kernel, iterations=self.main_window.erode_times)
             mask = cv.dilate(mask, kernel, iterations=self.main_window.dilate_times)
 
-            self.find_and_draw_contours(mask, img, filter_cells=True) # 启用细胞团检测
+            total_cells = self.find_and_draw_contours(mask, img, filter_cells=True) # 启用细胞团检测
 
             fps_text, _ = self.calculate_fps_text(start_time)
 
@@ -186,6 +188,8 @@ class Algorithm:
 
             self.main_window.result_img = img
             self.main_window.basic.display_image(img)
+
+            self.main_window.mat.add_data(total_cells)
 
             # 打印使用的参数
             # print(f"H:({self.H_min},{self.H_max}),S:({self.S_min},{self.S_max}),V:({self.V_min},{self.V_max})\n"

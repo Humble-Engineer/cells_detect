@@ -12,20 +12,20 @@ class Camera:
         self.thread_running = False  # 控制线程是否运行的标志
         self.worker_thread = None  # 存储线程实例
 
-        # 首先尝试使用内置摄像头
-        self.cap = cv.VideoCapture(0)
+        # # 首先尝试使用内置摄像头
+        # self.cap = cv.VideoCapture(0)
 
-        # 检查内置摄像头是否成功打开
-        if not self.cap.isOpened():
-            # 如果内置摄像头失败，则尝试外接摄像头
-            self.cap = cv.VideoCapture(1)
-            if not self.cap.isOpened():
-                print("未检测到任何摄像头!")
-                return
-            else:   
-                print("成功读取外接摄像头...")
-        else :
-            print("成功读取内置摄像头...")
+        # # 检查内置摄像头是否成功打开
+        # if not self.cap.isOpened():
+        #     # 如果内置摄像头失败，则尝试外接摄像头
+        #     self.cap = cv.VideoCapture(1)
+        #     if not self.cap.isOpened():
+        #         print("未检测到任何摄像头!")
+        #         return
+        #     else:   
+        #         print("成功读取外接摄像头...")
+        # else :
+        #     print("成功读取内置摄像头...")
 
     def toggle_thread(self):
         if not self.thread_running:
