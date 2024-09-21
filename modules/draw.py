@@ -52,14 +52,10 @@ class MplCanvas(FigureCanvas):
             self.main_window.mat.figure,
             self.update_plot,
             init_func=self.init_plot,
-            interval=30,
+            interval=200,
             blit=True,
             cache_frame_data=False
         )
-
-        # # 添加一些数据点
-        # for i in range(10):
-        #     self.add_data(np.random.randint(0, 501))
 
     def init_plot(self):
         """
@@ -75,8 +71,10 @@ class MplCanvas(FigureCanvas):
 
         # 更新数据列表
         if len(self.main_window.x_data) > 20:
-            self.main_window.x_data.pop(0)
-            self.main_window.y_data.pop(0)
+
+            while len(self.main_window.x_data) > 20:
+                self.main_window.x_data.pop(0)
+                self.main_window.y_data.pop(0)
 
             # 更新 x 轴范围和刻度
             self.main_window.mat.axes.set_xlim(self.main_window.x_data[0], self.main_window.x_data[-1] + 1)

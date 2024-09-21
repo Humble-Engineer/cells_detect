@@ -191,11 +191,6 @@ class Algorithm:
 
             self.main_window.mat.add_data(total_cells)
 
-            # 打印使用的参数
-            # print(f"H:({self.H_min},{self.H_max}),S:({self.S_min},{self.S_max}),V:({self.V_min},{self.V_max})\n"
-            #       f"gauss_shape={self.gauss_shape}, struct_shape={self.struct_shape},\n"
-            #       f"erode_times={self.erode_times}, dilate_times={self.dilate_times}")
-
         except Exception as e:
             print(f"An error occurred during image processing: {e}")
 
