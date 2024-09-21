@@ -40,19 +40,19 @@ class MplCanvas(FigureCanvas):
 
         # 基于数据，绘制图形
         self.line, = self.main_window.mat.axes.plot([], [], animated=True)
-        self.main_window.mat.axes.set_title('Rolling Random Data')
+        self.main_window.mat.axes.set_title('Historical measurement results')
         self.main_window.mat.axes.set_xlim(0, 19)  # 设置x轴范围
         self.main_window.mat.axes.set_xticks(list(range(1, 21)))  # 设置x轴刻度
         # self.main_window.mat.axes.set_xticks([])    # 不显示x轴刻度
         self.main_window.mat.axes.set_ylim(0, 500)  # 设置y轴范围
-        self.main_window.mat.axes.axhline(y=300, color='r', linestyle='--')  # 在 y=50 处画一条红色虚线
+        self.main_window.mat.axes.axhline(y=300, color='b', linestyle='--')  # 在 y=50 处画一条红色虚线
 
         # 创建动画
         self.ani = animation.FuncAnimation(
             self.main_window.mat.figure,
             self.update_plot,
             init_func=self.init_plot,
-            interval=100,
+            interval=30,
             blit=True,
             cache_frame_data=False
         )
@@ -73,16 +73,32 @@ class MplCanvas(FigureCanvas):
         更新绘图函数，每秒更新一次。
         """
 
+        # 更新数据列表
         if len(self.main_window.x_data) > 20:
-            
             self.main_window.x_data.pop(0)
             self.main_window.y_data.pop(0)
 
-            self.main_window.mat.axes.set_xlim(self.main_window.x_data[0], self.main_window.x_data[-1] + 1)  # 设置x轴范围
-            self.main_window.mat.axes.set_xticks(list(range(self.main_window.x_data[0], self.main_window.x_data[-1] + 2)))  # 设置x轴刻度
+            # 更新 x 轴范围和刻度
+            self.main_window.mat.axes.set_xlim(self.main_window.x_data[0], self.main_window.x_data[-1] + 1)
+            self.main_window.mat.axes.set_xticks(list(range(self.main_window.x_data[0], self.main_window.x_data[-1] + 2)))
+
+        # 清除之前的注释
+        texts_to_remove = self.main_window.mat.axes.texts[:]
+        for text in texts_to_remove:
+            text.remove()
 
         # 更新图形
         self.line.set_data(self.main_window.x_data, self.main_window.y_data)
+
+        # 添加注释
+        for i, (x, y) in enumerate(zip(self.main_window.x_data, self.main_window.y_data)):
+            self.main_window.mat.axes.text(x, y + 5, f'{y:.0f}', ha='center')
+
+        # 添加红色标记点
+        self.main_window.mat.axes.scatter(self.main_window.x_data, self.main_window.y_data, color='red', s=15)
+
+        # 强制更新图形
+        self.main_window.mat.figure.canvas.draw()
 
         return self.line,
 
