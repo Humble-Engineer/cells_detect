@@ -1,10 +1,12 @@
 
 from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
-import numpy as np
+
 import matplotlib.animation as animation
 
+import threading
 import time
+
 
 class MplCanvas(FigureCanvas):
     def __init__(self, main_window):
@@ -52,10 +54,13 @@ class MplCanvas(FigureCanvas):
             self.main_window.mat.figure,
             self.update_plot,
             init_func=self.init_plot,
-            interval=200,
+            interval=1000,
             blit=True,
             cache_frame_data=False
         )
+
+        # self.init_plot()
+        # self.start_thread()
 
     def init_plot(self):
         """
@@ -85,9 +90,6 @@ class MplCanvas(FigureCanvas):
         for text in texts_to_remove:
             text.remove()
 
-        # 更新图形
-        self.line.set_data(self.main_window.x_data, self.main_window.y_data)
-
         # 添加注释
         for i, (x, y) in enumerate(zip(self.main_window.x_data, self.main_window.y_data)):
             self.main_window.mat.axes.text(x, y + 5, f'{y:.0f}', ha='center')
@@ -114,3 +116,19 @@ class MplCanvas(FigureCanvas):
         # 更新数据列表
         self.main_window.x_data.append(x_new)
         self.main_window.y_data.append(y_new)
+
+    def start_thread(self):
+        self.thread_running = True
+        self.worker_thread = threading.Thread(target=self.thread_worker, daemon=True)
+        self.worker_thread.start()
+
+    def stop_thread(self):
+        self.thread_running = False
+        if self.worker_thread is not None:
+            self.worker_thread.join()
+        self.worker_thread = None
+
+    def thread_worker(self):
+        while self.thread_running:
+            self.update_plot(self.main_window.mat.figure)
+            time.sleep(1)

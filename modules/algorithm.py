@@ -190,6 +190,7 @@ class Algorithm:
             self.main_window.basic.display_image(img)
 
             self.main_window.mat.add_data(total_cells)
+            # self.main_window.mat.update_plot(self.main_window.mat.figure)
 
         except Exception as e:
             print(f"An error occurred during image processing: {e}")
