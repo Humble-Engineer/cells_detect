@@ -43,11 +43,13 @@ class MplCanvas(FigureCanvas):
         # 基于数据，绘制图形
         self.line, = self.main_window.mat.axes.plot([], [], animated=True)
         self.main_window.mat.axes.set_title('Historical measurement results')
-        self.main_window.mat.axes.set_xlim(0, 19)  # 设置x轴范围
-        self.main_window.mat.axes.set_xticks(list(range(1, 21)))  # 设置x轴刻度
+        self.main_window.mat.axes.set_xlim(0, 29)  # 设置x轴范围
+        self.main_window.mat.axes.set_xticks(list(range(1, 31)))  # 设置x轴刻度
+        self.main_window.mat.axes.tick_params(axis='x', labelsize=6)  # 调整x轴标签字体大小
         # self.main_window.mat.axes.set_xticks([])    # 不显示x轴刻度
-        self.main_window.mat.axes.set_ylim(0, 500)  # 设置y轴范围
-        self.main_window.mat.axes.axhline(y=300, color='b', linestyle='--')  # 在 y=50 处画一条红色虚线
+        self.main_window.mat.axes.set_ylim(0, 400)  # 设置y轴范围
+        self.main_window.mat.axes.tick_params(axis='y', labelsize=6)  # 调整y轴标签字体大小
+        self.main_window.mat.axes.axhline(y=300, color='r', linestyle='--')  # 在 y=50 处画一条红色虚线
 
         # 创建动画
         self.ani = animation.FuncAnimation(
@@ -75,9 +77,9 @@ class MplCanvas(FigureCanvas):
         """
 
         # 更新数据列表
-        if len(self.main_window.x_data) > 20:
+        if len(self.main_window.x_data) > 30:
 
-            while len(self.main_window.x_data) > 20:
+            while len(self.main_window.x_data) > 30:
                 self.main_window.x_data.pop(0)
                 self.main_window.y_data.pop(0)
 
@@ -90,9 +92,12 @@ class MplCanvas(FigureCanvas):
         for text in texts_to_remove:
             text.remove()
 
+        # 更新图形
+        self.line.set_data(self.main_window.x_data, self.main_window.y_data)
+
         # 添加注释
         for i, (x, y) in enumerate(zip(self.main_window.x_data, self.main_window.y_data)):
-            self.main_window.mat.axes.text(x, y + 5, f'{y:.0f}', ha='center')
+            self.main_window.mat.axes.text(x, y + 5, f'{y:.0f}', ha='center', fontsize=8)
 
         # 添加红色标记点
         self.main_window.mat.axes.scatter(self.main_window.x_data, self.main_window.y_data, color='red', s=15)
