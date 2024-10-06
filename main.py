@@ -19,7 +19,6 @@ from modules.statistics import Statistics
 from modules.algorithm import Algorithm
 from modules.draw import MplCanvas
 
-
 class MainWindow(QMainWindow):
     """
     主窗口类，用于显示图像。
@@ -95,7 +94,7 @@ class MainWindow(QMainWindow):
         self.ui.Erode_Slider.setValue(0)
         self.ui.Dilate_Slider.setValue(1)
 
-        self.low_percentage = 0.3
+        self.low_percentage = 0.4
         self.growth_factor = 1.8
         self.border_distance = 10
 
