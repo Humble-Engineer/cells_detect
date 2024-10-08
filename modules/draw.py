@@ -1,25 +1,14 @@
-
 from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
-
 import matplotlib.animation as animation
-
 import threading
 import time
-
 
 class MplCanvas(FigureCanvas):
     def __init__(self, main_window):
         """
         初始化函数，创建一个Matplotlib画布。
-
-        参数:
-        - parent: 父容器，用于将画布嵌入到Qt应用程序中。
-        - width: 画布宽度（英寸）。
-        - height: 画布高度（英寸）。
-        - dpi: 每英寸点数，决定了画布的分辨率。
         """
-
         self.main_window = main_window
         main_window.mat = self
         
@@ -27,8 +16,7 @@ class MplCanvas(FigureCanvas):
         self.axes = fig.add_subplot(111)
         super(MplCanvas, self).__init__(fig)
 
-    
-        # 在UI文件中指定的位置添加画布（MatLayout为需要取代的布局名称）
+        # 在UI文件中指定的位置添加画布
         self.main_window.ui_layout = self.main_window.ui.MatLayout
 
         if self.main_window.ui_layout:
@@ -46,7 +34,6 @@ class MplCanvas(FigureCanvas):
         self.main_window.mat.axes.set_xlim(0, 29)  # 设置x轴范围
         self.main_window.mat.axes.set_xticks(list(range(1, 31)))  # 设置x轴刻度
         self.main_window.mat.axes.tick_params(axis='x', labelsize=6)  # 调整x轴标签字体大小
-        # self.main_window.mat.axes.set_xticks([])    # 不显示x轴刻度
         self.main_window.mat.axes.set_ylim(0, 400)  # 设置y轴范围
         self.main_window.mat.axes.tick_params(axis='y', labelsize=6)  # 调整y轴标签字体大小
         self.main_window.mat.axes.axhline(y=300, color='r', linestyle='--')  # 在 y=50 处画一条红色虚线
@@ -61,9 +48,6 @@ class MplCanvas(FigureCanvas):
             cache_frame_data=False
         )
 
-        # self.init_plot()
-        # self.start_thread()
-
     def init_plot(self):
         """
         初始化绘图函数，设置初始状态。
@@ -75,10 +59,8 @@ class MplCanvas(FigureCanvas):
         """
         更新绘图函数，每秒更新一次。
         """
-
         # 更新数据列表
         if len(self.main_window.x_data) > 30:
-
             while len(self.main_window.x_data) > 30:
                 self.main_window.x_data.pop(0)
                 self.main_window.y_data.pop(0)
@@ -107,7 +89,7 @@ class MplCanvas(FigureCanvas):
 
         return self.line,
 
-    def add_data(self,y):
+    def add_data(self, y):
         """
         添加数据到绘图。
         """
