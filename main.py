@@ -3,8 +3,8 @@
 pyinstaller -F -w --icon=./libs/cell.ico main.py
 -w (–windowed / –noconsole): 对于 GUI 应用程序，隐藏控制台窗口。
 --icon=FILE.ico: 指定可执行文件的图标。
-
 '''
+
 import sys
 import cv2
 
@@ -18,6 +18,8 @@ from modules.camera import Camera
 from modules.statistics import Statistics
 from modules.algorithm import Algorithm
 from modules.draw import MplCanvas
+from modules.record import DataHandler
+
 
 class MainWindow(QMainWindow):
     """
@@ -39,6 +41,8 @@ class MainWindow(QMainWindow):
         self.algorithm = Algorithm(self)    # 图像处理相关函数
 
         self.mat = MplCanvas(self)  # 创建一个Matplotlib画布
+        
+        self.handler = DataHandler(self) # 数据存储功能
 
         self.slot_bind()  # 调用band方法进行进一步的初始化或设置
         self.argu_init()  # 设置默认参数

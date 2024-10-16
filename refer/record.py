@@ -33,7 +33,9 @@ def write_to_file(filename, content, mode='w'):
     
     print(f"文件已创建并写入内容：{file_path}")
 
-# 调用函数，指定文件名基础部分和内容
-file_name = generate_filename('data')
+if __name__ == '__main__':
 
-write_to_file(file_name, 'hello world!\n', mode='a')
+    # 调用函数，指定文件名基础部分和内容
+    file_name = generate_filename('data')
+
+    write_to_file(file_name, 'hello world!\n', mode='a')
