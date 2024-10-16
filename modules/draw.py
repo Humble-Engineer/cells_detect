@@ -34,9 +34,9 @@ class MplCanvas(FigureCanvas):
         self.main_window.mat.axes.set_xlim(0, 29)  # 设置x轴范围
         self.main_window.mat.axes.set_xticks(list(range(1, 31)))  # 设置x轴刻度
         self.main_window.mat.axes.tick_params(axis='x', labelsize=6)  # 调整x轴标签字体大小
-        self.main_window.mat.axes.set_ylim(0, 400)  # 设置y轴范围
+        self.main_window.mat.axes.set_ylim(0, 600)  # 设置y轴范围
         self.main_window.mat.axes.tick_params(axis='y', labelsize=6)  # 调整y轴标签字体大小
-        self.main_window.mat.axes.axhline(y=300, color='r', linestyle='--')  # 在 y=50 处画一条红色虚线
+        self.main_window.mat.axes.axhline(y=500, color='r', linestyle='--')  # 在 y=50 处画一条红色虚线
 
         # 创建动画
         self.ani = animation.FuncAnimation(
