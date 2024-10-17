@@ -47,7 +47,7 @@ class MainWindow(QMainWindow):
         self.slot_bind()  # 调用band方法进行进一步的初始化或设置
         self.argu_init()  # 设置默认参数
 
-        screen = cv2.imread('libs/logo.png')
+        screen = cv2.imread('libs/logo3.png')
         self.basic.display_image(screen)
 
 
