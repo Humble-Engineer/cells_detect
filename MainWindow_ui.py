@@ -15,9 +15,10 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QFrame, QGridLayout, QHBoxLayout,
-    QLabel, QLayout, QMainWindow, QPushButton,
-    QSizePolicy, QSlider, QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QApplication, QCheckBox, QFrame, QGridLayout,
+    QHBoxLayout, QLabel, QLayout, QMainWindow,
+    QPushButton, QSizePolicy, QSlider, QSpacerItem,
+    QVBoxLayout, QWidget)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -42,6 +43,13 @@ class Ui_MainWindow(object):
         self.centralwidget.setObjectName(u"centralwidget")
         self.gridLayout = QGridLayout(self.centralwidget)
         self.gridLayout.setObjectName(u"gridLayout")
+        self.MatLayout = QVBoxLayout()
+        self.MatLayout.setObjectName(u"MatLayout")
+        self.MatLayout.setSizeConstraint(QLayout.SizeConstraint.SetFixedSize)
+        self.MatLayout.setContentsMargins(-1, 0, 0, 0)
+
+        self.gridLayout.addLayout(self.MatLayout, 3, 0, 3, 1)
+
         self.mask_layout = QVBoxLayout()
         self.mask_layout.setSpacing(0)
         self.mask_layout.setObjectName(u"mask_layout")
@@ -260,7 +268,7 @@ class Ui_MainWindow(object):
         self.mask_layout.addLayout(self.horizontalLayout_6)
 
 
-        self.gridLayout.addLayout(self.mask_layout, 1, 2, 1, 1)
+        self.gridLayout.addLayout(self.mask_layout, 0, 1, 1, 1)
 
         self.blur_layout = QVBoxLayout()
         self.blur_layout.setSpacing(0)
@@ -410,80 +418,23 @@ class Ui_MainWindow(object):
         self.blur_layout.addLayout(self.horizontalLayout_13)
 
 
-        self.gridLayout.addLayout(self.blur_layout, 2, 2, 1, 1)
-
-        self.count_layout = QHBoxLayout()
-        self.count_layout.setObjectName(u"count_layout")
-        self.count_layout.setSizeConstraint(QLayout.SizeConstraint.SetDefaultConstraint)
-        self.default_button = QPushButton(self.centralwidget)
-        self.default_button.setObjectName(u"default_button")
-        sizePolicy4.setHeightForWidth(self.default_button.sizePolicy().hasHeightForWidth())
-        self.default_button.setSizePolicy(sizePolicy4)
-        self.default_button.setMinimumSize(QSize(0, 0))
-        self.default_button.setMaximumSize(QSize(16777215, 16777215))
-        font2 = QFont()
-        font2.setPointSize(12)
-        font2.setBold(True)
-        font2.setItalic(False)
-        font2.setUnderline(False)
-        self.default_button.setFont(font2)
-
-        self.count_layout.addWidget(self.default_button)
-
-        self.count_button = QPushButton(self.centralwidget)
-        self.count_button.setObjectName(u"count_button")
-        sizePolicy4.setHeightForWidth(self.count_button.sizePolicy().hasHeightForWidth())
-        self.count_button.setSizePolicy(sizePolicy4)
-        self.count_button.setMinimumSize(QSize(0, 0))
-        self.count_button.setMaximumSize(QSize(16777215, 16777215))
-        self.count_button.setFont(font2)
-
-        self.count_layout.addWidget(self.count_button)
-
-
-        self.gridLayout.addLayout(self.count_layout, 4, 2, 1, 1)
+        self.gridLayout.addLayout(self.blur_layout, 1, 1, 1, 1)
 
         self.gridLayout_2 = QGridLayout()
         self.gridLayout_2.setObjectName(u"gridLayout_2")
         self.gridLayout_2.setSizeConstraint(QLayout.SizeConstraint.SetDefaultConstraint)
-        self.draw_button = QPushButton(self.centralwidget)
-        self.draw_button.setObjectName(u"draw_button")
-        sizePolicy4.setHeightForWidth(self.draw_button.sizePolicy().hasHeightForWidth())
-        self.draw_button.setSizePolicy(sizePolicy4)
-        self.draw_button.setMinimumSize(QSize(90, 50))
-        self.draw_button.setMaximumSize(QSize(9999999, 16777215))
-        font3 = QFont()
-        font3.setPointSize(8)
-        font3.setBold(True)
-        self.draw_button.setFont(font3)
-
-        self.gridLayout_2.addWidget(self.draw_button, 3, 7, 1, 1)
-
         self.fft_button = QPushButton(self.centralwidget)
         self.fft_button.setObjectName(u"fft_button")
         sizePolicy4.setHeightForWidth(self.fft_button.sizePolicy().hasHeightForWidth())
         self.fft_button.setSizePolicy(sizePolicy4)
         self.fft_button.setMinimumSize(QSize(90, 50))
         self.fft_button.setMaximumSize(QSize(9999999, 16777215))
-        self.fft_button.setFont(font3)
+        font2 = QFont()
+        font2.setPointSize(8)
+        font2.setBold(True)
+        self.fft_button.setFont(font2)
 
         self.gridLayout_2.addWidget(self.fft_button, 1, 7, 1, 1)
-
-        self.load_button = QPushButton(self.centralwidget)
-        self.load_button.setObjectName(u"load_button")
-        self.load_button.setEnabled(True)
-        sizePolicy4.setHeightForWidth(self.load_button.sizePolicy().hasHeightForWidth())
-        self.load_button.setSizePolicy(sizePolicy4)
-        self.load_button.setMinimumSize(QSize(90, 50))
-        self.load_button.setMaximumSize(QSize(9999999, 16777215))
-        font4 = QFont()
-        font4.setPointSize(8)
-        font4.setBold(True)
-        font4.setItalic(False)
-        font4.setUnderline(False)
-        self.load_button.setFont(font4)
-
-        self.gridLayout_2.addWidget(self.load_button, 1, 3, 1, 1)
 
         self.save_button = QPushButton(self.centralwidget)
         self.save_button.setObjectName(u"save_button")
@@ -491,7 +442,12 @@ class Ui_MainWindow(object):
         self.save_button.setSizePolicy(sizePolicy4)
         self.save_button.setMinimumSize(QSize(90, 50))
         self.save_button.setMaximumSize(QSize(9999999, 16777215))
-        self.save_button.setFont(font4)
+        font3 = QFont()
+        font3.setPointSize(8)
+        font3.setBold(True)
+        font3.setItalic(False)
+        font3.setUnderline(False)
+        self.save_button.setFont(font3)
 
         self.gridLayout_2.addWidget(self.save_button, 3, 5, 1, 1)
 
@@ -501,7 +457,7 @@ class Ui_MainWindow(object):
         self.reset_button.setSizePolicy(sizePolicy4)
         self.reset_button.setMinimumSize(QSize(90, 50))
         self.reset_button.setMaximumSize(QSize(9999999, 16777215))
-        self.reset_button.setFont(font4)
+        self.reset_button.setFont(font3)
 
         self.gridLayout_2.addWidget(self.reset_button, 1, 5, 1, 1)
 
@@ -512,18 +468,70 @@ class Ui_MainWindow(object):
         self.capture_button.setSizePolicy(sizePolicy4)
         self.capture_button.setMinimumSize(QSize(90, 50))
         self.capture_button.setMaximumSize(QSize(9999999, 16777215))
-        font5 = QFont()
-        font5.setPointSize(8)
-        font5.setBold(True)
-        font5.setItalic(False)
-        font5.setUnderline(False)
-        font5.setKerning(True)
-        self.capture_button.setFont(font5)
+        font4 = QFont()
+        font4.setPointSize(8)
+        font4.setBold(True)
+        font4.setItalic(False)
+        font4.setUnderline(False)
+        font4.setKerning(True)
+        self.capture_button.setFont(font4)
 
         self.gridLayout_2.addWidget(self.capture_button, 3, 3, 1, 1)
 
+        self.load_button = QPushButton(self.centralwidget)
+        self.load_button.setObjectName(u"load_button")
+        self.load_button.setEnabled(True)
+        sizePolicy4.setHeightForWidth(self.load_button.sizePolicy().hasHeightForWidth())
+        self.load_button.setSizePolicy(sizePolicy4)
+        self.load_button.setMinimumSize(QSize(90, 50))
+        self.load_button.setMaximumSize(QSize(9999999, 16777215))
+        self.load_button.setFont(font3)
 
-        self.gridLayout.addLayout(self.gridLayout_2, 3, 2, 1, 1)
+        self.gridLayout_2.addWidget(self.load_button, 1, 3, 1, 1)
+
+        self.draw_button = QPushButton(self.centralwidget)
+        self.draw_button.setObjectName(u"draw_button")
+        sizePolicy4.setHeightForWidth(self.draw_button.sizePolicy().hasHeightForWidth())
+        self.draw_button.setSizePolicy(sizePolicy4)
+        self.draw_button.setMinimumSize(QSize(90, 50))
+        self.draw_button.setMaximumSize(QSize(9999999, 16777215))
+        self.draw_button.setFont(font2)
+
+        self.gridLayout_2.addWidget(self.draw_button, 3, 7, 1, 1)
+
+
+        self.gridLayout.addLayout(self.gridLayout_2, 3, 1, 1, 1)
+
+        self.count_layout = QHBoxLayout()
+        self.count_layout.setObjectName(u"count_layout")
+        self.count_layout.setSizeConstraint(QLayout.SizeConstraint.SetDefaultConstraint)
+        self.default_button = QPushButton(self.centralwidget)
+        self.default_button.setObjectName(u"default_button")
+        sizePolicy4.setHeightForWidth(self.default_button.sizePolicy().hasHeightForWidth())
+        self.default_button.setSizePolicy(sizePolicy4)
+        self.default_button.setMinimumSize(QSize(0, 0))
+        self.default_button.setMaximumSize(QSize(16777215, 16777215))
+        font5 = QFont()
+        font5.setPointSize(12)
+        font5.setBold(True)
+        font5.setItalic(False)
+        font5.setUnderline(False)
+        self.default_button.setFont(font5)
+
+        self.count_layout.addWidget(self.default_button)
+
+        self.count_button = QPushButton(self.centralwidget)
+        self.count_button.setObjectName(u"count_button")
+        sizePolicy4.setHeightForWidth(self.count_button.sizePolicy().hasHeightForWidth())
+        self.count_button.setSizePolicy(sizePolicy4)
+        self.count_button.setMinimumSize(QSize(0, 0))
+        self.count_button.setMaximumSize(QSize(16777215, 16777215))
+        self.count_button.setFont(font5)
+
+        self.count_layout.addWidget(self.count_button)
+
+
+        self.gridLayout.addLayout(self.count_layout, 5, 1, 1, 1)
 
         self.result_img = QLabel(self.centralwidget)
         self.result_img.setObjectName(u"result_img")
@@ -538,12 +546,34 @@ class Ui_MainWindow(object):
 
         self.gridLayout.addWidget(self.result_img, 0, 0, 3, 1)
 
-        self.MatLayout = QVBoxLayout()
-        self.MatLayout.setObjectName(u"MatLayout")
-        self.MatLayout.setSizeConstraint(QLayout.SizeConstraint.SetFixedSize)
-        self.MatLayout.setContentsMargins(-1, 0, 0, 0)
+        self.horizontalLayout_7 = QHBoxLayout()
+        self.horizontalLayout_7.setObjectName(u"horizontalLayout_7")
+        self.horizontalSpacer = QSpacerItem(20, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
-        self.gridLayout.addLayout(self.MatLayout, 3, 0, 2, 1)
+        self.horizontalLayout_7.addItem(self.horizontalSpacer)
+
+        self.count_type_Box = QCheckBox(self.centralwidget)
+        self.count_type_Box.setObjectName(u"count_type_Box")
+        self.count_type_Box.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
+        self.count_type_Box.setTristate(False)
+
+        self.horizontalLayout_7.addWidget(self.count_type_Box)
+
+        self.horizontalSpacer_3 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.horizontalLayout_7.addItem(self.horizontalSpacer_3)
+
+        self.write_file_Box = QCheckBox(self.centralwidget)
+        self.write_file_Box.setObjectName(u"write_file_Box")
+
+        self.horizontalLayout_7.addWidget(self.write_file_Box)
+
+        self.horizontalSpacer_2 = QSpacerItem(20, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.horizontalLayout_7.addItem(self.horizontalSpacer_2)
+
+
+        self.gridLayout.addLayout(self.horizontalLayout_7, 2, 1, 1, 1)
 
         MainWindow.setCentralWidget(self.centralwidget)
 
@@ -576,14 +606,16 @@ class Ui_MainWindow(object):
         self.Erode_label.setText(QCoreApplication.translate("MainWindow", u"0", None))
         self.label_14.setText(QCoreApplication.translate("MainWindow", u"\u81a8\u80c0\u7a0b\u5ea6\uff1a   ", None))
         self.Dilate_label.setText(QCoreApplication.translate("MainWindow", u"0", None))
-        self.default_button.setText(QCoreApplication.translate("MainWindow", u"\u9ed8\u8ba4\u53c2\u6570", None))
-        self.count_button.setText(QCoreApplication.translate("MainWindow", u"\u5f00\u59cb\u8ba1\u6570", None))
-        self.draw_button.setText(QCoreApplication.translate("MainWindow", u"\u7070\u5ea6\u76f4\u65b9\u56fe", None))
         self.fft_button.setText(QCoreApplication.translate("MainWindow", u"\u5085\u91cc\u53f6\u9891\u8c31", None))
-        self.load_button.setText(QCoreApplication.translate("MainWindow", u"\u52a0\u8f7d\u56fe\u50cf", None))
         self.save_button.setText(QCoreApplication.translate("MainWindow", u"\u4fdd\u5b58\u56fe\u50cf", None))
         self.reset_button.setText(QCoreApplication.translate("MainWindow", u"\u6062\u590d\u539f\u56fe", None))
         self.capture_button.setText(QCoreApplication.translate("MainWindow", u"\u76f8\u673a\u6355\u83b7", None))
+        self.load_button.setText(QCoreApplication.translate("MainWindow", u"\u52a0\u8f7d\u56fe\u50cf", None))
+        self.draw_button.setText(QCoreApplication.translate("MainWindow", u"\u7070\u5ea6\u76f4\u65b9\u56fe", None))
+        self.default_button.setText(QCoreApplication.translate("MainWindow", u"\u9ed8\u8ba4\u53c2\u6570", None))
+        self.count_button.setText(QCoreApplication.translate("MainWindow", u"\u5f00\u59cb\u8ba1\u6570", None))
         self.result_img.setText("")
+        self.count_type_Box.setText(QCoreApplication.translate("MainWindow", u"\u4f7f\u7528\u4f20\u7edf\u7b97\u6cd5", None))
+        self.write_file_Box.setText(QCoreApplication.translate("MainWindow", u"\u5f00\u59cb\u8bb0\u5f55\u6570\u636e", None))
     # retranslateUi
 

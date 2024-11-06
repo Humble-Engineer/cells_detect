@@ -8,10 +8,20 @@ class DataHandler:
         初始化 DataHandler 实例
         :param main_window: 主窗口对象，可选参数，默认为 None
         """
+        self.record_mode = False
+
         self.main_window = main_window
         self.data_dir = 'data'
         self.ensure_data_directory()
-        self.generate_filename()
+        
+    def change_record_mode(self):
+        """
+        切换记录模式
+        :param record_mode: 是否开启记录模式
+        """
+        if not self.record_mode:
+            self.generate_filename()
+        self.record_mode = not self.record_mode
     
     def ensure_data_directory(self):
         """
@@ -46,6 +56,8 @@ class DataHandler:
             file.write(content)
         
         # print(f"文件已创建并写入内容：{self.file_path}")
+
+    
 
 if __name__ == '__main__':
     

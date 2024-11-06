@@ -50,7 +50,6 @@ class MainWindow(QMainWindow):
         screen = cv2.imread('libs/logo3.png')
         self.basic.display_image(screen)
 
-
     def slot_bind(self):
         """
         绑定按钮或菜单项的点击事件到相应的函数。
@@ -72,6 +71,9 @@ class MainWindow(QMainWindow):
         self.ui.default_button.clicked.connect(self.argu_init)
         self.ui.count_button.clicked.connect(self.algorithm.count)
         self.ui.capture_button.clicked.connect(self.camera.toggle_thread)
+
+        self.ui.write_file_Box.stateChanged.connect(self.handler.change_record_mode)
+        self.ui.count_type_Box.stateChanged.connect(self.algorithm.detect_type)
 
         self.sliders = [self.ui.H_min_Slider, self.ui.H_max_Slider, self.ui.S_min_Slider,
                         self.ui.S_max_Slider, self.ui.V_min_Slider, self.ui.V_max_Slider,

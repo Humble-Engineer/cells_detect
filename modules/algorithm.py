@@ -9,6 +9,12 @@ class Algorithm:
 
         self.main_window = main_window
 
+        self.filter_cells = True
+
+    def detect_type(self):
+
+        self.filter_cells = not self.filter_cells
+
     def calculate_fps_text(self, start_time):
             """
             计算FPS并返回FPS文本和运行时间
@@ -180,7 +186,7 @@ class Algorithm:
             mask = cv.erode(mask, kernel, iterations=self.main_window.erode_times)
             mask = cv.dilate(mask, kernel, iterations=self.main_window.dilate_times)
 
-            total_cells = self.find_and_draw_contours(mask, img, filter_cells=True) # 启用细胞团检测
+            total_cells = self.find_and_draw_contours(mask, img, self.filter_cells) # 启用细胞团检测
 
             fps_text, _ = self.calculate_fps_text(start_time)
 
@@ -192,8 +198,10 @@ class Algorithm:
             self.main_window.mat.add_data(total_cells)
             # self.main_window.mat.update_plot(self.main_window.mat.figure)
             
-            try:    
-                self.main_window.handler.write_to_file(f"{total_cells}\n", mode='a')
+            try:
+                # 如果被设置为记录模式就记录数据
+                if self.main_window.handler.record_mode:    
+                    self.main_window.handler.write_to_file(f"{total_cells}\n", mode='a')
             except:
                 print("An error occurred during writing to file.")
                 
