@@ -38,7 +38,8 @@ class DataHandler:
         # 获取当前日期和时间
         now = datetime.datetime.now()
         # 将日期格式化为 "年月日时分秒" 格式
-        date_str = now.strftime("%Y%m%d%H%M%S")
+        date_str = now.strftime("%m-%d_%Hh%Mm%Ss")
+        # print(date_str)
         # 拼接文件名
         filename = f"{date_str}.txt"
         # 定义文件的完整路径
@@ -63,5 +64,4 @@ if __name__ == '__main__':
     
     # 创建 DataHandler 实例
     handler = DataHandler()
-    # 使用实例方法生成文件名并写入内容
-    handler.write_to_file('hello world!\n', mode='a')
+    handler.generate_filename()
