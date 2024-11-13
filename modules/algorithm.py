@@ -110,6 +110,8 @@ class Algorithm:
             else:
                 median_smallest_10_percent_area = 0
         
+        outline_counts = len(filtered_contours)
+        
         if filter_cells:
             # 估计每个轮廓代表的细胞数量
             estimated_cell_counts = []
@@ -145,7 +147,9 @@ class Algorithm:
         # 输出或使用最小10%轮廓面积的中位数
         # print(f"最小10%轮廓面积的中位数: {median_smallest_10_percent_area:.2f} 像素")
         
-        return total_cells
+        print(total_cells,outline_counts)
+        
+        return total_cells,outline_counts
     
     def filter_border_contours(self, contours, areas, img):
         """
@@ -188,7 +192,7 @@ class Algorithm:
             mask = cv.erode(mask, kernel, iterations=self.main_window.erode_times)
             mask = cv.dilate(mask, kernel, iterations=self.main_window.dilate_times)
 
-            total_cells = self.find_and_draw_contours(mask, img, self.filter_cells) # 启用细胞团检测
+            total_cells,outline_counts = self.find_and_draw_contours(mask, img, self.filter_cells) # 启用细胞团检测
 
             fps_text, _ = self.calculate_fps_text(start_time)
 

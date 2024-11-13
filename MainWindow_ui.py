@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'MainWindow.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.7.0
+## Created by: Qt User Interface Compiler version 6.8.0
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -615,7 +615,7 @@ class Ui_MainWindow(object):
         self.default_button.setText(QCoreApplication.translate("MainWindow", u"\u9ed8\u8ba4\u53c2\u6570", None))
         self.count_button.setText(QCoreApplication.translate("MainWindow", u"\u5f00\u59cb\u8ba1\u6570", None))
         self.result_img.setText("")
-        self.count_type_Box.setText(QCoreApplication.translate("MainWindow", u"\u4f7f\u7528\u4f20\u7edf\u7b97\u6cd5", None))
+        self.count_type_Box.setText(QCoreApplication.translate("MainWindow", u"\u8367\u5149\u8f6e\u5ed3\u8ba1\u6570", None))
         self.write_file_Box.setText(QCoreApplication.translate("MainWindow", u"\u5f00\u59cb\u8bb0\u5f55\u6570\u636e", None))
     # retranslateUi
 
