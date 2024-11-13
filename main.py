@@ -100,7 +100,7 @@ class MainWindow(QMainWindow):
         self.ui.Erode_Slider.setValue(0)
         self.ui.Dilate_Slider.setValue(1)
 
-        self.low_percentage = 0.4
+        self.low_percentage = 0.3
         self.growth_factor = 1.8
         self.border_distance = 10
 

@@ -126,7 +126,9 @@ class Algorithm:
             total_cells = len(filtered_contours)
         
         for index, (selected_contour, cell_count) in enumerate(zip(filtered_contours, estimated_cell_counts)):
-            cv.drawContours(img, filtered_contours, index, (255, 0, 0), thickness=max(1, int(img.shape[0] / 300)))  # 根据图像高度调整轮廓线粗细
+            # 根据细胞数量选择颜色
+            color = (0, 0, 255) if cell_count > 1 else (255, 0, 0)
+            cv.drawContours(img, [selected_contour], -1, color, thickness=max(1, int(img.shape[0] / 300)))  # 根据图像高度调整轮廓线粗细
             center, radius = cv.minEnclosingCircle(selected_contour)
             center = tuple(map(int, center))
             radius = int(radius)
@@ -207,4 +209,5 @@ class Algorithm:
                 
         except Exception as e:
             print(f"An error occurred during image processing: {e}")
+
 
