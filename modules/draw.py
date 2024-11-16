@@ -4,6 +4,12 @@ import matplotlib.animation as animation
 import threading
 import time
 
+import matplotlib.pyplot as plt
+
+# 设置中文字体
+plt.rcParams['font.sans-serif'] = ['SimHei']
+plt.rcParams['axes.unicode_minus'] = False
+
 class MplCanvas(FigureCanvas):
     def __init__(self, main_window):
         """
@@ -30,13 +36,14 @@ class MplCanvas(FigureCanvas):
 
         # 基于数据，绘制图形
         self.line, = self.main_window.mat.axes.plot([], [], animated=True)
-        self.main_window.mat.axes.set_title('Historical measurement results')
+        self.main_window.mat.axes.set_title('计数结果')
         self.main_window.mat.axes.set_xlim(0, 29)  # 设置x轴范围
         self.main_window.mat.axes.set_xticks(list(range(1, 31)))  # 设置x轴刻度
         self.main_window.mat.axes.tick_params(axis='x', labelsize=6)  # 调整x轴标签字体大小
         self.main_window.mat.axes.set_ylim(0, 500)  # 设置y轴范围
         self.main_window.mat.axes.tick_params(axis='y', labelsize=6)  # 调整y轴标签字体大小
         self.main_window.mat.axes.axhline(y=300, color='r', linestyle='--')  # 在 y=300 处画一条红色虚线
+
 
         # 创建动画
         self.ani = animation.FuncAnimation(
