@@ -1,4 +1,3 @@
-# conda env create -f environment.yml
 name: cv_test
 channels:
   - defaults

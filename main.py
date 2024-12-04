@@ -1,9 +1,3 @@
-'''
-打包发布命令：
-pyinstaller -F -w --icon=./libs/cell.ico main.py
--w (–windowed / –noconsole): 对于 GUI 应用程序，隐藏控制台窗口。
---icon=FILE.ico: 指定可执行文件的图标。
-'''
 
 import sys
 import cv2
