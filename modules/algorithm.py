@@ -147,7 +147,8 @@ class Algorithm:
         # 输出或使用最小10%轮廓面积的中位数
         # print(f"最小10%轮廓面积的中位数: {median_smallest_10_percent_area:.2f} 像素")
         
-        print(total_cells,outline_counts)
+        # 输出细胞总数和轮廓数量
+        # print(total_cells,outline_counts)
         
         return total_cells,outline_counts
     
