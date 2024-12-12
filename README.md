@@ -4,8 +4,11 @@
 # 1. 运行环境
 
 导出环境：conda env export --name 环境名称 > environment.yml
+
 复刻环境：conda env create -f environment.yml
 环境名称在yml文件name：中修改
+
+覆盖环境：conda env update --name 环境名称 --file environment.yml
 
 # 2. 打包发布
 
