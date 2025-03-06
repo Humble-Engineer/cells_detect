@@ -79,6 +79,11 @@ class Algorithm:
         
         # 计算每个轮廓的面积
         areas = [cv.contourArea(contour) for contour in contours]
+        try:
+            with open('contour_areas.txt', 'w') as f:
+                f.write('\n'.join(map(str, areas)))
+        except IOError as e:
+            print(f"Error writing to file: {e}")
 
         # if filter_cells:
         #     # 过滤靠近图像边界的轮廓
@@ -102,6 +107,7 @@ class Algorithm:
 
             # 取最小10%的面积
             smallest_10_percent_areas = sorted_areas[:threshold_index]
+
         
             # 计算最小10%面积的中位数
             # 检查列表是否为空以避免越界
@@ -110,6 +116,8 @@ class Algorithm:
             else:
                 median_smallest_10_percent_area = 0
         
+        print(f"基准单细胞轮廓面积: {median_smallest_10_percent_area}")
+
         outline_counts = len(filtered_contours)
         
         if filter_cells:
