@@ -33,7 +33,7 @@ def find_approximate_gcd(numbers):
     return best_divisor, divisors, distances  # 修改返回结构
 
 
-with open(r'.\refer\ML_arg\real_img.txt', 
+with open(r'.\refer\ML_arg\img.txt', 
          'r', 
          encoding='utf-8') as f:  # 关键修改点
     numbers = [float(line.strip()) for line in f]

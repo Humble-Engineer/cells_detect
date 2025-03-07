@@ -80,7 +80,7 @@ class Algorithm:
         # 计算每个轮廓的面积
         areas = [cv.contourArea(contour) for contour in contours]
         try:
-            with open('contour_areas.txt', 'w') as f:
+            with open('contour_areas.txt', 'a') as f:
                 f.write('\n'.join(map(str, areas)))
         except IOError as e:
             print(f"Error writing to file: {e}")
