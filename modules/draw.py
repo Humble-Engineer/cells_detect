@@ -36,7 +36,7 @@ class MplCanvas(FigureCanvas):
 
         # 基于数据，绘制图形
         self.line, = self.main_window.mat.axes.plot([], [], animated=True)
-        self.main_window.mat.axes.set_title('计数结果')
+        self.main_window.mat.axes.set_title('count results')
         self.main_window.mat.axes.set_xlim(0, 29)  # 设置x轴范围
         self.main_window.mat.axes.set_xticks(list(range(1, 31)))  # 设置x轴刻度
         self.main_window.mat.axes.tick_params(axis='x', labelsize=6)  # 调整x轴标签字体大小

@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'MainWindow.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.8.0
+## Created by: Qt User Interface Compiler version 6.7.2
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -584,38 +584,38 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"Cell Counter v3.0", None))
-        self.label_3.setText(QCoreApplication.translate("MainWindow", u"\u4e8c\u503c\u5316\u53c2\u6570", None))
-        self.label_4.setText(QCoreApplication.translate("MainWindow", u"\u8272\u76f8\u4e0b\u9650\uff1a   ", None))
+        self.label_3.setText(QCoreApplication.translate("MainWindow", u"Binary args", None))
+        self.label_4.setText(QCoreApplication.translate("MainWindow", u"H MIN", None))
         self.H_min_label.setText(QCoreApplication.translate("MainWindow", u"0", None))
-        self.label_5.setText(QCoreApplication.translate("MainWindow", u"\u8272\u76f8\u4e0a\u9650\uff1a   ", None))
+        self.label_5.setText(QCoreApplication.translate("MainWindow", u"H MAX", None))
         self.H_max_label.setText(QCoreApplication.translate("MainWindow", u"0", None))
-        self.label_6.setText(QCoreApplication.translate("MainWindow", u"\u9971\u548c\u5ea6\u4e0a\u9650\uff1a", None))
+        self.label_6.setText(QCoreApplication.translate("MainWindow", u"S MIN", None))
         self.S_min_label.setText(QCoreApplication.translate("MainWindow", u"0", None))
-        self.label_7.setText(QCoreApplication.translate("MainWindow", u"\u9971\u548c\u5ea6\u4e0b\u9650\uff1a", None))
+        self.label_7.setText(QCoreApplication.translate("MainWindow", u"S MAX", None))
         self.S_max_label.setText(QCoreApplication.translate("MainWindow", u"0", None))
-        self.label_8.setText(QCoreApplication.translate("MainWindow", u"\u660e\u5ea6\u4e0a\u9650\uff1a   ", None))
+        self.label_8.setText(QCoreApplication.translate("MainWindow", u"V MIN", None))
         self.V_min_label.setText(QCoreApplication.translate("MainWindow", u"0", None))
-        self.label_9.setText(QCoreApplication.translate("MainWindow", u"\u660e\u5ea6\u4e0b\u9650\uff1a   ", None))
+        self.label_9.setText(QCoreApplication.translate("MainWindow", u"V MAX", None))
         self.V_max_label.setText(QCoreApplication.translate("MainWindow", u"0", None))
-        self.label_10.setText(QCoreApplication.translate("MainWindow", u"\u5f62\u6001\u5b66\u53c2\u6570", None))
-        self.label_11.setText(QCoreApplication.translate("MainWindow", u"\u9ad8\u65af\u6838\u5c3a\u5bf8\uff1a", None))
+        self.label_10.setText(QCoreApplication.translate("MainWindow", u"Morphological args", None))
+        self.label_11.setText(QCoreApplication.translate("MainWindow", u"Gaussian", None))
         self.Gauss_label.setText(QCoreApplication.translate("MainWindow", u"0", None))
-        self.label_12.setText(QCoreApplication.translate("MainWindow", u"\u7ed3\u6784\u6838\u5c3a\u5bf8\uff1a", None))
+        self.label_12.setText(QCoreApplication.translate("MainWindow", u"Structural", None))
         self.Struct_label.setText(QCoreApplication.translate("MainWindow", u"0", None))
-        self.label_13.setText(QCoreApplication.translate("MainWindow", u"\u8150\u8680\u7a0b\u5ea6\uff1a   ", None))
+        self.label_13.setText(QCoreApplication.translate("MainWindow", u"Corrosion", None))
         self.Erode_label.setText(QCoreApplication.translate("MainWindow", u"0", None))
-        self.label_14.setText(QCoreApplication.translate("MainWindow", u"\u81a8\u80c0\u7a0b\u5ea6\uff1a   ", None))
+        self.label_14.setText(QCoreApplication.translate("MainWindow", u"Expansion", None))
         self.Dilate_label.setText(QCoreApplication.translate("MainWindow", u"0", None))
-        self.fft_button.setText(QCoreApplication.translate("MainWindow", u"\u5085\u91cc\u53f6\u9891\u8c31", None))
-        self.save_button.setText(QCoreApplication.translate("MainWindow", u"\u4fdd\u5b58\u56fe\u50cf", None))
-        self.reset_button.setText(QCoreApplication.translate("MainWindow", u"\u6062\u590d\u539f\u56fe", None))
-        self.capture_button.setText(QCoreApplication.translate("MainWindow", u"\u76f8\u673a\u6355\u83b7", None))
-        self.load_button.setText(QCoreApplication.translate("MainWindow", u"\u52a0\u8f7d\u56fe\u50cf", None))
-        self.draw_button.setText(QCoreApplication.translate("MainWindow", u"\u7070\u5ea6\u76f4\u65b9\u56fe", None))
-        self.default_button.setText(QCoreApplication.translate("MainWindow", u"\u9ed8\u8ba4\u53c2\u6570", None))
-        self.count_button.setText(QCoreApplication.translate("MainWindow", u"\u5f00\u59cb\u8ba1\u6570", None))
+        self.fft_button.setText(QCoreApplication.translate("MainWindow", u"fft img", None))
+        self.save_button.setText(QCoreApplication.translate("MainWindow", u"save img", None))
+        self.reset_button.setText(QCoreApplication.translate("MainWindow", u"renew img", None))
+        self.capture_button.setText(QCoreApplication.translate("MainWindow", u"capture img", None))
+        self.load_button.setText(QCoreApplication.translate("MainWindow", u"load img", None))
+        self.draw_button.setText(QCoreApplication.translate("MainWindow", u"hist img", None))
+        self.default_button.setText(QCoreApplication.translate("MainWindow", u"default args", None))
+        self.count_button.setText(QCoreApplication.translate("MainWindow", u"start count", None))
         self.result_img.setText("")
-        self.count_type_Box.setText(QCoreApplication.translate("MainWindow", u"\u8367\u5149\u8f6e\u5ed3\u8ba1\u6570", None))
-        self.write_file_Box.setText(QCoreApplication.translate("MainWindow", u"\u5f00\u59cb\u8bb0\u5f55\u6570\u636e", None))
+        self.count_type_Box.setText(QCoreApplication.translate("MainWindow", u"outline only", None))
+        self.write_file_Box.setText(QCoreApplication.translate("MainWindow", u"logging data", None))
     # retranslateUi
 

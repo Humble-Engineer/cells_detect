@@ -41,7 +41,15 @@ class MainWindow(QMainWindow):
         self.slot_bind()  # 调用band方法进行进一步的初始化或设置
         self.argu_init()  # 设置默认参数
 
-        screen = cv2.imread('libs/logo3.png')
+        # 设置并显示开屏默认背景及标题
+        background = cv2.imread('libs/icons/background.png')
+        title = 'somatic cell counter'
+        font = r'libs\fonts\寒蝉端黑宋.otf'
+        font_size = 120
+        color = (0, 0, 0)
+        screen = self.basic.put_chinese_text(
+            background, title, font, font_size, color)
+
         self.basic.display_image(screen)
 
     def slot_bind(self):
@@ -131,7 +139,7 @@ class MainWindow(QMainWindow):
 if __name__ == "__main__":
     # 创建 QApplication 实例
     app = QApplication(sys.argv)
-    app.setWindowIcon(QIcon('libs/cell.ico'))
+    app.setWindowIcon(QIcon('libs/iocns/cell.ico'))
 
     # 创建主窗口并显示
     main_window = MainWindow()

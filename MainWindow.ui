@@ -105,7 +105,7 @@
          </font>
         </property>
         <property name="text">
-         <string>二值化参数</string>
+         <string>Binary args</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignmentFlag::AlignCenter</set>
@@ -123,7 +123,7 @@
            </size>
           </property>
           <property name="text">
-           <string>色相下限：   </string>
+           <string>H MIN</string>
           </property>
          </widget>
         </item>
@@ -187,7 +187,7 @@
            </size>
           </property>
           <property name="text">
-           <string>色相上限：   </string>
+           <string>H MAX</string>
           </property>
          </widget>
         </item>
@@ -251,7 +251,7 @@
            </size>
           </property>
           <property name="text">
-           <string>饱和度上限：</string>
+           <string>S MIN</string>
           </property>
          </widget>
         </item>
@@ -315,7 +315,7 @@
            </size>
           </property>
           <property name="text">
-           <string>饱和度下限：</string>
+           <string>S MAX</string>
           </property>
          </widget>
         </item>
@@ -379,7 +379,7 @@
            </size>
           </property>
           <property name="text">
-           <string>明度上限：   </string>
+           <string>V MIN</string>
           </property>
          </widget>
         </item>
@@ -443,7 +443,7 @@
            </size>
           </property>
           <property name="text">
-           <string>明度下限：   </string>
+           <string>V MAX</string>
           </property>
          </widget>
         </item>
@@ -534,7 +534,7 @@
          </font>
         </property>
         <property name="text">
-         <string>形态学参数</string>
+         <string>Morphological args</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignmentFlag::AlignCenter</set>
@@ -552,7 +552,7 @@
            </size>
           </property>
           <property name="text">
-           <string>高斯核尺寸：</string>
+           <string>Gaussian</string>
           </property>
          </widget>
         </item>
@@ -622,7 +622,7 @@
            </size>
           </property>
           <property name="text">
-           <string>结构核尺寸：</string>
+           <string>Structural</string>
           </property>
          </widget>
         </item>
@@ -686,7 +686,7 @@
            </size>
           </property>
           <property name="text">
-           <string>腐蚀程度：   </string>
+           <string>Corrosion</string>
           </property>
          </widget>
         </item>
@@ -753,7 +753,7 @@
            </size>
           </property>
           <property name="text">
-           <string>膨胀程度：   </string>
+           <string>Expansion</string>
           </property>
          </widget>
         </item>
@@ -843,7 +843,7 @@
          </font>
         </property>
         <property name="text">
-         <string>傅里叶频谱</string>
+         <string>fft img</string>
         </property>
        </widget>
       </item>
@@ -876,7 +876,7 @@
          </font>
         </property>
         <property name="text">
-         <string>保存图像</string>
+         <string>save img</string>
         </property>
        </widget>
       </item>
@@ -909,7 +909,7 @@
          </font>
         </property>
         <property name="text">
-         <string>恢复原图</string>
+         <string>renew img</string>
         </property>
        </widget>
       </item>
@@ -946,7 +946,7 @@
          </font>
         </property>
         <property name="text">
-         <string>相机捕获</string>
+         <string>capture img</string>
         </property>
        </widget>
       </item>
@@ -982,7 +982,7 @@
          </font>
         </property>
         <property name="text">
-         <string>加载图像</string>
+         <string>load img</string>
         </property>
        </widget>
       </item>
@@ -1013,7 +1013,7 @@
          </font>
         </property>
         <property name="text">
-         <string>灰度直方图</string>
+         <string>hist img</string>
         </property>
        </widget>
       </item>
@@ -1053,7 +1053,7 @@
          </font>
         </property>
         <property name="text">
-         <string>默认参数</string>
+         <string>default args</string>
         </property>
        </widget>
       </item>
@@ -1086,7 +1086,7 @@
          </font>
         </property>
         <property name="text">
-         <string>开始计数</string>
+         <string>start count</string>
         </property>
        </widget>
       </item>
@@ -1141,7 +1141,7 @@
          <enum>Qt::LayoutDirection::LeftToRight</enum>
         </property>
         <property name="text">
-         <string>荧光轮廓计数</string>
+         <string>outline only</string>
         </property>
         <property name="tristate">
          <bool>false</bool>
@@ -1164,7 +1164,7 @@
       <item>
        <widget class="QCheckBox" name="write_file_Box">
         <property name="text">
-         <string>开始记录数据</string>
+         <string>logging data</string>
         </property>
        </widget>
       </item>
