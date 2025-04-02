@@ -35,13 +35,13 @@ class Camera:
     
     def start_thread(self):
         self.thread_running = True
-        self.main_window.ui.capture_button.setText("停止捕获")
+        self.main_window.ui.capture_button.setText("stop capture")
         self.worker_thread = threading.Thread(target=self.thread_worker, daemon=True)
         self.worker_thread.start()
 
     def stop_thread(self):
         self.thread_running = False
-        self.main_window.ui.capture_button.setText("相机捕获")
+        self.main_window.ui.capture_button.setText("start capture")
         if self.worker_thread is not None:
             self.worker_thread.join()
         self.worker_thread = None
