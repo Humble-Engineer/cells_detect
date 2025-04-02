@@ -14,7 +14,6 @@ from modules.algorithm import Algorithm
 from modules.draw import MplCanvas
 from modules.record import DataHandler
 
-
 class MainWindow(QMainWindow):
     """
     主窗口类，用于显示图像。
@@ -41,7 +40,15 @@ class MainWindow(QMainWindow):
         self.slot_bind()  # 调用band方法进行进一步的初始化或设置
         self.argu_init()  # 设置默认参数
 
-        screen = cv2.imread('libs/logo3.png')
+        # 设置并显示开屏默认背景及标题
+        background = cv2.imread(r'libs\pictures\logo3.png')
+        title = '生鲜乳荧光体细胞计数软件'
+        font = r'libs\fonts\程荣光刻楷.ttf'
+        font_size = 120
+        color = (0, 0, 0)
+        screen = self.basic.put_chinese_text(
+            background, title, font, font_size, color)
+
         self.basic.display_image(screen)
 
     def slot_bind(self):
@@ -131,7 +138,7 @@ class MainWindow(QMainWindow):
 if __name__ == "__main__":
     # 创建 QApplication 实例
     app = QApplication(sys.argv)
-    app.setWindowIcon(QIcon('libs/cell.ico'))
+    app.setWindowIcon(QIcon('libs/icons/cell.ico'))
 
     # 创建主窗口并显示
     main_window = MainWindow()

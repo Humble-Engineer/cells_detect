@@ -79,11 +79,13 @@ class Algorithm:
         
         # 计算每个轮廓的面积
         areas = [cv.contourArea(contour) for contour in contours]
-        try:
-            with open('contour_areas.txt', 'a') as f:
-                f.write('\n'.join(map(str, areas)))
-        except IOError as e:
-            print(f"Error writing to file: {e}")
+
+        # 将面积写入文件，用于调试
+        # try:
+        #     with open('contour_areas.txt', 'a') as f:
+        #         f.write('\n'.join(map(str, areas)))
+        # except IOError as e:
+        #     print(f"Error writing to file: {e}")
 
         # if filter_cells:
         #     # 过滤靠近图像边界的轮廓
