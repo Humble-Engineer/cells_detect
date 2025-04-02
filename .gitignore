@@ -6,4 +6,5 @@ __pycache__/*.pyc
 build/
 dist/
 data/*.txt
+*.txt
 *.spec
