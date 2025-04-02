@@ -139,7 +139,7 @@ class MainWindow(QMainWindow):
 if __name__ == "__main__":
     # 创建 QApplication 实例
     app = QApplication(sys.argv)
-    app.setWindowIcon(QIcon('libs/iocns/cell.ico'))
+    app.setWindowIcon(QIcon('libs/icons/cell.ico'))
 
     # 创建主窗口并显示
     main_window = MainWindow()
