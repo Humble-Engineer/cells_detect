@@ -41,7 +41,7 @@ class MainWindow(QMainWindow):
         self.argu_init()  # 设置默认参数
 
         # 设置并显示开屏默认背景及标题
-        background = cv2.imread(r'libs\pictures\logo.png')
+        background = cv2.imread(r'libs\pictures\logo3.png')
         title = '生鲜乳荧光体细胞计数软件'
         font = r'libs\fonts\程荣光刻楷.ttf'
         font_size = 120

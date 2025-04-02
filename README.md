@@ -12,6 +12,6 @@
 
 # 2. 打包发布
 
-pyinstaller -F -w --icon=./libs/cell.ico main.py
+pyinstaller -F -w --icon=./libs/icons/cell.ico main.py
 -w (–windowed / –noconsole): 对于 GUI 应用程序，隐藏控制台窗口。
 --icon=FILE.ico: 指定可执行文件的图标。
