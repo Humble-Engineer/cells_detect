@@ -118,7 +118,7 @@ class Algorithm:
             else:
                 median_smallest_10_percent_area = 0
         
-        print(f"基准单细胞轮廓面积: {median_smallest_10_percent_area}")
+            print(f"基准单细胞轮廓面积: {median_smallest_10_percent_area}")
 
         outline_counts = len(filtered_contours)
         
