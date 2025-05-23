@@ -30,7 +30,7 @@ def find_approximate_gcd(numbers):
     return best_divisor, divisors, distances
 
 # 数据读取
-with open(r'.\refer\ML_arg\real_img.txt', 'r', encoding='utf-8') as f:
+with open(r'.\refer\ML_arg\low_power_lens.txt', 'r', encoding='utf-8') as f:
     numbers = [float(line.strip()) for line in f]
 
 # 计算最佳除数
@@ -39,17 +39,13 @@ best_gcd, all_divisors, all_distances = find_approximate_gcd(numbers)
 # 可视化设置
 plt.figure(figsize=(10, 6), dpi=300)
 
-# 兼容性样式设置
+# 兼容性样式设置（已修改）
 try:
-    # 尝试新版样式名称
-    plt.style.use('seaborn-v0_8-whitegrid')
+    # 使用无网格的seaborn样式
+    plt.style.use('seaborn')
 except OSError:
-    try:
-        # 回退到旧版seaborn样式
-        plt.style.use('seaborn')
-    except OSError:
-        # 完全兼容模式
-        plt.grid(True, linestyle='--', alpha=0.6, color='#e0e0e0')
+    pass  # 直接跳过样式设置
+plt.grid(False)  # 显式关闭网格
 
 # 主曲线
 ax = plt.gca()
@@ -57,6 +53,7 @@ main_line = plt.plot(all_divisors, all_distances,
                     color='#2c5c8a',
                     linewidth=2.5,
                     alpha=0.9)
+
 # 极值点检测
 minima_indices = []
 for i in range(1, len(all_distances)-1):
@@ -106,15 +103,7 @@ plt.annotate(f'Optimal Divisor: {best_gcd:.1f}',
 # 背景设置
 ax.set_facecolor('#f0f0f0')
 
-# 兼容性网格设置（如果样式加载失败）
-if not plt.style.available:  # 如果没有任何样式被加载
-    ax.grid(True, 
-           linestyle='--', 
-           alpha=0.6, 
-           color='gray',
-           which='both')
-
-# 保存输出
+# 保存输出（已移除最后的兼容性网格代码）
 plt.tight_layout()
 plt.savefig('optimized_plot.pdf', format='pdf', bbox_inches='tight')
 plt.savefig('optimized_plot.png', dpi=600, bbox_inches='tight')
