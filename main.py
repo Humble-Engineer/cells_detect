@@ -1,6 +1,7 @@
 
 import sys
 import cv2
+import os
 
 from PySide6.QtWidgets import QApplication, QMainWindow
 from PySide6.QtGui import QIcon
@@ -41,11 +42,20 @@ class MainWindow(QMainWindow):
         self.argu_init()  # 设置默认参数
 
         # 设置并显示开屏默认背景及标题
-        background = cv2.imread(r'libs\pictures\logo3.png')
+        background_path = os.path.join('libs', 'pictures', 'logo3.png')
+        background = cv2.imread(background_path)  # 返回None如果文件不存在
+
         title = '生鲜乳荧光体细胞计数软件'
-        font = r'libs\fonts\程荣光刻楷.ttf'
+        font = os.path.join('libs', 'fonts', '寒蝉端黑宋.otf')
         font_size = 120
         color = (0, 0, 0)
+
+        if background is not None:
+            screen = self.basic.put_chinese_text(background, title, font, font_size, color)
+            self.basic.display_image(screen)
+        else:
+            print(f"无法加载背景图片：{background_path}")
+            
         screen = self.basic.put_chinese_text(
             background, title, font, font_size, color)
 

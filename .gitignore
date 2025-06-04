@@ -7,3 +7,5 @@ build/
 dist/
 data/*.txt
 *.spec
+
+*.DS_Store
