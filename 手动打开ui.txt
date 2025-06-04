@@ -1,0 +1,4 @@
+# 进入 Designer 所在目录
+cd /opt/anaconda3/envs/cv_gui/lib/python3.10/site-packages/PySide6/Designer.app/Contents/MacOS
+# 启动 Designer 并指定 UI 文件路径
+./Designer /Users/gaochi/Documents/代码/cells_detect/MainWindow.ui
