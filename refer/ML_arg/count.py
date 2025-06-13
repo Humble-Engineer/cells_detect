@@ -80,11 +80,17 @@ ax.spines['right'].set_visible(False)
 
 # 标签设置
 plt.title('Divisor Optimization Analysis', fontsize=18, 
-         fontname='Times New Roman', pad=20)
+          fontname='Times New Roman', pad=20,
+          fontweight='bold') 
+# 修改x轴标签（添加fontweight='bold'）
 plt.xlabel('Divisor', fontsize=14, 
-          fontname='Times New Roman',labelpad=10)
+          fontname='Times New Roman', labelpad=10, 
+          fontweight='bold')  # 添加此参数
+
+# 修改y轴标签（添加fontweight='bold'）
 plt.ylabel('Normalized Distance', fontsize=14, 
-          fontname='Times New Roman', labelpad=10)
+          fontname='Times New Roman', labelpad=10,
+          fontweight='bold')  # 添加此参数
 
 # 刻度设置
 plt.tick_params(axis='both', which='major', labelsize=12,

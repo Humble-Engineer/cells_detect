@@ -7,14 +7,14 @@ except:
     plt.style.use('classic')  # 回退到经典样式
 
 # 读取数据
-with open(r'refer\ML_arg\low_power_lens.txt', 'r') as file:
+with open(r'refer\ML_arg\high_power_lens.txt', 'r') as file:
     data = [float(line.strip()) for line in file]
 
 # 绘制直方图
 plt.hist(data, bins=30, edgecolor='black')
-plt.title('Data Distribution Histogram')
-plt.xlabel('Value')
-plt.ylabel('Frequency')
+plt.title('Data Distribution Histogram', fontweight='bold')
+plt.xlabel('Value', fontweight='bold')
+plt.ylabel('Frequency', fontweight='bold')
 plt.grid(False)
 
 # 坐标轴美化
