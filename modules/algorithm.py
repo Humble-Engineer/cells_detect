@@ -200,8 +200,11 @@ class Algorithm:
             # 使用结构元素(卷积核大小作用类似)
             kernel = cv.getStructuringElement(cv.MORPH_ELLIPSE, (self.main_window.struct_shape,self.main_window.struct_shape))
             # 形态学操作(可选迭代次数)
-            mask = cv.erode(mask, kernel, iterations=self.main_window.erode_times)
             mask = cv.dilate(mask, kernel, iterations=self.main_window.dilate_times)
+            mask = cv.erode(mask, kernel, iterations=self.main_window.erode_times)
+            
+            # 增加开运算去除小噪点
+            mask = cv.morphologyEx(mask, cv.MORPH_OPEN, kernel, iterations=1)
 
             total_cells,outline_counts = self.find_and_draw_contours(mask, img, self.filter_cells) # 启用细胞团检测
 
