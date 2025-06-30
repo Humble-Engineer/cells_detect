@@ -29,8 +29,9 @@ def find_approximate_gcd(numbers):
 
     return best_divisor, divisors, distances
 
-# 数据读取
-with open(r'.\refer\ML_arg\low_power_lens.txt', 'r', encoding='utf-8') as f:
+import os.path
+file_path = os.path.join('refer', 'ML_arg', 'low_power_lens.txt')
+with open(file_path, 'r', encoding='utf-8') as f:
     numbers = [float(line.strip()) for line in f]
 
 # 计算最佳除数
@@ -82,6 +83,7 @@ ax.spines['right'].set_visible(False)
 plt.title('Divisor Optimization Analysis', fontsize=18, 
           fontname='Times New Roman', pad=20,
           fontweight='bold') 
+
 # 修改x轴标签（添加fontweight='bold'）
 plt.xlabel('Divisor', fontsize=14, 
           fontname='Times New Roman', labelpad=10, 
@@ -107,8 +109,21 @@ plt.annotate(f'Optimal Divisor: {best_gcd:.1f}',
             fontname='Times New Roman')
 
 # 背景设置
-ax.set_facecolor('#f0f0f0')
+ax.set_facecolor("#ffffff")
 
+import pandas as pd
+
+# 创建DataFrame保存数据
+data = pd.DataFrame({
+    'Divisor (X-axis)': all_divisors,
+    'Normalized Distance (Y-axis)': all_distances,
+    'Is_Local_Minima': [i in minima_indices for i in range(len(all_divisors))]
+})
+
+csv_path = os.path.join('refer', 'ML_arg', 'divisor_optimization_data.csv')
+data.to_csv(csv_path, index=False)
+
+print(f"数据已保存到: {os.path.abspath(csv_path)}")
 # 保存输出（已移除最后的兼容性网格代码）
 plt.tight_layout()
 plt.savefig('optimized_plot.pdf', format='pdf', bbox_inches='tight')

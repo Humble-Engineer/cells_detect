@@ -6,8 +6,11 @@ try:
 except:
     plt.style.use('classic')  # 回退到经典样式
 
+from pathlib import Path
+
 # 读取数据
-with open(r'refer\ML_arg\high_power_lens.txt', 'r') as file:
+file_path = Path('refer') / 'ML_arg' / 'high_power_lens.txt'
+with open(file_path, 'r') as file:
     data = [float(line.strip()) for line in file]
 
 # 绘制直方图
