@@ -313,7 +313,7 @@ if __name__ == "__main__":
     
     print("\n使用单一方法处理:")
     # 可以选择以下任意一种方法:
-    # simple_background_removal(image_path, 'morphological')
-    # simple_background_removal(image_path, 'tophat')
-    # simple_background_removal(image_path, 'rollingball')
+    simple_background_removal(image_path, 'morphological')
+    simple_background_removal(image_path, 'tophat')
+    simple_background_removal(image_path, 'rollingball')
     simple_background_removal(image_path, 'adaptive')

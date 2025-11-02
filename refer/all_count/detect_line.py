@@ -1,9 +1,7 @@
 import cv2 as cv
 import numpy as np
 import time
-import sys
 import os
-from collections import deque
 
 class Algorithm:
     """
@@ -593,7 +591,7 @@ def main():
     counter = VideoCellCounter()
     
     # 使用指定的测试视频
-    video_path = os.path.join("refer", "all_count", "t3.mp4")
+    video_path = os.path.join("refer", "all_count", "t1.mp4")
     
     # 检查文件是否存在
     if not os.path.exists(video_path):
