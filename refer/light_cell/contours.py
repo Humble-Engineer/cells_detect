@@ -300,7 +300,7 @@ def simple_gradient_contour_detection_colored(image_path, top_percent=20, circul
 # 使用示例
 if __name__ == "__main__":
     # 替换为您的明场图像路径
-    image_path = r"refer\light_cell\test2.jpg"
+    image_path = r"refer\light_cell\light.png"
 
     # 设置顶部百分比阈值
     top_percent=20

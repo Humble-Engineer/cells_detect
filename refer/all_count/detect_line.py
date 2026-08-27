@@ -554,10 +554,13 @@ class VideoCellCounter:
             # 显示当前帧信息
             cv.putText(frame_display, f"Frame: {frame_count}/{total_frames}", (10, 30), 
                       cv.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
-            cv.putText(frame_display, f"Total Count: {self.total_count}", (10, 70), 
+            cv.putText(frame_display, f"cells passed: {self.total_count}", (10, 70), 
                       cv.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
-            cv.putText(frame_display, f"Tracked Cells: {len(self.tracked_cells)}", (10, 110), 
+            cv.putText(frame_display, f"cells in view: {len(self.tracked_cells)}", (10, 110), 
                       cv.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 0), 2)
+            
+            cv.putText(frame_display, f"Press 'space' to pause...", (10, 150), 
+                                  cv.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 0), 2)
             
             # 显示处理后的帧
             cv.imshow('Cell Tracking', frame_display)
@@ -591,7 +594,7 @@ def main():
     counter = VideoCellCounter()
     
     # 使用指定的测试视频
-    video_path = os.path.join("refer", "all_count", "t1.mp4")
+    video_path = os.path.join("refer", "all_count", "t2.mp4")
     
     # 检查文件是否存在
     if not os.path.exists(video_path):
