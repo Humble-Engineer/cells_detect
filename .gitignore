@@ -8,4 +8,8 @@ dist/
 data/*.txt
 *.spec
 
+# capture_demo 的打包产物（exe）和录制视频都是本地产物，不入库
+capture_demo/dist/
+capture_demo/videos/
+
 *.DS_Store
