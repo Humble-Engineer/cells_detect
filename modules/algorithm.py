@@ -3,6 +3,88 @@ import numpy as np
 import time
 
 
+# 单帧内"最优单细胞轮廓面积"搜索时，参与扫描的候选除数个数上限。
+# 只有当帧内最大轮廓面积异常大（约 > 10000 像素）时才会触发分两级搜索，
+# 常规 1100x1600 / 4K 显微图像都是全量精确扫描。
+OPTIMAL_AREA_MAX_STEPS = 20000
+# 向量化扫描时每批处理的候选除数个数（控制临时矩阵内存占用）。
+OPTIMAL_AREA_CHUNK = 512
+
+
+def find_optimal_cell_area(areas):
+    """
+    求"最优单细胞轮廓面积"（移植自 refer/ML_arg/count.py 的 find_approximate_gcd）。
+
+    原算法的思路：单细胞轮廓面积应为某个基准面积 d 的整数倍（细胞团 = 多个单细胞
+    面积之和）。于是在 [min(areas), max(areas)] 区间上以 0.5 为步长枚举候选基准 d，
+    对每个 d 计算所有轮廓面积对其取整后的偏差之和：
+
+        cost(d) = Σ |area_i / d - round(area_i / d)|
+
+    取 cost 最小的 d 作为基准单细胞面积。
+
+    与 count.py 的差异：
+      * count.py 用 Python 双层循环逐个候选值试算，这里改为 numpy 向量化（按批
+        扫描候选值），结果与逐点扫描完全一致，但单帧耗时从数十毫秒降到毫秒级；
+      * 原实现是模块顶层脚本、直接读 low_power_lens.txt 并画图，这里只保留核心
+        求解函数，供主程序逐帧调用；
+      * 极端大轮廓时先按 stride 粗扫、再在最优粗解附近精扫，避免扫描区间过大。
+
+    :param areas: 轮廓面积序列（像素）
+    :return: 最优单细胞轮廓面积（float）；无有效输入时返回 0.0
+    """
+    vals = np.asarray([float(a) for a in areas if a > 0], dtype=np.float64)
+
+    if vals.size == 0:
+        return 0.0
+    if vals.size == 1:
+        return float(vals[0])
+
+    # count.py: for divisor in range(int(max_number*2), int(min_number), -1): divisor /= 2
+    # 即候选值 k/2，k 从 int(max*2) 递减到 int(min)+1
+    k_hi = int(vals.max() * 2.0)
+    k_lo = int(vals.min()) + 1
+
+    if k_hi < k_lo:
+        # 面积几乎全相同（max*2 与 min 太接近），退化处理
+        return float(np.median(vals))
+
+    ks = np.arange(k_hi, k_lo - 1, -1, dtype=np.int64)
+    stride = 1
+    if ks.size > OPTIMAL_AREA_MAX_STEPS:
+        stride = int(np.ceil(ks.size / OPTIMAL_AREA_MAX_STEPS))
+        ks = ks[::stride]
+
+    def scan(k_arr):
+        """在给定候选 k 数组上求 cost 最小的基准面积（= k/2）。"""
+        best_divisor = 0.0
+        best_cost = float('inf')
+        for start in range(0, k_arr.size, OPTIMAL_AREA_CHUNK):
+            divisors = k_arr[start:start + OPTIMAL_AREA_CHUNK] / 2.0
+            # 每个候选值对全部轮廓面积算一次取整偏差（与 count.py 的 round 同为四舍六入五成双）
+            quotients = vals[:, None] / divisors[None, :]
+            costs = np.abs(quotients - np.round(quotients)).sum(axis=0)
+            idx = int(np.argmin(costs))
+            if costs[idx] < best_cost:
+                best_cost = float(costs[idx])
+                best_divisor = float(divisors[idx])
+        return best_divisor, best_cost
+
+    best_divisor, best_cost = scan(ks)
+
+    if stride > 1:
+        # 粗扫有跳步时，在最优点附近补一次逐点精扫
+        center = int(round(best_divisor * 2))
+        k_fine = np.arange(min(k_hi, center + stride),
+                           max(k_lo - 1, center - stride) - 1, -1, dtype=np.int64)
+        if k_fine.size:
+            fine_divisor, fine_cost = scan(k_fine)
+            if fine_cost < best_cost:
+                best_divisor, best_cost = fine_divisor, fine_cost
+
+    return best_divisor
+
+
 class Algorithm:
 
     def __init__(self, main_window):
@@ -96,40 +178,23 @@ class Algorithm:
         filtered_contours = contours
         filtered_areas = areas
         
-        # 排序过滤后的面积
-        sorted_areas = sorted(filtered_areas)
-        
         if filter_cells:
-            # 找到最小10%面积的阈值索引
-            threshold_index = int(len(sorted_areas) * self.main_window.low_percentage)
+            # 求"最优单细胞轮廓面积"作为基准（基于寻找最优单细胞轮廓面积的方法）
+            base_cell_area = find_optimal_cell_area(filtered_areas)
 
-            # 如果轮廓太少，设置最小轮廓作为参考
-            if threshold_index == 0:
-                threshold_index = 1
-
-            # 取最小10%的面积
-            smallest_10_percent_areas = sorted_areas[:threshold_index]
-
-        
-            # 计算最小10%面积的中位数
-            # 检查列表是否为空以避免越界
-            if smallest_10_percent_areas:
-                median_smallest_10_percent_area = smallest_10_percent_areas[len(smallest_10_percent_areas) // 2]
-            else:
-                median_smallest_10_percent_area = 0
-        
-            print(f"基准单细胞轮廓面积: {median_smallest_10_percent_area}")
+            print(f"基准单细胞轮廓面积: {base_cell_area}")
 
         outline_counts = len(filtered_contours)
         
         if filter_cells:
-            # 估计每个轮廓代表的细胞数量
+            # 估计每个轮廓代表的细胞数量：轮廓面积 / 最优单细胞面积，四舍五入
             estimated_cell_counts = []
             for area in filtered_areas:
-                cell_count = 1
-                while area > median_smallest_10_percent_area * (self.main_window.growth_factor * cell_count):
-                    cell_count += 1
-                estimated_cell_counts.append(cell_count)
+                if base_cell_area > 0:
+                    cell_count = int(round(area / base_cell_area))
+                else:
+                    cell_count = 1
+                estimated_cell_counts.append(max(1, cell_count))
             
             total_cells = sum(estimated_cell_counts)
         else:
@@ -154,8 +219,8 @@ class Algorithm:
         # 绘制找到的细胞总数
         self.draw_cells_found_text(img, total_cells)
         
-        # 输出或使用最小10%轮廓面积的中位数
-        # print(f"最小10%轮廓面积的中位数: {median_smallest_10_percent_area:.2f} 像素")
+        # 输出或使用最优单细胞轮廓面积
+        # print(f"最优单细胞轮廓面积: {base_cell_area:.2f} 像素")
         
         # 输出细胞总数和轮廓数量
         # print(total_cells,outline_counts)
